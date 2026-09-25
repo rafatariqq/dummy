@@ -19,24 +19,24 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Custom Styling & Bright Professional Green Palette -->
+  <!-- Custom Styling & Animations -->
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
             kemenkes: {
-              50: '#ecfdf5',
-              100: '#d1fae5',
-              200: '#a7f3d0',
-              300: '#6ee7b7',
-              400: '#34d399',
-              500: '#10b981',
-              600: '#059669',
-              700: '#047857',
-              800: '#065f46',
-              900: '#064e3b',
-              950: '#022c22',
+              50: '#f3f7f4',
+              100: '#e1ebe4',
+              200: '#c3d7ca',
+              300: '#9cbca8',
+              400: '#719b81',
+              500: '#517d63',
+              600: '#3e6450',
+              700: '#325141',
+              800: '#294136',
+              900: '#22362c',
+              950: '#101e19',
             }
           },
           fontFamily: {
@@ -51,25 +51,25 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #f8fafc;
-      color: #1e293b;
+      background-color: #fafaf9;
+      color: #292524;
     }
     h1, h2, h3, h4, .font-display {
       font-family: 'Manrope', sans-serif;
       letter-spacing: -0.01em;
     }
     .bg-kemenkes-gradient {
-      background: linear-gradient(135deg, #047857 0%, #059669 50%, #10b981 100%);
+      background: linear-gradient(160deg, #22362c 0%, #101e19 100%);
     }
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
     }
     ::-webkit-scrollbar-track {
-      background: #f1f5f9;
+      background: #f5f5f4;
     }
     ::-webkit-scrollbar-thumb {
-      background: #34d399;
+      background: #9cbca8;
       border-radius: 9999px;
     }
   </style>
@@ -80,14 +80,14 @@
   <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
   <!-- FLOATING BUTTON BUKU TAMU -->
-  <button onclick="openModal('guestBookModal')" class="fixed bottom-6 right-6 z-40 bg-kemenkes-600 hover:bg-kemenkes-700 text-white px-5 py-3.5 rounded-full shadow-xl flex items-center gap-3 font-display font-bold text-sm transition-all transform hover:scale-105 border border-white/20">
+  <button onclick="openModal('guestBookModal')" class="fixed bottom-6 right-6 z-40 bg-kemenkes-700 hover:bg-kemenkes-600 text-white px-5 py-3.5 rounded-full shadow-lg flex items-center gap-3 font-display font-bold text-sm transition-all transform hover:scale-105 border border-white/20">
     <i class="fa-solid fa-address-book text-lg"></i>
     <span>Buku Tamu</span>
   </button>
 
   <!-- HEADER UTAMA -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-stone-100">
-    <div class="bg-kemenkes-900 text-kemenkes-100 text-xs py-1.5 px-4 hidden sm:block">
+    <div class="bg-kemenkes-950 text-kemenkes-100 text-xs py-1.5 px-4 hidden sm:block">
       <div class="max-w-7xl mx-auto flex justify-between items-center">
         <div class="flex items-center gap-6">
           <span class="flex items-center gap-1.5"><i class="fa-solid fa-clock text-kemenkes-300"></i> Layanan UGD: <strong>24 Jam Siaga</strong></span>
@@ -105,7 +105,7 @@
           <img src="logo-puskesmas-tarailu.png" alt="Logo" class="h-10 sm:h-12 w-auto object-contain group-hover:scale-105 transition-transform" onerror="this.src='https://via.placeholder.com/48x48?text=PKM'">
           <div class="flex flex-col">
             <span class="font-display font-extrabold text-lg sm:text-xl text-stone-800 tracking-tight leading-none group-hover:text-kemenkes-700 transition-colors">PKM SATELIT TARAILU</span>
-            <span class="text-[10px] sm:text-[11px] font-bold text-kemenkes-600 tracking-wider uppercase mt-1">DINAS KESEHATAN KAB. MAMUJU</span>
+            <span class="text-[10px] sm:text-[11px] font-semibold text-kemenkes-700 tracking-wider uppercase mt-1">DINAS KESEHATAN KAB. MAMUJU</span>
           </div>
         </a>
 
@@ -119,7 +119,7 @@
         </nav>
 
         <div class="hidden md:flex items-center gap-3">
-          <a href="https://wa.me/6282353685324" target="_blank" class="bg-kemenkes-600 hover:bg-kemenkes-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 shadow-sm transition-all">
+          <a href="https://wa.me/6282353685324" target="_blank" class="bg-kemenkes-600 hover:bg-kemenkes-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 shadow-sm transition-all">
             <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
           </a>
           <button onclick="openModal('loginModal')" class="bg-stone-900 hover:bg-stone-800 text-white px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 shadow-sm transition-all border border-stone-700/50">
@@ -153,24 +153,24 @@
   </header>
 
   <!-- Hero Section -->
-  <section id="beranda" class="relative bg-kemenkes-gradient text-white pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden shadow-inner">
+  <section id="beranda" class="relative bg-kemenkes-gradient text-white pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       <div class="max-w-3xl mx-auto text-center space-y-6">
-        <div class="inline-flex items-center gap-2 bg-white/20 px-3.5 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-semibold backdrop-blur-sm">
-          <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+        <div class="inline-flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-full border border-white/15 text-xs sm:text-sm font-medium">
+          <span class="w-1.5 h-1.5 rounded-full bg-kemenkes-300"></span>
           <span>Integrasi Layanan Primer (ILP) Kabupaten Mamuju</span>
         </div>
         <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
-          Puskesmas Satelit Tarailu <span class="text-kemenkes-100">Sehat & Terpercaya</span>
+          Puskesmas Satelit Tarailu <span class="text-kemenkes-200">Sehat & Terpercaya</span>
         </h1>
         <p class="text-kemenkes-50 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
           Berkomitmen memberikan pelayanan kesehatan primer yang cepat, profesional, ramah, dan terintegrasi untuk masyarakat Tarailu, Kecamatan Sampaga, Kabupaten Mamuju.
         </p>
         <div class="pt-2 flex flex-wrap justify-center gap-3">
-          <a href="#jadwal" class="bg-white hover:bg-kemenkes-50 text-kemenkes-800 font-bold px-7 py-3.5 rounded-xl shadow-lg transition-all flex items-center gap-2 text-sm">
+          <a href="#jadwal" class="bg-white hover:bg-kemenkes-50 text-kemenkes-800 font-bold px-7 py-3.5 rounded-xl shadow-md transition-all flex items-center gap-2 text-sm">
             <i class="fa-regular fa-calendar-alt text-lg"></i> Lihat Jadwal Dokter
           </a>
-          <button onclick="openModal('guestBookModal')" class="border border-white/50 hover:bg-white/20 text-white font-bold px-7 py-3.5 rounded-xl transition-all flex items-center gap-2 text-sm backdrop-blur-sm">
+          <button onclick="openModal('guestBookModal')" class="border border-white/30 hover:bg-white/10 text-white font-bold px-7 py-3.5 rounded-xl transition-all flex items-center gap-2 text-sm">
             <i class="fa-solid fa-address-book text-lg"></i> Isi Buku Tamu
           </button>
         </div>
@@ -188,9 +188,9 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="bg-gradient-to-br from-kemenkes-700 to-kemenkes-900 text-white rounded-2xl p-8 shadow-md flex flex-col justify-between">
+        <div class="bg-gradient-to-br from-kemenkes-800 to-kemenkes-950 text-white rounded-2xl p-8 shadow-md flex flex-col justify-between">
           <div class="space-y-4">
-            <div class="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 text-white flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-eye"></i></div>
+            <div class="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-md border border-white/20 text-kemenkes-300 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-eye"></i></div>
             <h3 class="font-display text-xl font-bold">Visi Puskesmas</h3>
             <p class="text-kemenkes-50 text-sm sm:text-base italic leading-relaxed font-light">"Terwujudnya Masyarakat Tarailu yang Sehat, Mandiri, dan Berkualitas Melalui Pelayanan Kesehatan Primer yang Bermutu dan Berintegrasi."</p>
           </div>
@@ -219,25 +219,108 @@
     </div>
   </section>
 
-  <!-- SECTION: KLASTER LAYANAN -->
-  <section id="layanan" class="py-16 sm:py-24 bg-kemenkes-50/50">
+  <!-- SECTION: KLASTER LAYANAN (DILENGKAPI DENGAN FITUR DETAIL ILP) -->
+  <section id="layanan" class="py-16 sm:py-24 bg-stone-50/70">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center max-w-3xl mx-auto space-y-3 mb-12">
         <span class="inline-block bg-kemenkes-100 text-kemenkes-800 font-semibold text-xs px-4 py-1.5 rounded-full uppercase">Integrasi Layanan Primer (ILP)</span>
-        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-stone-900">Klaster Layanan Kesehatan</h2>
+        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-stone-900">Klaster Layanan Kesehatan & Fitur Detail</h2>
+        <p class="text-xs sm:text-sm text-stone-600">Standar operasional pelayanan kesehatan klaster berorientasi siklus hidup di Puskesmas Satelit Tarailu.</p>
       </div>
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-white rounded-2xl p-6 border border-kemenkes-100 shadow-sm hover:shadow-md transition-all">
-          <h3 class="font-display font-bold text-xl text-stone-900 mb-2">Klaster 1: Manajemen</h3>
-          <p class="text-xs text-stone-500">Pengelolaan administrasi, informasi, mutu, dan jaringan.</p>
+        <!-- Klaster 1: Manajemen -->
+        <div class="bg-white rounded-2xl p-6 border border-stone-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-all">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-kemenkes-100 text-kemenkes-700 flex items-center justify-center font-bold mb-4 shadow-sm">
+              <i class="fa-solid fa-file-lines"></i>
+            </div>
+            <span class="text-[10px] font-bold text-kemenkes-700 uppercase tracking-wider">Klaster 1</span>
+            <h3 class="font-display font-bold text-lg text-stone-900 mt-1 mb-2">Manajemen</h3>
+            <p class="text-xs text-stone-500 mb-4">Pengelolaan administrasi, tata kelola sumber daya, mutu, dan jaringan fasilitas.</p>
+            <ul class="space-y-2 text-xs text-stone-600 border-t border-stone-100 pt-3">
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Perencanaan & Evaluasi Puskesmas</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Manajemen Keuangan & Aset</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Pengelolaan Mutu & Akreditasi</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Sistem Informasi Puskesmas (SIPP)</span></li>
+            </ul>
+          </div>
         </div>
-        <div class="bg-white rounded-2xl p-6 border border-kemenkes-100 shadow-sm hover:shadow-md transition-all">
-          <h3 class="font-display font-bold text-xl text-stone-900 mb-2">Klaster 2: Ibu & Anak</h3>
-          <p class="text-xs text-stone-500">Pelayanan kesehatan ibu hamil, bayi, balita, dan remaja.</p>
+
+        <!-- Klaster 2: Ibu & Anak -->
+        <div class="bg-white rounded-2xl p-6 border border-stone-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-all">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-kemenkes-100 text-kemenkes-700 flex items-center justify-center font-bold mb-4 shadow-sm">
+              <i class="fa-solid fa-child-reaching"></i>
+            </div>
+            <span class="text-[10px] font-bold text-kemenkes-700 uppercase tracking-wider">Klaster 2</span>
+            <h3 class="font-display font-bold text-lg text-stone-900 mt-1 mb-2">Ibu & Anak</h3>
+            <p class="text-xs text-stone-500 mb-4">Pelayanan kesehatan berorientasi siklus hidup bagi ibu, bayi, balita, dan anak sekolah.</p>
+            <ul class="space-y-2 text-xs text-stone-600 border-t border-stone-100 pt-3">
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Kesehatan Ibu Hamil, Bersalin & Nifas</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Pelayanan Neonatus, Bayi & Balita</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Pelayanan Anak Usia Sekolah & Remaja</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Pelayanan KB (Keluarga Berencana)</span></li>
+            </ul>
+          </div>
         </div>
-        <div class="bg-white rounded-2xl p-6 border border-kemenkes-100 shadow-sm hover:shadow-md transition-all">
-          <h3 class="font-display font-bold text-xl text-stone-900 mb-2">Klaster 3: Dewasa & Lansia</h3>
-          <p class="text-xs text-stone-500">Skrining PTM, usia produktif, dan geriatri.</p>
+
+        <!-- Klaster 3: Dewasa & Lansia -->
+        <div class="bg-white rounded-2xl p-6 border border-stone-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-all">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-kemenkes-100 text-kemenkes-700 flex items-center justify-center font-bold mb-4 shadow-sm">
+              <i class="fa-solid fa-user-injured"></i>
+            </div>
+            <span class="text-[10px] font-bold text-kemenkes-700 uppercase tracking-wider">Klaster 3</span>
+            <h3 class="font-display font-bold text-lg text-stone-900 mt-1 mb-2">Dewasa & Lansia</h3>
+            <p class="text-xs text-stone-500 mb-4">Skrining dan penanganan kesehatan usia produktif serta lanjut usia (geriatri).</p>
+            <ul class="space-y-2 text-xs text-stone-600 border-t border-stone-100 pt-3">
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Skrining Penyakit Tidak Menular (PTM)</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Kesehatan Usia Produktif</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Pelayanan Geriatri & Posyandu Lansia</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Konsultasi & Manajemen PTM</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Klaster 4: Penyakit Menular -->
+        <div class="bg-white rounded-2xl p-6 border border-stone-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-all">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-kemenkes-100 text-kemenkes-700 flex items-center justify-center font-bold mb-4 shadow-sm">
+              <i class="fa-solid fa-virus-covid"></i>
+            </div>
+            <span class="text-[10px] font-bold text-kemenkes-700 uppercase tracking-wider">Klaster 4</span>
+            <h3 class="font-display font-bold text-lg text-stone-900 mt-1 mb-2">Penyakit Menular</h3>
+            <p class="text-xs text-stone-500 mb-4">Pencegahan, surveilans, dan penanggulangan penyakit menular serta imunisasi.</p>
+            <ul class="space-y-2 text-xs text-stone-600 border-t border-stone-100 pt-3">
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Surveilans Epidemiologi & Kewaspadaan Dini</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Pelayanan Imunisasi Rutin & Tambahan</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Pengendalian TBC, HIV, & DBD</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Kesehatan Lingkungan & Sanitasi</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Lintas Klaster -->
+        <div class="bg-white rounded-2xl p-6 border border-stone-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-all md:col-span-2 lg:col-span-2">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-kemenkes-100 text-kemenkes-700 flex items-center justify-center font-bold mb-4 shadow-sm">
+              <i class="fa-solid fa-hospital-user"></i>
+            </div>
+            <span class="text-[10px] font-bold text-kemenkes-700 uppercase tracking-wider">Lintas Klaster</span>
+            <h3 class="font-display font-bold text-lg text-stone-900 mt-1 mb-2">Pelayanan Penunjang & Gawat Darurat</h3>
+            <p class="text-xs text-stone-500 mb-4">Layanan terpadu pendukung kegawatdaruratan, kefarmasian, dan laboratorium klinis.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 border-t border-stone-100 pt-3">
+              <ul class="space-y-2 text-xs text-stone-600">
+                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Unit Gawat Darurat (UGD) 24 Jam Siaga</span></li>
+                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Pelayanan Rawat Inap & Observasi</span></li>
+              </ul>
+              <ul class="space-y-2 text-xs text-stone-600">
+                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Pelayanan Laboratorium Kesehatan</span></li>
+                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-600 mt-0.5 shrink-0"></i><span>Pelayanan Kefarmasian & Apotek</span></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -253,7 +336,7 @@
         </div>
         <div class="w-full md:w-72 relative">
           <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 text-sm"></i>
-          <input type="text" id="doctorSearchInput" oninput="filterDoctors()" placeholder="Cari nama dokter / poli..." class="w-full pl-10 pr-4 py-2.5 text-xs bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-kemenkes-500">
+          <input type="text" id="doctorSearchInput" oninput="filterDoctors()" placeholder="Cari nama dokter / poli..." class="w-full pl-10 pr-4 py-2.5 text-xs bg-stone-50 border border-stone-200 rounded-xl focus:outline-none">
         </div>
       </div>
       <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="doctorsGrid"></div>
@@ -261,7 +344,7 @@
   </section>
 
   <!-- FAQ Section -->
-  <section id="faq" class="py-16 sm:py-24 bg-kemenkes-50/40">
+  <section id="faq" class="py-16 sm:py-24 bg-stone-50">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center space-y-3 mb-12">
         <span class="inline-block bg-kemenkes-100 text-kemenkes-800 font-semibold text-xs px-3.5 py-1 rounded-full uppercase">FAQ</span>
@@ -281,7 +364,7 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-kemenkes-50/50 rounded-2xl p-8 border border-kemenkes-100 shadow-sm flex flex-col items-center text-center space-y-4 hover:shadow-md transition-all">
+        <div class="bg-stone-50/50 rounded-2xl p-8 border border-stone-200 shadow-sm flex flex-col items-center text-center space-y-4 hover:shadow-md transition-all">
           <div class="w-14 h-14 rounded-2xl bg-kemenkes-100 text-kemenkes-700 flex items-center justify-center text-2xl shadow-sm">
             <i class="fa-brands fa-whatsapp"></i>
           </div>
@@ -290,12 +373,12 @@
             <p class="text-xs text-stone-500 mt-1">Layanan Informasi & Konsultasi Cepat</p>
           </div>
           <p class="text-sm font-bold text-stone-800">0823-5368-5324</p>
-          <a href="https://wa.me/6282353685324" target="_blank" class="w-full bg-kemenkes-600 hover:bg-kemenkes-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition-all">
+          <a href="https://wa.me/6282353685324" target="_blank" class="w-full bg-kemenkes-600 hover:bg-kemenkes-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition-all">
             <i class="fa-brands fa-whatsapp text-sm"></i> Chat WhatsApp
           </a>
         </div>
 
-        <div class="bg-kemenkes-50/50 rounded-2xl p-8 border border-kemenkes-100 shadow-sm flex flex-col items-center text-center space-y-4 hover:shadow-md transition-all">
+        <div class="bg-stone-50/50 rounded-2xl p-8 border border-stone-200 shadow-sm flex flex-col items-center text-center space-y-4 hover:shadow-md transition-all">
           <div class="w-14 h-14 rounded-2xl bg-kemenkes-100 text-kemenkes-700 flex items-center justify-center text-2xl shadow-sm">
             <i class="fa-solid fa-envelope"></i>
           </div>
@@ -304,12 +387,12 @@
             <p class="text-xs text-stone-500 mt-1">Kirimkan surat atau dokumen resmi</p>
           </div>
           <p class="text-sm font-bold text-stone-800 break-all">pkmsatelittarailu@gmail.com</p>
-          <a href="mailto:pkmsatelittarailu@gmail.com" class="w-full bg-kemenkes-700 hover:bg-kemenkes-800 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition-all">
+          <a href="mailto:pkmsatelittarailu@gmail.com" class="w-full bg-kemenkes-700 hover:bg-kemenkes-600 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition-all">
             <i class="fa-solid fa-envelope text-sm"></i> Kirim Email
           </a>
         </div>
 
-        <div class="bg-kemenkes-50/50 rounded-2xl p-8 border border-kemenkes-100 shadow-sm flex flex-col items-center text-center space-y-4 hover:shadow-md transition-all">
+        <div class="bg-stone-50/50 rounded-2xl p-8 border border-stone-200 shadow-sm flex flex-col items-center text-center space-y-4 hover:shadow-md transition-all">
           <div class="w-14 h-14 rounded-2xl bg-kemenkes-100 text-kemenkes-700 flex items-center justify-center text-2xl shadow-sm">
             <i class="fa-solid fa-location-dot"></i>
           </div>
@@ -333,7 +416,7 @@
       <!-- Top Bar Admin -->
       <div class="bg-white rounded-2xl p-6 shadow-sm border border-stone-200 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
-          <span class="bg-kemenkes-700 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Panel Admin / Petugas</span>
+          <span class="bg-stone-800 text-stone-100 text-xs font-bold px-3 py-1 rounded-full uppercase">Panel Admin / Petugas</span>
           <h1 class="font-display font-extrabold text-2xl text-stone-900 mt-1">Manajemen Puskesmas Satelit Tarailu</h1>
         </div>
         <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-500 text-white font-bold px-5 py-2.5 rounded-xl text-xs flex items-center gap-2">
@@ -364,13 +447,13 @@
           <h3 class="font-display font-bold text-lg text-stone-900 flex items-center gap-2">
             <i class="fa-solid fa-sitemap text-kemenkes-600"></i> Kelola Struktur Organisasi / Hirarki
           </h3>
-          <button onclick="openStructureModal()" class="bg-kemenkes-600 hover:bg-kemenkes-700 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm">
+          <button onclick="openStructureModal()" class="bg-kemenkes-600 hover:bg-kemenkes-500 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm">
             <i class="fa-solid fa-plus"></i> Tambah Posisi Struktur
           </button>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
-            <thead class="bg-kemenkes-50 text-kemenkes-900 uppercase font-semibold">
+            <thead class="bg-stone-50 text-stone-600 uppercase">
               <tr>
                 <th class="p-3 rounded-l-xl">Grup Klaster</th>
                 <th class="p-3">Jabatan / Unit</th>
@@ -389,7 +472,7 @@
         <div class="bg-white rounded-2xl p-6 shadow-sm border border-stone-200 space-y-6">
           <div class="flex items-center justify-between">
             <h3 class="font-display font-bold text-lg text-stone-900">Kelola Jadwal Dokter</h3>
-            <button onclick="openDoctorModal()" class="bg-kemenkes-600 hover:bg-kemenkes-700 text-white px-4 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-plus"></i> Tambah</button>
+            <button onclick="openDoctorModal()" class="bg-kemenkes-600 text-white px-4 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-plus"></i> Tambah</button>
           </div>
           <div class="overflow-x-auto"><table class="w-full text-left text-xs"><tbody id="adminDoctorsTableBody"></tbody></table></div>
         </div>
@@ -397,7 +480,7 @@
         <div class="bg-white rounded-2xl p-6 shadow-sm border border-stone-200 space-y-6">
           <div class="flex items-center justify-between">
             <h3 class="font-display font-bold text-lg text-stone-900">Kelola FAQ</h3>
-            <button onclick="openFaqModal()" class="bg-kemenkes-600 hover:bg-kemenkes-700 text-white px-4 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-plus"></i> Tambah</button>
+            <button onclick="openFaqModal()" class="bg-kemenkes-600 text-white px-4 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-plus"></i> Tambah</button>
           </div>
           <div class="overflow-x-auto"><table class="w-full text-left text-xs"><tbody id="adminFaqTableBody"></tbody></table></div>
         </div>
@@ -415,7 +498,7 @@
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
-            <thead class="bg-kemenkes-50 text-kemenkes-900 uppercase font-semibold">
+            <thead class="bg-stone-50 text-stone-600 uppercase">
               <tr>
                 <th class="p-3 rounded-l-xl">Tanggal & Waktu</th>
                 <th class="p-3">Nama & Pekerjaan</th>
@@ -497,7 +580,7 @@
         </div>
         <div class="pt-2 flex justify-end gap-3">
           <button type="button" onclick="closeModal('guestBookModal')" class="px-5 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl font-semibold transition-all">Batal</button>
-          <button type="submit" class="px-6 py-2.5 bg-kemenkes-600 hover:bg-kemenkes-700 text-white rounded-xl font-bold shadow-md transition-all">Kirim Buku Tamu</button>
+          <button type="submit" class="px-6 py-2.5 bg-kemenkes-600 hover:bg-kemenkes-500 text-white rounded-xl font-bold shadow-md transition-all">Kirim Buku Tamu</button>
         </div>
       </form>
     </div>
@@ -523,9 +606,9 @@
       <button onclick="closeModal('loginModal')" class="absolute top-5 right-5 text-stone-400 hover:text-stone-700"><i class="fa-solid fa-xmark"></i></button>
       <h3 class="font-display font-bold text-xl text-stone-900 mb-4">Login Petugas</h3>
       <form onsubmit="handleLoginSubmit(event)" class="space-y-4 text-xs">
-        <input type="text" id="loginUsername" required placeholder="Username..." class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-kemenkes-500">
-        <input type="password" id="loginPassword" required placeholder="Password..." class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:border-kemenkes-500">
-        <button type="submit" class="w-full bg-kemenkes-700 hover:bg-kemenkes-800 text-white font-bold py-3 rounded-xl shadow-md transition-all">Masuk</button>
+        <input type="text" id="loginUsername" required placeholder="Username..." class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl">
+        <input type="password" id="loginPassword" required placeholder="Password..." class="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl">
+        <button type="submit" class="w-full bg-kemenkes-700 hover:bg-kemenkes-600 text-white font-bold py-3 rounded-xl shadow-md transition-all">Masuk</button>
       </form>
     </div>
   </div>
@@ -776,7 +859,7 @@
       let controlsHtml = '';
       controlsHtml += `<button onclick="changeGuestPage(${currentGuestPage - 1})" ${currentGuestPage === 1 ? 'disabled class="px-3 py-1.5 bg-stone-100 text-stone-400 rounded-lg cursor-not-allowed text-xs"' : 'class="px-3 py-1.5 bg-stone-200 hover:bg-stone-300 text-stone-700 rounded-lg text-xs font-semibold"'}>Sebelumnya</button>`;
       controlsHtml += `<span class="text-xs font-bold text-stone-700 px-2">Hal ${currentGuestPage} / ${totalPages || 1}</span>`;
-      controlsHtml += `<button onclick="changeGuestPage(${currentGuestPage + 1})" ${currentGuestPage >= totalPages ? 'disabled class="px-3 py-1.5 bg-stone-100 text-stone-400 rounded-lg cursor-not-allowed text-xs"' : 'class="px-3 py-1.5 bg-kemenkes-600 hover:bg-kemenkes-700 text-white rounded-lg text-xs font-semibold"'}>Selanjutnya</button>`;
+      controlsHtml += `<button onclick="changeGuestPage(${currentGuestPage + 1})" ${currentGuestPage >= totalPages ? 'disabled class="px-3 py-1.5 bg-stone-100 text-stone-400 rounded-lg cursor-not-allowed text-xs"' : 'class="px-3 py-1.5 bg-kemenkes-600 hover:bg-kemenkes-500 text-white rounded-lg text-xs font-semibold"'}>Selanjutnya</button>`;
       
       document.getElementById('guestPaginationControls').innerHTML = controlsHtml;
     }
@@ -855,10 +938,10 @@
       if (leader) {
         html += `
           <div class="bg-kemenkes-50 border border-kemenkes-200 rounded-2xl p-6 text-center max-w-md mx-auto w-full shadow-sm">
-            <div class="w-14 h-14 bg-kemenkes-600 text-white rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 shadow-md">
+            <div class="w-14 h-14 bg-kemenkes-700 text-white rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 shadow-md">
               <i class="fa-solid fa-user-tie"></i>
             </div>
-            <span class="text-[10px] font-extrabold text-kemenkes-800 uppercase tracking-widest bg-kemenkes-200/80 px-3 py-1 rounded-full">Pimpinan Tertinggi</span>
+            <span class="text-[10px] font-extrabold text-kemenkes-800 uppercase tracking-widest bg-kemenkes-200/60 px-3 py-1 rounded-full">Pimpinan Tertinggi</span>
             <h4 class="font-display font-bold text-stone-900 text-base mt-2">${leader.position_title}</h4>
             <p class="text-xs font-semibold text-kemenkes-900 mt-1">${leader.person_name}</p>
           </div>
@@ -876,9 +959,9 @@
         const subUnits = clusterItems.filter(item => item.category === 'sub_unit');
 
         html += `
-          <div class="bg-white rounded-2xl p-5 border border-kemenkes-100 shadow-sm flex flex-col justify-between hover:shadow-md transition-all">
+          <div class="bg-white rounded-2xl p-5 border border-stone-200 shadow-sm flex flex-col justify-between">
             <div>
-              <div class="w-10 h-10 bg-kemenkes-50 text-kemenkes-700 rounded-xl flex items-center justify-center text-base mb-3 font-bold border border-kemenkes-100">
+              <div class="w-10 h-10 bg-stone-100 text-stone-700 rounded-xl flex items-center justify-center text-base mb-3 font-bold">
                 <i class="fa-solid fa-sitemap"></i>
               </div>
               <span class="text-[10px] font-bold text-kemenkes-700 uppercase">${clusterName}</span>
@@ -887,7 +970,7 @@
               
               <div class="mt-4 space-y-2 border-t border-stone-100 pt-3">
                 ${subUnits.map(sub => `
-                  <div class="bg-kemenkes-50/40 p-2 rounded-xl border border-kemenkes-100">
+                  <div class="bg-stone-50 p-2 rounded-xl border border-stone-100">
                     <div class="text-[11px] font-bold text-stone-800">${sub.position_title}</div>
                     <div class="text-[10px] text-stone-600">${sub.person_name}</div>
                   </div>
@@ -910,11 +993,11 @@
 
       data.forEach(item => {
         tbody.innerHTML += `
-          <tr class="hover:bg-stone-50">
+          <tr>
             <td class="p-3 font-bold text-kemenkes-700">${item.cluster_group}</td>
             <td class="p-3 font-medium text-stone-900">${item.position_title}</td>
             <td class="p-3 text-stone-700">${item.person_name}</td>
-            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] bg-kemenkes-100 text-kemenkes-800 font-semibold">${item.category}</span></td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] bg-stone-100 font-semibold">${item.category}</span></td>
             <td class="p-3 text-right space-x-2">
               <button onclick="editStructure(${item.id}, '${item.cluster_group}', '${item.position_title.replace(/'/g, "\\'")}', '${item.person_name.replace(/'/g, "\\'")}', '${item.category}')" class="text-kemenkes-700 font-bold hover:underline">Edit</button>
               <button onclick="deleteStructure(${item.id})" class="text-rose-600 font-bold hover:underline">Hapus</button>
@@ -986,9 +1069,9 @@
       data.forEach(doc => {
         if (grid) {
           grid.innerHTML += `
-            <div class="doctor-card bg-kemenkes-50/40 rounded-2xl p-5 border border-kemenkes-100 hover:shadow-md transition-all" data-search="${doc.name.toLowerCase()} ${doc.specialty.toLowerCase()}">
+            <div class="doctor-card bg-stone-50 rounded-2xl p-5 border border-stone-200" data-search="${doc.name.toLowerCase()} ${doc.specialty.toLowerCase()}">
               <div class="flex items-start gap-4">
-                <div class="w-12 h-12 bg-kemenkes-600 text-white rounded-2xl flex items-center justify-center font-bold shrink-0 shadow-sm"><i class="fa-solid fa-user-doctor"></i></div>
+                <div class="w-12 h-12 bg-kemenkes-700 text-white rounded-2xl flex items-center justify-center font-bold shrink-0"><i class="fa-solid fa-user-doctor"></i></div>
                 <div>
                   <span class="text-[10px] font-bold text-kemenkes-700 bg-kemenkes-100 px-2 py-0.5 rounded">${doc.specialty}</span>
                   <h4 class="font-display font-bold text-stone-900 text-sm mt-1">${doc.name}</h4>
@@ -1003,7 +1086,7 @@
         }
         if (adminTable) {
           adminTable.innerHTML += `
-            <tr class="hover:bg-stone-50">
+            <tr>
               <td class="p-3 font-bold text-stone-900">${doc.name} <span class="text-stone-500 font-normal">(${doc.specialty})</span></td>
               <td class="p-3 text-right space-x-2">
                 <button onclick="deleteDoctor(${doc.id})" class="text-rose-600 font-bold hover:underline">Hapus</button>
@@ -1079,16 +1162,16 @@
       data.forEach(faq => {
         if (container) {
           container.innerHTML += `
-            <div class="bg-white rounded-2xl border border-kemenkes-100 overflow-hidden shadow-sm">
-              <button onclick="toggleFaq(this)" class="w-full p-5 text-left font-display font-semibold text-stone-800 flex justify-between items-center text-sm hover:bg-kemenkes-50/50 transition-colors">
-                <span>${faq.question}</span><i class="fa-solid fa-chevron-down text-xs text-kemenkes-600"></i>
+            <div class="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-sm">
+              <button onclick="toggleFaq(this)" class="w-full p-5 text-left font-display font-semibold text-stone-800 flex justify-between items-center text-sm">
+                <span>${faq.question}</span><i class="fa-solid fa-chevron-down text-xs"></i>
               </button>
-              <div class="hidden p-5 pt-0 text-xs text-stone-600 border-t border-kemenkes-100 bg-kemenkes-50/20">${faq.answer}</div>
+              <div class="hidden p-5 pt-0 text-xs text-stone-600 border-t bg-stone-50/50">${faq.answer}</div>
             </div>`;
         }
         if (adminTable) {
           adminTable.innerHTML += `
-            <tr class="hover:bg-stone-50">
+            <tr>
               <td class="p-3 font-medium text-stone-800">${faq.question}</td>
               <td class="p-3 text-right"><button onclick="deleteFaq(${faq.id})" class="text-rose-600 font-bold hover:underline">Hapus</button></td>
             </tr>`;
