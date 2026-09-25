@@ -1,1455 +1,685 @@
-<!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PUSKESMAS GARUDA - DINAS KESEHATAN KOTA BANDUNG</title>
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Google Fonts: Inter & Poppins -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- FontAwesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Custom Styling & Animations -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            kemenkes: {
-              50: '#ecfdf5',
-              100: '#d1fae5',
-              200: '#a7f3d0',
-              500: '#10b981',
-              600: '#059669',
-              700: '#00a651',
-              800: '#009639',
-              900: '#00768a',
-            },
-            bandung: {
-              gold: '#f59e0b',
-              red: '#e11d48',
-              blue: '#0284c7'
-            }
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            display: ['Poppins', 'sans-serif'],
+import Link from "next/link";
+import Image from "next/image";
+import {
+  MapPin,
+  Phone,
+  Clock3,
+  MessageCircle,
+  ArrowRight,
+  ExternalLink,
+  Heart,
+  Mail,
+  Building2,
+} from "lucide-react";
+
+export default function Kontak() {
+  // Format nomor WA menggunakan kode negara (6282353685324)
+  const whatsappNumber = "6282353685324";
+  const whatsappMessage = encodeURIComponent(
+    "Halo SIPELITA, saya ingin bertanya mengenai layanan Puskesmas Tarailu Sampaga."
+  );
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+
+  // Format link untuk Email (mailto)
+  const emailAddress = "pkmsatelittarailu@gmail.com";
+  const emailSubject = encodeURIComponent("Pertanyaan Layanan Puskesmas Tarailu");
+  const emailUrl = `mailto:${emailAddress}?subject=${emailSubject}`;
+
+  // Tautan Google Maps ke Puskesmas Satelit Tarailu
+  const googleMapsUrl =
+    "https://www.google.com/maps/place/Puskesmas+Satelit+Tarailu/@-2.3111475,119.1754624,18z/data=!4m23!1m16!4m15!1m6!1m2!1s0x2d92d833d4d70f27:0xec8b6ecb8c7bb406!2sJl.+Poros+Mamuju+-+Topoyo,+Sulawesi+Barat!2m2!1d119.1621854!2d-2.4195697!1m6!1m2!1s0x2d9290f914f05173:0xb0b84e39a98a507!2sTarailu,+Kec.+Sampaga,+Kabupaten+Mamuju,+Sulawesi+Barat!2m2!1d119.179765!2d-2.3173016!3e0!3m5!1s0x2d9291e7019333a9:0x7ba3c2a8525060fc!8m2!3d-2.3112276!4d119.1766989!16s%2Fg%2F11ghsjk6wk";
+
+  return (
+    <div className="sipelita-page">
+      {/* ===== EMBEDDED STANDALONE STYLES ===== */}
+      <style>{`
+        .sipelita-page {
+          min-height: 100vh;
+          background-color: #f7fbf9;
+          color: #1f2937;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        .sipelita-header {
+          position: sticky;
+          top: 0;
+          z-index: 50;
+          background-color: rgba(255, 255, 255, 0.92);
+          backdrop-filter: blur(8px);
+          border-bottom: 1px solid #eef2f0;
+          padding: 16px 40px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .sipelita-logo {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          text-decoration: none;
+          color: inherit;
+        }
+
+        .sipelita-logo-icon {
+          width: 44px;
+          height: 44px;
+          border-radius: 12px;
+          background-color: #e6f4ee;
+          border: 1px solid #c2e5d5;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #0d7a5f;
+          flex-shrink: 0;
+          overflow: hidden;
+          position: relative;
+        }
+
+        .sipelita-logo-title {
+          font-weight: 900;
+          font-size: 15px;
+          letter-spacing: -0.3px;
+          color: #111827;
+          text-transform: uppercase;
+          line-height: 1.1;
+        }
+
+        .sipelita-logo-sub {
+          font-size: 11px;
+          font-weight: 600;
+          color: #8896a6;
+          letter-spacing: 0.5px;
+        }
+
+        .sipelita-nav {
+          display: flex;
+          align-items: center;
+          gap: 28px;
+        }
+
+        .sipelita-nav a {
+          text-decoration: none;
+          font-size: 14px;
+          font-weight: 500;
+          color: #4b5563;
+          transition: color 0.2s;
+        }
+
+        .sipelita-nav a:hover, .sipelita-nav a.active {
+          color: #0d7a5f;
+          font-weight: 700;
+        }
+
+        .sipelita-btn-outline {
+          padding: 8px 20px;
+          border-radius: 9999px;
+          border: 1px solid #d1d5db;
+          background-color: #ffffff;
+          font-size: 14px;
+          font-weight: 600;
+          color: #1f2937;
+          text-decoration: none;
+          transition: all 0.2s;
+          display: inline-flex;
+          align-items: center;
+          white-space: nowrap;
+        }
+
+        .sipelita-btn-outline:hover {
+          border-color: #0d7a5f;
+          color: #0d7a5f;
+          box-shadow: 0 2px 8px rgba(13, 122, 95, 0.12);
+        }
+
+        .sipelita-main {
+          max-width: 1140px;
+          margin: 0 auto;
+          padding: 48px 24px 80px 24px;
+        }
+
+        .sipelita-hero {
+          display: grid;
+          grid-template-columns: 1.1fr 0.9fr;
+          gap: 48px;
+          align-items: center;
+          margin-bottom: 64px;
+        }
+
+        .sipelita-eyebrow {
+          font-size: 12px;
+          font-weight: 800;
+          letter-spacing: 1.5px;
+          color: #0d7a5f;
+          text-transform: uppercase;
+          margin-bottom: 12px;
+          display: block;
+        }
+
+        .sipelita-hero-title {
+          font-size: 48px;
+          font-weight: 900;
+          line-height: 1.1;
+          color: #111827;
+          margin: 0 0 20px 0;
+          letter-spacing: -1px;
+        }
+
+        .sipelita-hero-title span {
+          color: #0d7a5f;
+        }
+
+        .sipelita-hero-desc {
+          font-size: 15px;
+          line-height: 1.6;
+          color: #6b7280;
+          margin-bottom: 32px;
+          max-width: 520px;
+        }
+
+        .sipelita-btn-group {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 16px;
+        }
+
+        .sipelita-btn-primary {
+          background-color: #0d7a5f;
+          color: #ffffff;
+          padding: 12px 24px;
+          border-radius: 14px;
+          font-size: 14px;
+          font-weight: 600;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          transition: all 0.2s;
+          box-shadow: 0 4px 12px rgba(13, 122, 95, 0.25);
+        }
+
+        .sipelita-btn-primary:hover {
+          background-color: #0a634d;
+          transform: translateY(-1px);
+          box-shadow: 0 6px 16px rgba(13, 122, 95, 0.35);
+        }
+
+        .sipelita-btn-link {
+          color: #0d7a5f;
+          font-size: 14px;
+          font-weight: 700;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          padding: 12px 16px;
+          border-radius: 12px;
+          transition: background-color 0.2s;
+        }
+
+        .sipelita-btn-link:hover {
+          background-color: #e6f4ee;
+        }
+
+        /* Hero Right Graphic */
+        .sipelita-graphic-wrapper {
+          display: flex;
+          justify-content: center;
+          position: relative;
+        }
+
+        .sipelita-circle-bg {
+          width: 320px;
+          height: 320px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(230, 244, 238, 0.9) 0%, rgba(240, 249, 245, 0.4) 100%);
+          border: 1px solid #d3ebd8;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+        }
+
+        .sipelita-circle-inner {
+          width: 240px;
+          height: 240px;
+          border-radius: 50%;
+          border: 2px dashed #b3e0cd;
+          background-color: rgba(255, 255, 255, 0.85);
+          backdrop-filter: blur(4px);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          padding: 20px;
+          box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+        }
+
+        .sipelita-hero-logo {
+          width: 80px;
+          height: 80px;
+          object-fit: contain;
+          margin-bottom: 8px;
+        }
+
+        .sipelita-badge {
+          position: absolute;
+          bottom: 10px;
+          right: -10px;
+          background-color: #ffffff;
+          padding: 12px 18px;
+          border-radius: 16px;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+          border: 1px solid #f3f4f6;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .sipelita-badge-icon {
+          width: 38px;
+          height: 38px;
+          border-radius: 10px;
+          background-color: #e6f4ee;
+          color: #0d7a5f;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        /* Content Cards Section */
+        .sipelita-section {
+          border-top: 1px solid #eef2f0;
+          padding-top: 48px;
+        }
+
+        .sipelita-section-header {
+          margin-bottom: 32px;
+        }
+
+        .sipelita-section-title {
+          font-size: 32px;
+          font-weight: 900;
+          color: #111827;
+          margin: 4px 0 0 0;
+          letter-spacing: -0.5px;
+        }
+
+        .sipelita-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 24px;
+        }
+
+        .sipelita-card {
+          background-color: #ffffff;
+          border-radius: 24px;
+          padding: 28px;
+          border: 1px solid #f0f0f0;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          gap: 20px;
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .sipelita-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+
+        .sipelita-card-accent {
+          background-color: #e6f4ee;
+          border-color: #d1eae0;
+        }
+
+        .sipelita-card-icon {
+          width: 44px;
+          height: 44px;
+          border-radius: 12px;
+          background-color: #e6f4ee;
+          color: #0d7a5f;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .sipelita-card-accent .sipelita-card-icon {
+          background-color: #ffffff;
+        }
+
+        .sipelita-card-label {
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: 1px;
+          color: #0d7a5f;
+          text-transform: uppercase;
+          margin-top: 12px;
+          display: block;
+        }
+
+        .sipelita-card-heading {
+          font-size: 18px;
+          font-weight: 800;
+          color: #111827;
+          margin: 6px 0;
+          word-break: break-word;
+        }
+
+        .sipelita-card-desc {
+          font-size: 13px;
+          color: #6b7280;
+          line-height: 1.5;
+          margin: 0;
+        }
+
+        .sipelita-card-action {
+          font-size: 13px;
+          font-weight: 700;
+          color: #0d7a5f;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          margin-top: auto;
+        }
+
+        .sipelita-card-action:hover {
+          text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+          .sipelita-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .sipelita-hero-title {
+            font-size: 40px;
+          }
+          .sipelita-circle-bg {
+            width: 280px;
+            height: 280px;
+          }
+          .sipelita-circle-inner {
+            width: 200px;
+            height: 200px;
           }
         }
-      }
-    }
-  </script>
-  
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f8fafc;
-      color: #1e293b;
-    }
-    h1, h2, h3, h4, .font-display {
-      font-family: 'Poppins', sans-serif;
-    }
-    .bg-kemenkes-gradient {
-      background: linear-gradient(135deg, #009639 0%, #00768a 100%);
-    }
-    .bg-mint-tint {
-      background-color: #f0fdf4;
-    }
-    .border-mint-accent {
-      border-color: #d1fae5;
-    }
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #f1f5f9;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #10b981;
-      border-radius: 9999px;
-    }
-  </style>
-</head>
-<body class="antialiased selection:bg-kemenkes-500 selection:text-white">
 
-  <!-- Toast Notification Box -->
-  <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+        @media (max-width: 900px) {
+          .sipelita-hero {
+            grid-template-columns: 1fr;
+            gap: 40px;
+            text-align: center;
+          }
+          .sipelita-hero-desc {
+            margin-left: auto;
+            margin-right: auto;
+          }
+          .sipelita-btn-group {
+            justify-content: center;
+          }
+          .sipelita-nav {
+            display: none;
+          }
+          .sipelita-header {
+            padding: 16px 20px;
+          }
+        }
 
-  <!-- Main Navigation Bar (Header) -->
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-20">
-        
-        <!-- Branding Logo & Title (PUSKESMAS GARUDA) -->
-        <a href="#" class="flex items-center gap-3 group">
-          <img src="logo-puskesmas-tarailu.png" alt="Logo Puskesmas Garuda" class="h-10 sm:h-12 w-auto object-contain group-hover:scale-105 transition-transform" onerror="this.src='https://via.placeholder.com/48x48?text=PUSKESMAS'">
-          <div class="flex flex-col">
-            <span class="font-display font-extrabold text-xl sm:text-2xl text-slate-800 tracking-tight leading-none group-hover:text-kemenkes-700 transition-colors">
-              PUSKESMAS GARUDA
-            </span>
-            <span class="text-[11px] font-semibold text-kemenkes-700 tracking-wider uppercase mt-1">
-              DINAS KESEHATAN KOTA BANDUNG
-            </span>
+        @media (max-width: 640px) {
+          .sipelita-grid {
+            grid-template-columns: 1fr;
+          }
+          .sipelita-hero-title {
+            font-size: 32px;
+          }
+          .sipelita-section-title {
+            font-size: 24px;
+          }
+          .sipelita-main {
+            padding: 32px 16px 60px 16px;
+          }
+          .sipelita-btn-primary, .sipelita-btn-link {
+            width: 100%;
+          }
+        }
+      `}</style>
+
+      {/* ===== NAVBAR HEADER ===== */}
+      <header className="sipelita-header">
+        <Link href="/" className="sipelita-logo">
+          <div className="sipelita-logo-icon">
+            <img
+              src="/logo-puskesmas-tarailu.png"
+              alt="Logo Puskesmas Tarailu"
+              className="w-full h-full object-contain p-1"
+              onError={(e) => {
+                // Fallback ikon jika gambar tidak ditemukan
+                e.currentTarget.style.display = "none";
+                const parent = e.currentTarget.parentElement;
+                if (parent) {
+                  const fallbackIcon = document.createElement("div");
+                  fallbackIcon.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M12 4v4"/></svg>`;
+                  parent.appendChild(fallbackIcon);
+                }
+              }}
+            />
           </div>
-        </a>
+          <div>
+            <span className="sipelita-logo-title">PUSKESMAS TARAILU</span>
+            <div className="sipelita-logo-sub">SAMPAGA · Portal Informasi</div>
+          </div>
+        </Link>
 
-        <!-- Desktop Navigation Links -->
-        <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-700">
-          <a href="#beranda" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-kemenkes-600 text-kemenkes-700 font-semibold">Beranda</a>
-          <a href="#layanan" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Klaster Layanan</a>
-          <a href="#jadwal" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Jadwal Dokter</a>
-          <a href="#program" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Program ILP</a>
-          <a href="#berita" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Berita</a>
-          <a href="#faq" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">FAQ</a>
-          <a href="#kontak" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Kontak</a>
+        <nav className="sipelita-nav">
+          <Link href="/">Beranda</Link>
+          <Link href="/profil">Profil</Link>
+          <Link href="/layanan">Layanan</Link>
+          <Link href="/persyaratan">Persyaratan</Link>
+          <Link href="/jadwal">Jadwal</Link>
+          <Link href="/informasi">Informasi</Link>
+          <Link href="/kontak" className="active">
+            Kontak
+          </Link>
         </nav>
 
-        <!-- Mobile Menu Toggle Button -->
-        <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none">
-          <i class="fa-solid fa-bars text-xl"></i>
-        </button>
-      </div>
-    </div>
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="sipelita-btn-outline"
+        >
+          Hubungi Kami
+        </a>
+      </header>
 
-    <!-- Mobile Dropdown Menu -->
-    <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-3">
-      <a href="#beranda" onclick="toggleMobileMenu()" class="block py-2 text-slate-800 font-semibold">Beranda</a>
-      <a href="#layanan" onclick="toggleMobileMenu()" class="block py-2 text-slate-600 hover:text-kemenkes-700">Klaster Layanan</a>
-      <a href="#jadwal" onclick="toggleMobileMenu()" class="block py-2 text-slate-600 hover:text-kemenkes-700">Jadwal Dokter</a>
-      <a href="#program" onclick="toggleMobileMenu()" class="block py-2 text-slate-600 hover:text-kemenkes-700">Program ILP</a>
-      <a href="#berita" onclick="toggleMobileMenu()" class="block py-2 text-slate-600 hover:text-kemenkes-700">Berita</a>
-      <a href="#faq" onclick="toggleMobileMenu()" class="block py-2 text-slate-600 hover:text-kemenkes-700">FAQ</a>
-      <a href="#kontak" onclick="toggleMobileMenu()" class="block py-2 text-slate-600 hover:text-kemenkes-700">Kontak</a>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section id="beranda" class="relative bg-kemenkes-gradient text-white pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden">
-    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="max-w-3xl mx-auto text-center space-y-6">
-        
-        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-xs sm:text-sm font-medium">
-          <span class="w-2 h-2 rounded-full bg-emerald-300 animate-ping"></span>
-          <span>Integrasi Layanan Primer (ILP) Kota Bandung</span>
-        </div>
-
-        <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
-          Pelayanan Kesehatan Primer <span class="text-emerald-200">Terpadu & Modern</span>
-        </h1>
-
-        <p class="text-emerald-50 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
-          Puskesmas Garuda berkomitmen memberikan pelayanan medis yang cepat, profesional, ramah, dan terintegrasi secara digital untuk seluruh warga Kecamatan Andir dan Kota Bandung.
-        </p>
-
-        <div class="pt-2 flex justify-center">
-          <a href="#jadwal" class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-8 py-3.5 rounded-2xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 text-sm sm:text-base">
-            <i class="fa-regular fa-calendar-alt text-lg"></i>
-            Lihat Jadwal Dokter
-          </a>
-        </div>
-
-        <!-- Quick Badges -->
-        <div class="pt-6 border-t border-white/15 grid grid-cols-3 gap-4 text-center max-w-lg mx-auto">
+      {/* ===== MAIN CONTENT ===== */}
+      <main className="sipelita-main">
+        {/* HERO SECTION */}
+        <section className="sipelita-hero">
           <div>
-            <div class="font-display text-xl sm:text-2xl font-bold text-white">100%</div>
-            <div class="text-xs text-emerald-100">Bebas Pungli</div>
-          </div>
-          <div>
-            <div class="font-display text-xl sm:text-2xl font-bold text-white">BPJS</div>
-            <div class="text-xs text-emerald-100">Faskes Tingkat I</div>
-          </div>
-          <div>
-            <div class="font-display text-xl sm:text-2xl font-bold text-white">Paripurna</div>
-            <div class="text-xs text-emerald-100">Akreditasi Kemenkes</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Marquee Announcement Banner -->
-  <div class="bg-amber-400 text-slate-900 py-2.5 px-4 overflow-hidden border-y border-amber-300 shadow-sm">
-    <div class="max-w-7xl mx-auto flex items-center gap-3">
-      <span class="bg-slate-900 text-amber-300 font-bold text-[10px] uppercase px-2.5 py-1 rounded-md shrink-0 flex items-center gap-1">
-        <i class="fa-solid fa-bullhorn"></i> Pengumuman
-      </span>
-      <marquee class="text-xs font-semibold tracking-wide">
-        • Posyandu Integrasi Layanan Primer (ILP) dilaksanakan serentak di seluruh RW Kelurahan Andir setiap minggu ke-2 • Layanan Vaksinasi Booster COVID-19 & BIAN tersedia setiap hari Selasa & Kamis pukul 08.00 - 11.00 WIB • Mohon membawa Kartu Identitas (KTP/KIA) & Kartu BPJS saat berkunjung •
-      </marquee>
-    </div>
-  </div>
-
-  <!-- SECTION: KLASTER LAYANAN INTEGRASI PRIMER (ILP) -->
-  <section id="layanan" class="py-16 sm:py-24 bg-slate-50/70">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <!-- Section Header -->
-      <div class="text-center max-w-3xl mx-auto space-y-3 mb-12">
-        <span class="inline-block bg-emerald-100 text-emerald-800 font-semibold text-xs px-4 py-1.5 rounded-full uppercase tracking-wider">
-          Integrasi Layanan Primer (ILP)
-        </span>
-        <h2 class="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
-          Klaster Layanan Kesehatan
-        </h2>
-        <p class="text-slate-600 text-sm sm:text-base">
-          Penyelenggaraan pelayanan kesehatan terpadu berorientasi pada siklus hidup manusia untuk meningkatkan mutu layanan bagi masyarakat.
-        </p>
-      </div>
-
-      <!-- Klaster Cards Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-        <!-- KLASTER 1: Manajemen -->
-        <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-5">
-              <div class="w-12 h-12 rounded-2xl bg-emerald-100/70 text-emerald-700 flex items-center justify-center text-xl font-bold group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all">
-                <i class="fa-solid fa-sitemap"></i>
-              </div>
-              <span class="font-display font-extrabold text-4xl text-slate-200/80 tracking-tighter select-none">01</span>
-            </div>
-
-            <span class="block text-[11px] font-extrabold text-emerald-700 uppercase tracking-widest mb-1">
-              KLASTER 1
-            </span>
-            <h3 class="font-display font-bold text-xl text-slate-900 group-hover:text-emerald-700 transition-colors">
-              Manajemen
-            </h3>
-            <p class="text-xs text-slate-500 mt-2 leading-relaxed">
-              Pengelolaan administrasi, informasi, mutu, dan koordinasi pelayanan Puskesmas.
+            <span className="sipelita-eyebrow">PROFIL PUSKESMAS & KONTAK</span>
+            <h1 className="sipelita-hero-title">
+              Mengenal <br />
+              <span>Puskesmas</span> <br />
+              <span>Tarailu Sampaga.</span>
+            </h1>
+            <p className="sipelita-hero-desc">
+              Informasi mengenai profil, arah pelayanan, lokasi, serta layanan konsultasi cepat langsung terhubung dengan petugas Puskesmas Satelit Tarailu.
             </p>
+
+            <div className="sipelita-btn-group">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="sipelita-btn-primary"
+              >
+                <MessageCircle size={18} />
+                Chat via WhatsApp
+                <ArrowRight size={18} />
+              </a>
+
+              <a
+                href={googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="sipelita-btn-link"
+              >
+                Lihat di Google Maps
+                <ExternalLink size={16} />
+              </a>
+            </div>
           </div>
 
-          <div class="mt-8 pt-4 border-t border-slate-100 flex items-center justify-between">
-            <span class="text-xs text-slate-500 font-medium flex items-center gap-1.5">
-              <i class="fa-regular fa-circle-check text-emerald-600"></i> 4 Layanan
-            </span>
-            <button onclick="showKlasterDetail(1)" class="text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-              Lihat detail <i class="fa-solid fa-arrow-right text-[10px]"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- KLASTER 2: Ibu dan Anak -->
-        <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-5">
-              <div class="w-12 h-12 rounded-2xl bg-emerald-100/70 text-emerald-700 flex items-center justify-center text-xl font-bold group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all">
-                <i class="fa-solid fa-globe"></i>
+          {/* GRAPHIC CIRCLE */}
+          <div className="sipelita-graphic-wrapper">
+            <div className="sipelita-circle-bg">
+              <div className="sipelita-circle-inner">
+                <img
+                  src="/logo-puskesmas-tarailu.png"
+                  alt="Logo Puskesmas Tarailu"
+                  className="sipelita-hero-logo"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
+                />
+                <span style={{ fontSize: 13, fontWeight: 800, color: "#111827" }}>
+                  Puskesmas Satelit
+                </span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: "#0d7a5f" }}>
+                  Tarailu Sampaga
+                </span>
               </div>
-              <span class="font-display font-extrabold text-4xl text-slate-200/80 tracking-tighter select-none">02</span>
-            </div>
 
-            <span class="block text-[11px] font-extrabold text-emerald-700 uppercase tracking-widest mb-1">
-              KLASTER 2
-            </span>
-            <h3 class="font-display font-bold text-xl text-slate-900 group-hover:text-emerald-700 transition-colors">
-              Ibu dan Anak
-            </h3>
-            <p class="text-xs text-slate-500 mt-2 leading-relaxed">
-              Pelayanan kesehatan bagi ibu, bayi, balita, anak, dan remaja.
-            </p>
-          </div>
-
-          <div class="mt-8 pt-4 border-t border-slate-100 flex items-center justify-between">
-            <span class="text-xs text-slate-500 font-medium flex items-center gap-1.5">
-              <i class="fa-regular fa-circle-check text-emerald-600"></i> 4 Layanan
-            </span>
-            <button onclick="showKlasterDetail(2)" class="text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-              Lihat detail <i class="fa-solid fa-arrow-right text-[10px]"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- KLASTER 3: Usia Dewasa & Lansia -->
-        <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-5">
-              <div class="w-12 h-12 rounded-2xl bg-emerald-100/70 text-emerald-700 flex items-center justify-center text-xl font-bold group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all">
-                <i class="fa-regular fa-user"></i>
+              {/* Floating Badge */}
+              <div className="sipelita-badge">
+                <div className="sipelita-badge-icon">
+                  <Heart size={20} fill="#0d7a5f" />
+                </div>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 800, color: "#111827" }}>
+                    Pelayanan Kesehatan
+                  </div>
+                  <div style={{ fontSize: 11, color: "#9ca3af" }}>Untuk masyarakat</div>
+                </div>
               </div>
-              <span class="font-display font-extrabold text-4xl text-slate-200/80 tracking-tighter select-none">03</span>
-            </div>
-
-            <span class="block text-[11px] font-extrabold text-emerald-700 uppercase tracking-widest mb-1">
-              KLASTER 3
-            </span>
-            <h3 class="font-display font-bold text-xl text-slate-900 group-hover:text-emerald-700 transition-colors">
-              Usia Dewasa & Lansia
-            </h3>
-            <p class="text-xs text-slate-500 mt-2 leading-relaxed">
-              Pelayanan kesehatan untuk masyarakat usia dewasa hingga lanjut usia.
-            </p>
-          </div>
-
-          <div class="mt-8 pt-4 border-t border-slate-100 flex items-center justify-between">
-            <span class="text-xs text-slate-500 font-medium flex items-center gap-1.5">
-              <i class="fa-regular fa-circle-check text-emerald-600"></i> 4 Layanan
-            </span>
-            <button onclick="showKlasterDetail(3)" class="text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-              Lihat detail <i class="fa-solid fa-arrow-right text-[10px]"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- KLASTER 4: Penanggulangan Penyakit Menular -->
-        <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-5">
-              <div class="w-12 h-12 rounded-2xl bg-emerald-100/70 text-emerald-700 flex items-center justify-center text-xl font-bold group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all">
-                <i class="fa-regular fa-shield text-xl"></i>
-              </div>
-              <span class="font-display font-extrabold text-4xl text-slate-200/80 tracking-tighter select-none">04</span>
-            </div>
-
-            <span class="block text-[11px] font-extrabold text-emerald-700 uppercase tracking-widest mb-1">
-              KLASTER 4
-            </span>
-            <h3 class="font-display font-bold text-xl text-slate-900 group-hover:text-emerald-700 transition-colors">
-              Penanggulangan Penyakit Menular
-            </h3>
-            <p class="text-xs text-slate-500 mt-2 leading-relaxed">
-              Upaya pencegahan, pemantauan, dan pengendalian penyakit menular.
-            </p>
-          </div>
-
-          <div class="mt-8 pt-4 border-t border-slate-100 flex items-center justify-between">
-            <span class="text-xs text-slate-500 font-medium flex items-center gap-1.5">
-              <i class="fa-regular fa-circle-check text-emerald-600"></i> 4 Layanan
-            </span>
-            <button onclick="showKlasterDetail(4)" class="text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-              Lihat detail <i class="fa-solid fa-arrow-right text-[10px]"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- LINTAS KLASTER: Pelayanan Pendukung -->
-        <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group flex flex-col justify-between md:col-span-2 lg:col-span-1 lg:col-start-2">
-          <div>
-            <div class="flex items-center justify-between mb-5">
-              <div class="w-12 h-12 rounded-2xl bg-emerald-100/70 text-emerald-700 flex items-center justify-center text-xl font-bold group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all">
-                <i class="fa-solid fa-house-medical"></i>
-              </div>
-              <span class="font-display font-extrabold text-4xl text-slate-200/80 tracking-tighter select-none">05</span>
-            </div>
-
-            <span class="block text-[11px] font-extrabold text-emerald-700 uppercase tracking-widest mb-1">
-              LINTAS KLASTER
-            </span>
-            <h3 class="font-display font-bold text-xl text-slate-900 group-hover:text-emerald-700 transition-colors">
-              Pelayanan Pendukung
-            </h3>
-            <p class="text-xs text-slate-500 mt-2 leading-relaxed">
-              Pelayanan yang mendukung kebutuhan kesehatan lintas kelompok dan kondisi khusus.
-            </p>
-          </div>
-
-          <div class="mt-8 pt-4 border-t border-slate-100 flex items-center justify-between">
-            <span class="text-xs text-slate-500 font-medium flex items-center gap-1.5">
-              <i class="fa-regular fa-circle-check text-emerald-600"></i> 4 Layanan
-            </span>
-            <button onclick="showKlasterDetail(5)" class="text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-              Lihat detail <i class="fa-solid fa-arrow-right text-[10px]"></i>
-            </button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Doctor Schedule Section -->
-  <section id="jadwal" class="py-16 sm:py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-slate-100">
-        <div class="space-y-2">
-          <span class="inline-block bg-emerald-100 text-emerald-800 font-semibold text-xs px-3.5 py-1 rounded-full uppercase">
-            Jadwal Praktik Dokter
-          </span>
-          <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900">
-            Jadwal Dokter & Tenaga Medis
-          </h2>
-          <p class="text-xs sm:text-sm text-slate-600">
-            Cari dokter kesayangan Anda dan periksa hari serta jam praktiknya.
-          </p>
-        </div>
-
-        <!-- Doctor Search Input -->
-        <div class="w-full md:w-72 relative">
-          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-          <input type="text" id="doctorSearchInput" oninput="filterDoctors()" placeholder="Cari nama dokter / poli..." class="w-full pl-10 pr-4 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-kemenkes-500 transition-all">
-        </div>
-      </div>
-
-      <!-- Day Filter Pills -->
-      <div class="mt-6 flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" id="dayFilterButtons">
-        <button onclick="filterDoctorDay('all')" class="day-btn active text-xs font-semibold px-4 py-2 rounded-xl bg-kemenkes-700 text-white shrink-0">Semua Hari</button>
-        <button onclick="filterDoctorDay('Senin')" class="day-btn text-xs font-semibold px-4 py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0">Senin</button>
-        <button onclick="filterDoctorDay('Selasa')" class="day-btn text-xs font-semibold px-4 py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0">Selasa</button>
-        <button onclick="filterDoctorDay('Rabu')" class="day-btn text-xs font-semibold px-4 py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0">Rabu</button>
-        <button onclick="filterDoctorDay('Kamis')" class="day-btn text-xs font-semibold px-4 py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0">Kamis</button>
-        <button onclick="filterDoctorDay('Jumat')" class="day-btn text-xs font-semibold px-4 py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0">Jumat</button>
-        <button onclick="filterDoctorDay('Sabtu')" class="day-btn text-xs font-semibold px-4 py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 shrink-0">Sabtu</button>
-      </div>
-
-      <!-- Doctor Cards Grid -->
-      <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="doctorsGrid">
-        
-        <!-- Doctor 1 -->
-        <div class="doctor-card bg-slate-50 rounded-2xl p-5 border border-slate-200 hover:border-emerald-300 transition-all" data-days="Senin,Rabu,Jumat" data-search="dr achmad kurnia poli umum">
-          <div class="flex items-start gap-4">
-            <div class="w-14 h-14 bg-emerald-700 text-white rounded-2xl flex items-center justify-center text-xl font-bold shrink-0">
-              <i class="fa-solid fa-user-doctor"></i>
-            </div>
-            <div>
-              <span class="text-[10px] font-bold text-emerald-700 uppercase tracking-wider bg-emerald-100 px-2 py-0.5 rounded">Poli Umum</span>
-              <h4 class="font-display font-bold text-slate-900 text-sm mt-1">dr. H. Achmad Kurnia, Sp.PD</h4>
-              <p class="text-xs text-slate-500">Dokter Spesialis Penyakit Dalam / Umum</p>
             </div>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-200 flex justify-between items-center text-xs">
-            <span class="text-slate-600"><i class="fa-regular fa-calendar text-emerald-600 mr-1"></i> Senin, Rabu, Jumat</span>
-            <span class="font-semibold text-slate-800"><i class="fa-regular fa-clock text-emerald-600 mr-1"></i> 08:00 - 12:00</span>
-          </div>
-        </div>
+        </section>
 
-        <!-- Doctor 2 -->
-        <div class="doctor-card bg-slate-50 rounded-2xl p-5 border border-slate-200 hover:border-emerald-300 transition-all" data-days="Senin,Selasa,Kamis" data-search="drg sarah melati poli gigi">
-          <div class="flex items-start gap-4">
-            <div class="w-14 h-14 bg-teal-700 text-white rounded-2xl flex items-center justify-center text-xl font-bold shrink-0">
-              <i class="fa-solid fa-tooth"></i>
-            </div>
-            <div>
-              <span class="text-[10px] font-bold text-teal-700 uppercase tracking-wider bg-teal-100 px-2 py-0.5 rounded">Poli Gigi</span>
-              <h4 class="font-display font-bold text-slate-900 text-sm mt-1">drg. Sarah Melati</h4>
-              <p class="text-xs text-slate-500">Dokter Gigi Umum</p>
-            </div>
+        {/* INFORMASI SECTION */}
+        <section className="sipelita-section">
+          <div className="sipelita-section-header">
+            <span className="sipelita-eyebrow">HUBUNGI KAMI</span>
+            <h2 className="sipelita-section-title">
+              Pelayanan kesehatan untuk masyarakat.
+            </h2>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-200 flex justify-between items-center text-xs">
-            <span class="text-slate-600"><i class="fa-regular fa-calendar text-teal-600 mr-1"></i> Senin, Selasa, Kamis</span>
-            <span class="font-semibold text-slate-800"><i class="fa-regular fa-clock text-teal-600 mr-1"></i> 08:30 - 12:30</span>
-          </div>
-        </div>
 
-        <!-- Doctor 3 -->
-        <div class="doctor-card bg-slate-50 rounded-2xl p-5 border border-slate-200 hover:border-emerald-300 transition-all" data-days="Selasa,Kamis,Sabtu" data-search="dr rina setyowati poli kia anak">
-          <div class="flex items-start gap-4">
-            <div class="w-14 h-14 bg-rose-600 text-white rounded-2xl flex items-center justify-center text-xl font-bold shrink-0">
-              <i class="fa-solid fa-baby"></i>
-            </div>
-            <div>
-              <span class="text-[10px] font-bold text-rose-700 uppercase tracking-wider bg-rose-100 px-2 py-0.5 rounded">Poli KIA & Anak</span>
-              <h4 class="font-display font-bold text-slate-900 text-sm mt-1">dr. Rina Setyowati, Sp.A</h4>
-              <p class="text-xs text-slate-500">Spesialis Kesehatan Anak & Ibu</p>
-            </div>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-200 flex justify-between items-center text-xs">
-            <span class="text-slate-600"><i class="fa-regular fa-calendar text-rose-600 mr-1"></i> Selasa, Kamis, Sabtu</span>
-            <span class="font-semibold text-slate-800"><i class="fa-regular fa-clock text-rose-600 mr-1"></i> 08:00 - 11:30</span>
-          </div>
-        </div>
-
-        <!-- Doctor 4 -->
-        <div class="doctor-card bg-slate-50 rounded-2xl p-5 border border-slate-200 hover:border-emerald-300 transition-all" data-days="Senin,Selasa,Rabu,Kamis,Jumat,Sabtu" data-search="bidan yulia rahmawati kb kia">
-          <div class="flex items-start gap-4">
-            <div class="w-14 h-14 bg-pink-600 text-white rounded-2xl flex items-center justify-center text-xl font-bold shrink-0">
-              <i class="fa-solid fa-person-breastfeeding"></i>
-            </div>
-            <div>
-              <span class="text-[10px] font-bold text-pink-700 uppercase tracking-wider bg-pink-100 px-2 py-0.5 rounded">Poli KB & Kebidanan</span>
-              <h4 class="font-display font-bold text-slate-900 text-sm mt-1">Bidan Yulia Rahmawati, S.ST</h4>
-              <p class="text-xs text-slate-500">Koordinator Bidan Puskesmas</p>
-            </div>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-200 flex justify-between items-center text-xs">
-            <span class="text-slate-600"><i class="fa-regular fa-calendar text-pink-600 mr-1"></i> Senin - Sabtu</span>
-            <span class="font-semibold text-slate-800"><i class="fa-regular fa-clock text-pink-600 mr-1"></i> 07:30 - 13:00</span>
-          </div>
-        </div>
-
-        <!-- Doctor 5 -->
-        <div class="doctor-card bg-slate-50 rounded-2xl p-5 border border-slate-200 hover:border-emerald-300 transition-all" data-days="Rabu,Jumat" data-search="dr farhan kamil poli lansia ptm">
-          <div class="flex items-start gap-4">
-            <div class="w-14 h-14 bg-amber-600 text-white rounded-2xl flex items-center justify-center text-xl font-bold shrink-0">
-              <i class="fa-solid fa-person-cane"></i>
-            </div>
-            <div>
-              <span class="text-[10px] font-bold text-amber-700 uppercase tracking-wider bg-amber-100 px-2 py-0.5 rounded">Poli Lansia & PTM</span>
-              <h4 class="font-display font-bold text-slate-900 text-sm mt-1">dr. Farhan Kamil</h4>
-              <p class="text-xs text-slate-500">Dokter Penyakit Tidak Menular</p>
-            </div>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-200 flex justify-between items-center text-xs">
-            <span class="text-slate-600"><i class="fa-regular fa-calendar text-amber-600 mr-1"></i> Rabu & Jumat</span>
-            <span class="font-semibold text-slate-800"><i class="fa-regular fa-clock text-amber-600 mr-1"></i> 08:00 - 12:00</span>
-          </div>
-        </div>
-
-        <!-- Doctor 6 -->
-        <div class="doctor-card bg-slate-50 rounded-2xl p-5 border border-slate-200 hover:border-emerald-300 transition-all" data-days="Senin,Selasa,Rabu,Kamis,Jumat,Sabtu" data-search="apt rizky ramadhan apotek farmasi">
-          <div class="flex items-start gap-4">
-            <div class="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-xl font-bold shrink-0">
-              <i class="fa-solid fa-pills"></i>
-            </div>
-            <div>
-              <span class="text-[10px] font-bold text-blue-700 uppercase tracking-wider bg-blue-100 px-2 py-0.5 rounded">Farmasi & Apotek</span>
-              <h4 class="font-display font-bold text-slate-900 text-sm mt-1">Apt. Rizky Ramadhan, S.Farm</h4>
-              <p class="text-xs text-slate-500">Apoteker Penanggung Jawab</p>
-            </div>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-200 flex justify-between items-center text-xs">
-            <span class="text-slate-600"><i class="fa-regular fa-calendar text-blue-600 mr-1"></i> Senin - Sabtu</span>
-            <span class="font-semibold text-slate-800"><i class="fa-regular fa-clock text-blue-600 mr-1"></i> 07:30 - 14:00</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ILP Program & Public Health Banner -->
-  <section id="program" class="py-16 bg-mint-tint border-y border-mint-accent">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        
-        <div class="lg:col-span-6 space-y-4">
-          <span class="inline-block bg-kemenkes-700 text-white font-semibold text-xs px-3.5 py-1 rounded-full uppercase tracking-wider">
-            Transformasi Layanan Kesehatan RI
-          </span>
-          <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900">
-            Integrasi Layanan Primer (ILP) Puskesmas Garuda
-          </h2>
-          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-            Puskesmas Garuda secara aktif mengimplementasikan program ILP Kemenkes RI dengan membagi pelayanan berdasarkan Klaster Siklus Hidup untuk hasil kesehatan yang lebih efektif dan proaktif.
-          </p>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-            
-            <div class="bg-white p-4 rounded-2xl border border-emerald-100 shadow-sm flex items-start gap-3">
-              <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 font-bold">1</div>
+          {/* Grid Informasi Kontak (4 Kartu) */}
+          <div className="sipelita-grid">
+            {/* Card 1: Lokasi */}
+            <div className="sipelita-card sipelita-card-accent">
               <div>
-                <h4 class="font-bold text-xs text-slate-800">Klaster Manajemen</h4>
-                <p class="text-[11px] text-slate-500">Pengelolaan admin & operasional faskes</p>
-              </div>
-            </div>
-
-            <div class="bg-white p-4 rounded-2xl border border-emerald-100 shadow-sm flex items-start gap-3">
-              <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 font-bold">2</div>
-              <div>
-                <h4 class="font-bold text-xs text-slate-800">Ibu & Anak</h4>
-                <p class="text-[11px] text-slate-500">Layanan kesehatan dari hamil hingga remaja</p>
-              </div>
-            </div>
-
-            <div class="bg-white p-4 rounded-2xl border border-emerald-100 shadow-sm flex items-start gap-3">
-              <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 font-bold">3</div>
-              <div>
-                <h4 class="font-bold text-xs text-slate-800">Usia Dewasa & Lansia</h4>
-                <p class="text-[11px] text-slate-500">Skrining PTM & kesehatan pra-lansia</p>
-              </div>
-            </div>
-
-            <div class="bg-white p-4 rounded-2xl border border-emerald-100 shadow-sm flex items-start gap-3">
-              <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 font-bold">4</div>
-              <div>
-                <h4 class="font-bold text-xs text-slate-800">Penanggulangan Menular</h4>
-                <p class="text-[11px] text-slate-500">Pencegahan DBD, TBC & surveilans</p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Infographic Card Box -->
-        <div class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-emerald-200 shadow-lg relative overflow-hidden">
-          <div class="absolute top-0 right-0 bg-kemenkes-700 text-white text-[10px] font-extrabold px-4 py-1.5 rounded-bl-2xl uppercase">
-            Capaian Kinerja 2026
-          </div>
-
-          <h3 class="font-display font-bold text-slate-800 text-lg mb-6 flex items-center gap-2">
-            <i class="fa-solid fa-chart-line text-kemenkes-600"></i> Statistik Mutu Pelayanan
-          </h3>
-
-          <div class="space-y-5">
-            <div>
-              <div class="flex justify-between text-xs font-semibold mb-1">
-                <span class="text-slate-700">Indeks Kepuasan Masyarakat (IKM)</span>
-                <span class="text-kemenkes-700 font-bold">98.4% (Sangat Baik)</span>
-              </div>
-              <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
-                <div class="bg-kemenkes-600 h-2.5 rounded-full" style="width: 98.4%"></div>
-              </div>
-            </div>
-
-            <div>
-              <div class="flex justify-between text-xs font-semibold mb-1">
-                <span class="text-slate-700">Cakupan Imunisasi Anak Lengkap</span>
-                <span class="text-kemenkes-700 font-bold">96.8%</span>
-              </div>
-              <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
-                <div class="bg-teal-600 h-2.5 rounded-full" style="width: 96.8%"></div>
-              </div>
-            </div>
-
-            <div>
-              <div class="flex justify-between text-xs font-semibold mb-1">
-                <span class="text-slate-700">Ketepatan Waktu Pelayanan Obat</span>
-                <span class="text-kemenkes-700 font-bold">&lt; 15 Menit</span>
-              </div>
-              <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
-                <div class="bg-emerald-500 h-2.5 rounded-full" style="width: 92%"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-8 p-4 bg-emerald-50 rounded-2xl flex items-center gap-4 border border-emerald-100">
-            <i class="fa-solid fa-award text-3xl text-kemenkes-600"></i>
-            <p class="text-xs text-emerald-900 leading-snug">
-              Puskesmas Garuda dianugerahi sebagai <strong>Puskesmas Teladan Kota Bandung</strong> berkat digitalisasi pelayanan dan Integrasi Layanan Primer berbasis masyarakat.
-            </p>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- FAQ Accordion Section -->
-  <section id="faq" class="py-16 sm:py-24 bg-slate-50">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <div class="text-center space-y-3 mb-12">
-        <span class="inline-block bg-emerald-100 text-emerald-800 font-semibold text-xs px-3.5 py-1 rounded-full uppercase">
-          Pertanyaan Populer
-        </span>
-        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900">
-          Pertanyaan Sering Diajukan (FAQ)
-        </h2>
-        <p class="text-xs sm:text-sm text-slate-600">
-          Informasi seputar pendaftaran BPJS, syarat berobat, dan aturan kunjungan di Puskesmas Garuda.
-        </p>
-      </div>
-
-      <div class="space-y-4">
-        
-        <!-- FAQ 1 -->
-        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-          <button onclick="toggleFaq(this)" class="w-full p-5 text-left font-display font-semibold text-slate-800 flex justify-between items-center text-sm sm:text-base hover:text-kemenkes-700 transition-colors">
-            <span>Bagaimana cara berobat gratis menggunakan BPJS Kesehatan?</span>
-            <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
-          </button>
-          <div class="hidden p-5 pt-0 text-xs sm:text-sm text-slate-600 border-t border-slate-100 leading-relaxed bg-slate-50/50">
-            Pastikan Puskesmas Garuda terdaftar sebagai Faskes Tingkat 1 Anda pada aplikasi Mobile JKN atau kartu BPJS Anda. Bawa KTP/Kartu Keluarga asli saat berkunjung langsung ke loket pendaftaran Puskesmas.
-          </div>
-        </div>
-
-        <!-- FAQ 2 -->
-        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-          <button onclick="toggleFaq(this)" class="w-full p-5 text-left font-display font-semibold text-slate-800 flex justify-between items-center text-sm sm:text-base hover:text-kemenkes-700 transition-colors">
-            <span>Apakah pasien umum tanpa BPJS tetap bisa berobat?</span>
-            <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
-          </button>
-          <div class="hidden p-5 pt-0 text-xs sm:text-sm text-slate-600 border-t border-slate-100 leading-relaxed bg-slate-50/50">
-            Ya, Puskesmas Garuda melayani pasien Umum non-BPJS dengan retribusi yang terjangkau sesuai Peraturan Daerah Kota Bandung.
-          </div>
-        </div>
-
-        <!-- FAQ 3 -->
-        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-          <button onclick="toggleFaq(this)" class="w-full p-5 text-left font-display font-semibold text-slate-800 flex justify-between items-center text-sm sm:text-base hover:text-kemenkes-700 transition-colors">
-            <span>Jam berapa pendaftaran loket Puskesmas dibuka?</span>
-            <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
-          </button>
-          <div class="hidden p-5 pt-0 text-xs sm:text-sm text-slate-600 border-t border-slate-100 leading-relaxed bg-slate-50/50">
-            Loket pendaftaran dibuka setiap hari Senin hingga Sabtu mulai pukul 07.30 WIB sampai dengan 14.00 WIB.
-          </div>
-        </div>
-
-        <!-- FAQ 4 -->
-        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-          <button onclick="toggleFaq(this)" class="w-full p-5 text-left font-display font-semibold text-slate-800 flex justify-between items-center text-sm sm:text-base hover:text-kemenkes-700 transition-colors">
-            <span>Bagaimana cara memperoleh surat rujukan ke Rumah Sakit?</span>
-            <i class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-200"></i>
-          </button>
-          <div class="hidden p-5 pt-0 text-xs sm:text-sm text-slate-600 border-t border-slate-100 leading-relaxed bg-slate-50/50">
-            Rujukan diterbitkan oleh Dokter Poli Puskesmas Garuda berdasarkan indikasi medis apabila penyakit membutuhkan penanganan dokter spesialis di Rumah Sakit lanjutan.
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="kontak" class="py-16 sm:py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
-        
-        <!-- Address & Operational Info -->
-        <div class="lg:col-span-5 space-y-6">
-          <span class="inline-block bg-emerald-100 text-emerald-800 font-semibold text-xs px-3.5 py-1 rounded-full uppercase">
-            Lokasi & Kontak
-          </span>
-          <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900">
-            Hubungi Puskesmas Garuda
-          </h2>
-          <p class="text-xs sm:text-sm text-slate-600">
-            Kami siap melayani kebutuhan informasi dan saran dari masyarakat Kota Bandung.
-          </p>
-
-          <div class="space-y-4 text-xs sm:text-sm">
-            <div class="flex items-start gap-3.5">
-              <div class="w-10 h-10 rounded-xl bg-emerald-100 text-kemenkes-700 flex items-center justify-center shrink-0 font-bold">
-                <i class="fa-solid fa-location-dot"></i>
-              </div>
-              <div>
-                <h4 class="font-bold text-slate-800">Alamat Lengkap</h4>
-                <p class="text-slate-600 mt-0.5">Jl. Garuda No. 40, Kec. Andir, Kota Bandung, Jawa Barat 40184</p>
-              </div>
-            </div>
-
-            <div class="flex items-start gap-3.5">
-              <div class="w-10 h-10 rounded-xl bg-emerald-100 text-kemenkes-700 flex items-center justify-center shrink-0 font-bold">
-                <i class="fa-solid fa-phone"></i>
-              </div>
-              <div>
-                <h4 class="font-bold text-slate-800">Telepon & WhatsApp</h4>
-                <p class="text-slate-600 mt-0.5">Call Center: (022) 6011718<br>WA UGD: +62 811-2233-4455</p>
-              </div>
-            </div>
-
-            <div class="flex items-start gap-3.5">
-              <div class="w-10 h-10 rounded-xl bg-emerald-100 text-kemenkes-700 flex items-center justify-center shrink-0 font-bold">
-                <i class="fa-solid fa-envelope"></i>
-              </div>
-              <div>
-                <h4 class="font-bold text-slate-800">Email Resmi</h4>
-                <p class="text-slate-600 mt-0.5">puskesmas.garuda@bandung.go.id</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Interactive Contact Form -->
-        <div class="lg:col-span-7 bg-slate-50 p-6 sm:p-8 rounded-3xl border border-slate-200">
-          <h3 class="font-display font-bold text-lg text-slate-800 mb-2">Kirim Pesan & Saran</h3>
-          <p class="text-xs text-slate-500 mb-6">Saran Anda sangat berharga untuk meningkatkan kualitas pelayanan kami.</p>
-
-          <form id="contactForm" onsubmit="handleContactSubmit(event)" class="space-y-4">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Lengkap</label>
-                <input type="text" required placeholder="Masukkan nama Anda" class="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-kemenkes-500">
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Nomor WhatsApp / HP</label>
-                <input type="tel" required placeholder="08xxxxxxxxxx" class="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-kemenkes-500">
-              </div>
-            </div>
-
-            <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1">Topik Pesan</label>
-              <select class="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-kemenkes-500">
-                <option>Pertanyaan Umum</option>
-                <option>Saran & Kritik Pelayanan</option>
-                <option>Informasi BPJS</option>
-                <option>Lainnya</option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1">Isi Pesan</label>
-              <textarea rows="4" required placeholder="Tuliskan pesan Anda di sini..." class="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-kemenkes-500"></textarea>
-            </div>
-
-            <button type="submit" class="w-full bg-kemenkes-gradient hover:opacity-95 text-white font-bold py-3 rounded-xl text-xs sm:text-sm shadow-md transition-all">
-              <i class="fa-solid fa-paper-plane mr-2"></i> Kirim Pesan Sekarang
-            </button>
-          </form>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ==================== FOOTER INFORMASI LENGKAP PUSKESMAS ==================== -->
-  <footer class="bg-slate-900 text-slate-300 pt-16 pb-8 border-t border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <!-- Top Grid Footer: Informasi Profil & Unggulan Puskesmas -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-12 border-b border-slate-800">
-        
-        <!-- Col 1: Profil Puskesmas -->
-        <div class="space-y-4">
-          <div class="flex items-center gap-2">
-            <div class="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center font-bold text-white text-base shadow-md">
-              <i class="fa-solid fa-hospital"></i>
-            </div>
-            <span class="font-display font-extrabold text-white text-base tracking-tight">PUSKESMAS GARUDA</span>
-          </div>
-          <p class="text-xs text-slate-400 leading-relaxed">
-            Fasilitas Kesehatan Tingkat Pertama (FKTP) terakreditasi Paripurna di Kecamatan Andir, dibawah binaan Dinas Kesehatan Kota Bandung.
-          </p>
-          <div class="flex gap-3 text-slate-400 pt-1">
-            <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all"><i class="fa-brands fa-facebook-f text-xs"></i></a>
-            <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all"><i class="fa-brands fa-instagram text-xs"></i></a>
-            <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all"><i class="fa-brands fa-youtube text-xs"></i></a>
-            <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-all"><i class="fa-brands fa-whatsapp text-xs"></i></a>
-          </div>
-        </div>
-
-        <!-- Col 2: Visi & Misi Ringkasan -->
-        <div class="space-y-3">
-          <h4 class="font-display font-bold text-white text-sm flex items-center gap-2">
-            <i class="fa-solid fa-bullseye text-emerald-500"></i> Visi & Misi
-          </h4>
-          <p class="text-xs text-slate-400 italic bg-slate-800/60 p-3 rounded-xl border border-slate-800">
-            "Terwujudnya Masyarakat Kecamatan Andir yang Sehat, Mandiri, dan Berkeadilan 2026."
-          </p>
-          <button onclick="openModal('visiMisiModal')" class="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1.5 transition-colors">
-            <i class="fa-solid fa-file-lines text-xs"></i> Baca Misi Selengkapnya <i class="fa-solid fa-arrow-right text-[10px]"></i>
-          </button>
-        </div>
-
-        <!-- Col 3: Struktur Organisasi & Denah -->
-        <div class="space-y-3">
-          <h4 class="font-display font-bold text-white text-sm flex items-center gap-2">
-            <i class="fa-solid fa-sitemap text-emerald-500"></i> Informasi Gedung & Organisasi
-          </h4>
-          <ul class="space-y-2 text-xs text-slate-400">
-            <li>
-              <button onclick="openModal('strukturModal')" class="hover:text-emerald-400 transition-colors flex items-center gap-2 text-left w-full">
-                <i class="fa-solid fa-diagram-project text-emerald-500 text-xs"></i>
-                <span>Struktur Organisasi Puskesmas</span>
-              </button>
-            </li>
-            <li>
-              <button onclick="openModal('denahModal')" class="hover:text-emerald-400 transition-colors flex items-center gap-2 text-left w-full">
-                <i class="fa-solid fa-map-location-dot text-emerald-500 text-xs"></i>
-                <span>Denah Lokasi & Tata Ruang Gedung</span>
-              </button>
-            </li>
-            <li class="pt-1">
-              <span class="text-[11px] text-slate-500 block">Jam Pelayanan Loket:</span>
-              <span class="text-xs text-slate-300 font-medium">Senin - Sabtu (07.30 - 14.00 WIB)</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Col 4: Akreditasi & Tautan Penting -->
-        <div class="space-y-3">
-          <h4 class="font-display font-bold text-white text-sm flex items-center gap-2">
-            <i class="fa-solid fa-award text-amber-400"></i> Akreditasi & Link Resmi
-          </h4>
-          <div class="bg-slate-800 p-3 rounded-xl border border-slate-700 flex items-center gap-3">
-            <i class="fa-solid fa-shield-halved text-amber-400 text-2xl"></i>
-            <div>
-              <h5 class="font-bold text-xs text-white">LPA KEMENKES RI</h5>
-              <p class="text-[10px] text-emerald-400 font-semibold">PARIPURNA (Bintang 5)</p>
-            </div>
-          </div>
-          <ul class="space-y-1 text-[11px] text-slate-400">
-            <li><a href="https://kemkes.go.id" target="_blank" class="hover:text-emerald-400 transition-colors">• Kementerian Kesehatan RI</a></li>
-            <li><a href="https://dinkes.bandung.go.id" target="_blank" class="hover:text-emerald-400 transition-colors">• Dinas Kesehatan Kota Bandung</a></li>
-            <li><a href="https://bpjs-kesehatan.go.id" target="_blank" class="hover:text-emerald-400 transition-colors">• Portal Resmi BPJS Kesehatan</a></li>
-          </ul>
-        </div>
-
-      </div>
-
-      <!-- Section khusus Berita & Upload Berita Baru dalam Footer -->
-      <div id="berita" class="py-10 border-b border-slate-800">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-          <div>
-            <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest block">Kabar Kesehatan Hari Ini</span>
-            <h3 class="font-display text-xl font-bold text-white flex items-center gap-2 mt-0.5">
-              <i class="fa-solid fa-newspaper text-emerald-500"></i> Berita & Kegiatan Puskesmas
-            </h3>
-          </div>
-          <button onclick="openModal('uploadBeritaModal')" class="self-start sm:self-auto bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-2 shadow-md transition-all">
-            <i class="fa-solid fa-plus"></i> Upload Berita Baru
-          </button>
-        </div>
-
-        <!-- Grid Card Berita -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="beritaGrid">
-          
-          <!-- Berita Item 1 -->
-          <div class="bg-slate-800 rounded-2xl overflow-hidden border border-slate-700/80 hover:border-emerald-500/50 transition-all flex flex-col justify-between">
-            <div>
-              <div class="h-36 bg-slate-700 relative overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=500&auto=format&fit=crop&q=60" alt="Pelaksanaan ILP" class="w-full h-full object-cover">
-                <span class="absolute top-3 left-3 bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase">Program</span>
-              </div>
-              <div class="p-4 space-y-2">
-                <span class="text-[10px] text-slate-400 block"><i class="fa-regular fa-calendar text-emerald-400 mr-1"></i> 20 September 2026</span>
-                <h4 class="font-bold text-sm text-white line-clamp-2 hover:text-emerald-400 transition-colors">
-                  Peluncuran Integrasi Layanan Primer (ILP) Serentak di Kelurahan Andir
-                </h4>
-                <p class="text-xs text-slate-400 line-clamp-2">
-                  Puskesmas Garuda secara resmi mengaktifkan 5 Klaster Layanan Terpadu untuk kemudahan akses berobat masyarakat.
+                <div className="sipelita-card-icon">
+                  <MapPin size={22} />
+                </div>
+                <span className="sipelita-card-label">LOKASI</span>
+                <h3 className="sipelita-card-heading">
+                  Desa Tarailu, Kecamatan Sampaga
+                </h3>
+                <p className="sipelita-card-desc">
+                  Puskesmas Satelit Tarailu, Kec. Sampaga, Kab. Mamuju, Sulawesi Barat.
                 </p>
               </div>
+              <a
+                href={googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="sipelita-card-action"
+              >
+                Buka Peta Google Maps <ExternalLink size={14} />
+              </a>
             </div>
-            <div class="p-4 pt-0">
-              <button onclick="showBeritaDetail('Peluncuran Integrasi Layanan Primer (ILP)', 'Puskesmas Garuda secara resmi meluncurkan program ILP...')" class="text-xs font-semibold text-emerald-400 hover:underline">Baca Selengkapnya &rarr;</button>
-            </div>
-          </div>
 
-          <!-- Berita Item 2 -->
-          <div class="bg-slate-800 rounded-2xl overflow-hidden border border-slate-700/80 hover:border-emerald-500/50 transition-all flex flex-col justify-between">
-            <div>
-              <div class="h-36 bg-slate-700 relative overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=500&auto=format&fit=crop&q=60" alt="Pemeriksaan Gratis" class="w-full h-full object-cover">
-                <span class="absolute top-3 left-3 bg-amber-500 text-slate-900 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase">Kegiatan</span>
-              </div>
-              <div class="p-4 space-y-2">
-                <span class="text-[10px] text-slate-400 block"><i class="fa-regular fa-calendar text-emerald-400 mr-1"></i> 15 September 2026</span>
-                <h4 class="font-bold text-sm text-white line-clamp-2 hover:text-emerald-400 transition-colors">
-                  Pemeriksaan Kesehatan Gratis & Skrining Diabetes Lansia
-                </h4>
-                <p class="text-xs text-slate-400 line-clamp-2">
-                  Sebanyak 150 warga lansia berpartisipasi dalam pemeriksaan gula darah, tekanan darah, dan konseling gizi gratis.
+            {/* Card 2: WhatsApp / Telepon */}
+            <div className="sipelita-card">
+              <div>
+                <div className="sipelita-card-icon">
+                  <Phone size={22} />
+                </div>
+                <span className="sipelita-card-label">TELEPON / WHATSAPP</span>
+                <h3 className="sipelita-card-heading">0823-5368-5324</h3>
+                <p className="sipelita-card-desc">
+                  Layanan konsultasi cepat dan pendaftaran melalui pesan resmi WhatsApp.
                 </p>
               </div>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="sipelita-card-action"
+              >
+                Chat WhatsApp Sekarang <ArrowRight size={14} />
+              </a>
             </div>
-            <div class="p-4 pt-0">
-              <button onclick="showBeritaDetail('Pemeriksaan Kesehatan Gratis Lansia', 'Sebanyak 150 warga lansia antusias mendatangi Puskesmas...')" class="text-xs font-semibold text-emerald-400 hover:underline">Baca Selengkapnya &rarr;</button>
-            </div>
-          </div>
 
-          <!-- Berita Item 3 -->
-          <div class="bg-slate-800 rounded-2xl overflow-hidden border border-slate-700/80 hover:border-emerald-500/50 transition-all flex flex-col justify-between">
-            <div>
-              <div class="h-36 bg-slate-700 relative overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=500&auto=format&fit=crop&q=60" alt="Edukasi DBD" class="w-full h-full object-cover">
-                <span class="absolute top-3 left-3 bg-rose-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase">Edukasi</span>
-              </div>
-              <div class="p-4 space-y-2">
-                <span class="text-[10px] text-slate-400 block"><i class="fa-regular fa-calendar text-emerald-400 mr-1"></i> 10 September 2026</span>
-                <h4 class="font-bold text-sm text-white line-clamp-2 hover:text-emerald-400 transition-colors">
-                  Waspada Demam Berdarah: Gerakan 3M Plus Kader Jumantik
-                </h4>
-                <p class="text-xs text-slate-400 line-clamp-2">
-                  Puskesmas Garuda bersama kader kelurahan mengimbau warga menjaga kebersihan jentik nyamuk di musim pancaroba.
+            {/* Card 3: Email */}
+            <div className="sipelita-card">
+              <div>
+                <div className="sipelita-card-icon">
+                  <Mail size={22} />
+                </div>
+                <span className="sipelita-card-label">EMAIL RESMI</span>
+                <h3 className="sipelita-card-heading" style={{ fontSize: "15px" }}>
+                  pkmsatelittarailu<br />@gmail.com
+                </h3>
+                <p className="sipelita-card-desc">
+                  Kirimkan pertanyaan, saran, atau keluhan melalui email resmi kami.
                 </p>
               </div>
+              <a href={emailUrl} className="sipelita-card-action">
+                Kirim Email Sekarang <ArrowRight size={14} />
+              </a>
             </div>
-            <div class="p-4 pt-0">
-              <button onclick="showBeritaDetail('Waspada Demam Berdarah', 'Gerakan 3M Plus digalakkan serentak di lingkungan Bandung...')" class="text-xs font-semibold text-emerald-400 hover:underline">Baca Selengkapnya &rarr;</button>
+
+            {/* Card 4: Jam Operasional */}
+            <div className="sipelita-card">
+              <div>
+                <div className="sipelita-card-icon">
+                  <Clock3 size={22} />
+                </div>
+                <span className="sipelita-card-label">JAM OPERASIONAL</span>
+                <h3 className="sipelita-card-heading">Senin – Jumat</h3>
+                <p className="sipelita-card-desc">Jam Pelayanan: 08.00 – 16.00 WITA</p>
+              </div>
+              <span
+                style={{
+                  fontSize: 12,
+                  fontWeight: 700,
+                  color: "#0d7a5f",
+                  backgroundColor: "#e6f4ee",
+                  padding: "6px 12px",
+                  borderRadius: 999,
+                  width: "max-content",
+                }}
+              >
+                Pelayanan Buka
+              </span>
             </div>
           </div>
-
-        </div>
-      </div>
-
-      <!-- Copyright Bar -->
-      <div class="pt-8 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <span>&copy; 2026 Puskesmas Garuda - Dinas Kesehatan Kota Bandung. All Rights Reserved.</span>
-        <div class="flex items-center gap-4 text-[11px] text-slate-400">
-          <a href="#beranda" class="hover:text-emerald-400 transition-colors">Atas Halaman</a>
-          <span>•</span>
-          <a href="#kontak" class="hover:text-emerald-400 transition-colors">Kontak Kami</a>
-        </div>
-      </div>
-
+        </section>
+      </main>
     </div>
-  </footer>
-
-  <!-- ==================== MODAL DIALOGS ==================== -->
-
-  <!-- MODAL 1: Detail Visi & Misi -->
-  <div id="visiMisiModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
-    <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-emerald-100 relative my-8">
-      <button onclick="closeModal('visiMisiModal')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 text-lg">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-
-      <div class="flex items-center gap-3 mb-4">
-        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg">
-          <i class="fa-solid fa-bullseye"></i>
-        </div>
-        <div>
-          <span class="text-[10px] font-extrabold text-emerald-700 uppercase tracking-widest">Profil Faskes</span>
-          <h3 class="font-display font-bold text-lg text-slate-900 leading-tight">Visi, Misi & Motto Puskesmas</h3>
-        </div>
-      </div>
-
-      <div class="space-y-4 text-xs text-slate-600 leading-relaxed">
-        <div class="bg-emerald-50 p-4 rounded-2xl border border-emerald-100">
-          <h4 class="font-bold text-emerald-900 text-sm mb-1"><i class="fa-solid fa-eye text-emerald-700 mr-1.5"></i> Visi:</h4>
-          <p class="italic text-emerald-800 font-medium">
-            "Terwujudnya Masyarakat Kecamatan Andir yang Sehat, Mandiri, dan Berkeadilan menuju Bandung Kota Sehat."
-          </p>
-        </div>
-
-        <div>
-          <h4 class="font-bold text-slate-800 text-sm mb-2"><i class="fa-solid fa-list-check text-emerald-600 mr-1.5"></i> Misi:</h4>
-          <ol class="list-decimal list-inside space-y-2">
-            <li>Menyelenggarakan pelayanan kesehatan primer yang bermutu, merata, dan terjangkau.</li>
-            <li>Mendorong kemandirian masyarakat hidup sehat melalui pemberdayaan dan Integrasi Layanan Primer (ILP).</li>
-            <li>Meningkatkan tata kelola manajemen faskes yang transparan, akuntabel, dan berbasis digital.</li>
-            <li>Mengendalikan penyakit menular dan tidak menular secara proaktif.</li>
-          </ol>
-        </div>
-
-        <div class="p-3 bg-slate-100 rounded-xl border border-slate-200">
-          <span class="font-bold text-slate-800">Motto Pelayanan:</span>
-          <p class="text-emerald-700 font-bold mt-0.5">"GARUDA: Gesit, Akurat, Ramah, Unggul, Disiplin, & Akuntabel"</p>
-        </div>
-      </div>
-
-      <div class="mt-6 pt-4 border-t border-slate-100 flex justify-end">
-        <button onclick="closeModal('visiMisiModal')" class="px-5 py-2 bg-slate-100 text-slate-700 font-semibold rounded-xl text-xs hover:bg-slate-200">Tutup</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 2: Struktur Organisasi -->
-  <div id="strukturModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
-    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-emerald-100 relative my-8">
-      <button onclick="closeModal('strukturModal')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 text-lg">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-
-      <div class="flex items-center gap-3 mb-4">
-        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg">
-          <i class="fa-solid fa-sitemap"></i>
-        </div>
-        <div>
-          <span class="text-[10px] font-extrabold text-emerald-700 uppercase tracking-widest">Organisasi</span>
-          <h3 class="font-display font-bold text-lg text-slate-900 leading-tight">Struktur Organisasi Puskesmas Garuda</h3>
-        </div>
-      </div>
-
-      <!-- Diagram Struktur Sederhana -->
-      <div class="space-y-3 text-xs">
-        <div class="bg-emerald-700 text-white p-3 rounded-xl text-center shadow-md">
-          <div class="text-[10px] text-emerald-200 uppercase font-semibold">Kepala Puskesmas Garuda</div>
-          <div class="font-bold text-sm">dr. H. Achmad Kurnia, Sp.PD</div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div class="bg-slate-100 p-3 rounded-xl border border-slate-200 text-center">
-            <div class="text-[10px] text-slate-500 uppercase font-semibold">Kasubag Tata Usaha</div>
-            <div class="font-bold text-slate-800">Hj. Nunung Nuryanti, S.ST</div>
-          </div>
-          <div class="bg-slate-100 p-3 rounded-xl border border-slate-200 text-center">
-            <div class="text-[10px] text-slate-500 uppercase font-semibold">Penanggung Jawab Mutu</div>
-            <div class="font-bold text-slate-800">drg. Sarah Melati</div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
-          <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-100 text-center">
-            <div class="font-bold text-emerald-900 text-[11px]">Klaster 1</div>
-            <div class="text-[10px] text-emerald-700">Manajemen</div>
-          </div>
-          <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-100 text-center">
-            <div class="font-bold text-emerald-900 text-[11px]">Klaster 2</div>
-            <div class="text-[10px] text-emerald-700">Ibu & Anak</div>
-          </div>
-          <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-100 text-center">
-            <div class="font-bold text-emerald-900 text-[11px]">Klaster 3</div>
-            <div class="text-[10px] text-emerald-700">Dewasa & Lansia</div>
-          </div>
-          <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-100 text-center">
-            <div class="font-bold text-emerald-900 text-[11px]">Klaster 4</div>
-            <div class="text-[10px] text-emerald-700">Menular & Kesling</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-6 pt-4 border-t border-slate-100 flex justify-end">
-        <button onclick="closeModal('strukturModal')" class="px-5 py-2 bg-slate-100 text-slate-700 font-semibold rounded-xl text-xs hover:bg-slate-200">Tutup</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 3: Denah Puskesmas -->
-  <div id="denahModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
-    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-emerald-100 relative my-8">
-      <button onclick="closeModal('denahModal')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 text-lg">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-
-      <div class="flex items-center gap-3 mb-4">
-        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg">
-          <i class="fa-solid fa-map-location-dot"></i>
-        </div>
-        <div>
-          <span class="text-[10px] font-extrabold text-emerald-700 uppercase tracking-widest">Navigasi Gedung</span>
-          <h3 class="font-display font-bold text-lg text-slate-900 leading-tight">Denah Ruang Pelayanan Puskesmas</h3>
-        </div>
-      </div>
-
-      <!-- Simulasi Visual Layout Denah 2 Lantai -->
-      <div class="space-y-4 text-xs">
-        <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50">
-          <h4 class="font-bold text-slate-800 text-xs mb-2 flex items-center gap-1.5">
-            <span class="w-5 h-5 rounded bg-emerald-600 text-white flex items-center justify-center text-[10px]">L1</span> Lantai 1 (Layanan UGD & Poli Umum)
-          </h4>
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-slate-700">
-            <div class="p-2 bg-white rounded-lg border border-slate-200 font-medium text-[11px]">1. Loket Pendaftaran</div>
-            <div class="p-2 bg-white rounded-lg border border-slate-200 font-medium text-[11px]">2. UGD 24 Jam & Triase</div>
-            <div class="p-2 bg-white rounded-lg border border-slate-200 font-medium text-[11px]">3. Poli Umum / Klaster 3</div>
-            <div class="p-2 bg-white rounded-lg border border-slate-200 font-medium text-[11px]">4. Apoteker / Farmasi</div>
-            <div class="p-2 bg-white rounded-lg border border-slate-200 font-medium text-[11px]">5. Ruang Laboratorium</div>
-            <div class="p-2 bg-white rounded-lg border border-slate-200 font-medium text-[11px]">6. Toilet Disabilitas</div>
-          </div>
-        </div>
-
-        <div class="border border-slate-200 rounded-2xl p-4 bg-slate-50">
-          <h4 class="font-bold text-slate-800 text-xs mb-2 flex items-center gap-1.5">
-            <span class="w-5 h-5 rounded bg-teal-600 text-white flex items-center justify-center text-[10px]">L2</span> Lantai 2 (Poli KIA, Gigi & Kantor Admin)
-          </h4>
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-slate-700">
-            <div class="p-2 bg-white rounded-lg border border-slate-200 font-medium text-[11px]">1. Poli KIA & Anak</div>
-            <div class="p-2 bg-white rounded-lg border border-slate-200 font-medium text-[11px]">2. Poli Gigi</div>
-            <div class="p-2 bg-white rounded-lg border border-slate-200 font-medium text-[11px]">3. Ruang Konseling KB</div>
-            <div class="p-2 bg-white rounded-lg border border-slate-200 font-medium text-[11px]">4. Kantor Tata Usaha</div>
-            <div class="p-2 bg-white rounded-lg border border-slate-200 font-medium text-[11px]">5. Ruang Kepala Puskesmas</div>
-            <div class="p-2 bg-white rounded-lg border border-slate-200 font-medium text-[11px]">6. Aula Pertemuan</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-6 pt-4 border-t border-slate-100 flex justify-end">
-        <button onclick="closeModal('denahModal')" class="px-5 py-2 bg-slate-100 text-slate-700 font-semibold rounded-xl text-xs hover:bg-slate-200">Tutup</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 4: Form Upload Berita Baru -->
-  <div id="uploadBeritaModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
-    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-emerald-100 relative my-8">
-      <button onclick="closeModal('uploadBeritaModal')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 text-lg">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-
-      <div class="flex items-center gap-3 mb-4">
-        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg">
-          <i class="fa-solid fa-plus-circle"></i>
-        </div>
-        <div>
-          <span class="text-[10px] font-extrabold text-emerald-700 uppercase tracking-widest">Portal Informasi</span>
-          <h3 class="font-display font-bold text-lg text-slate-900 leading-tight">Upload Berita / Kegiatan Baru</h3>
-        </div>
-      </div>
-
-      <form id="uploadBeritaForm" onsubmit="handleBeritaSubmit(event)" class="space-y-4 text-xs">
-        <div>
-          <label class="block font-semibold text-slate-700 mb-1">Judul Berita</label>
-          <input type="text" id="beritaJudul" required placeholder="Masukkan judul berita singkat & jelas..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-kemenkes-500">
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">Kategori</label>
-            <select id="beritaKategori" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-kemenkes-500">
-              <option value="Program">Program</option>
-              <option value="Kegiatan">Kegiatan</option>
-              <option value="Edukasi">Edukasi</option>
-              <option value="Pengumuman">Pengumuman</option>
-            </select>
-          </div>
-          <div>
-            <label class="block font-semibold text-slate-700 mb-1">URL Gambar (Opsional)</label>
-            <input type="url" id="beritaGambar" placeholder="https://..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-kemenkes-500">
-          </div>
-        </div>
-
-        <div>
-          <label class="block font-semibold text-slate-700 mb-1">Ringkasan / Isi Berita</label>
-          <textarea id="beritaIsi" rows="4" required placeholder="Tuliskan detail berita kesehatan di sini..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-kemenkes-500"></textarea>
-        </div>
-
-        <div class="pt-2 flex justify-end gap-3">
-          <button type="button" onclick="closeModal('uploadBeritaModal')" class="px-4 py-2 bg-slate-100 text-slate-700 font-semibold rounded-xl hover:bg-slate-200">Batal</button>
-          <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl shadow-md transition-all">
-            <i class="fa-solid fa-paper-plane mr-1.5"></i> Publikasikan
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- MODAL: Detail Sub-Layanan Klaster -->
-  <div id="klasterModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
-    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-emerald-100 my-8 relative">
-      <button onclick="closeModal('klasterModal')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 text-lg">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-
-      <div class="flex items-center gap-3 mb-3">
-        <div id="klasterModalIcon" class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg">
-          <i class="fa-solid fa-sitemap"></i>
-        </div>
-        <div>
-          <span id="klasterModalBadge" class="text-[10px] font-extrabold text-emerald-700 uppercase tracking-widest">KLASTER 1</span>
-          <h3 id="klasterModalTitle" class="font-display font-bold text-lg text-slate-900 leading-tight">Manajemen</h3>
-        </div>
-      </div>
-
-      <p id="klasterModalDesc" class="text-xs text-slate-500 mb-5 leading-relaxed"></p>
-
-      <div class="border-t border-slate-100 pt-4">
-        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-3">Daftar Layanan Terpadu (4 Layanan):</h4>
-        <ul id="klasterModalList" class="space-y-2.5 text-xs text-slate-700">
-          <!-- Populated by JS -->
-        </ul>
-      </div>
-
-      <div class="mt-6 pt-4 border-t border-slate-100 flex justify-end gap-3">
-        <button onclick="closeModal('klasterModal')" class="px-4 py-2 bg-slate-100 text-slate-700 font-semibold rounded-xl text-xs hover:bg-slate-200">Tutup</button>
-        <a href="#jadwal" onclick="closeModal('klasterModal')" class="px-5 py-2 bg-kemenkes-gradient text-white font-semibold rounded-xl text-xs shadow-md">Lihat Jadwal Dokter</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Application Logic JavaScript -->
-  <script>
-    // Data Klaster ILP
-    const klasterData = {
-      1: {
-        badge: "KLASTER 1",
-        title: "Manajemen",
-        icon: "fa-sitemap",
-        desc: "Pengelolaan administrasi, informasi, mutu, dan koordinasi pelayanan Puskesmas.",
-        items: [
-          "Ketatausahaan & Keuangan Puskesmas",
-          "Manajemen Mutu & Keselamatan Pasien",
-          "Sistem Informasi Puskesmas (e-Puskesmas & SatuSehat)",
-          "Manajemen Jejaring & Fasilitas Kesehatan Wilayah"
-        ]
-      },
-      2: {
-        badge: "KLASTER 2",
-        title: "Ibu dan Anak",
-        icon: "fa-globe",
-        desc: "Pelayanan kesehatan bagi ibu, bayi, balita, anak, dan remaja.",
-        items: [
-          "Kesehatan Ibu Hamil, Bersalin & Nifas (ANC & USG)",
-          "Pelayanan Kesehatan Bayi, Balita & Imunisasi Dasar",
-          "Pemantauan Tumbuh Kembang & Pencegahan Stunting",
-          "Pelayanan Kesehatan Anak Sekolah & Remaja"
-        ]
-      },
-      3: {
-        badge: "KLASTER 3",
-        title: "Usia Dewasa & Lansia",
-        icon: "fa-user",
-        desc: "Pelayanan kesehatan untuk masyarakat usia dewasa hingga lanjut usia.",
-        items: [
-          "Skrining & Pengobatan Penyakit Tidak Menular (Hipertensi, DM)",
-          "Pelayanan Kesehatan Jiwa & NAPZA",
-          "Pemeriksaan Kesehatan Lansia & Geriatri",
-          "Pelayanan Keluarga Berencana (KB) & Kesehatan Reproduksi"
-        ]
-      },
-      4: {
-        badge: "KLASTER 4",
-        title: "Penanggulangan Penyakit Menular",
-        icon: "fa-shield",
-        desc: "Upaya pencegahan, pemantauan, dan pengendalian penyakit menular.",
-        items: [
-          "Pencegahan & Pengendalian TBC, DBD, & Malaria",
-          "Surveilans Epidemiologi & Penanggulangan KLB",
-          "Pemeriksaan & Konseling HIV/AIDS & IMS",
-          "Konseling Penyehatan Lingkungan & Sanitasi Dasar"
-        ]
-      },
-      5: {
-        badge: "LINTAS KLASTER",
-        title: "Pelayanan Pendukung",
-        icon: "fa-house-medical",
-        desc: "Pelayanan yang mendukung kebutuhan kesehatan lintas kelompok dan kondisi khusus.",
-        items: [
-          "Unit Gawat Darurat (UGD 24 Jam) & Ambulans Rujukan",
-          "Pelayanan Kefarmasian & Apotek",
-          "Laboratorium Klinik Sederhana & TCM",
-          "Layanan Rawat Inap & Observasi Medis"
-        ]
-      }
-    };
-
-    // Mobile Navigation Toggle
-    function toggleMobileMenu() {
-      const menu = document.getElementById('mobileMenu');
-      menu.classList.toggle('hidden');
-    }
-
-    // Modal Control Functions
-    function openModal(modalId) {
-      document.getElementById(modalId).classList.remove('hidden');
-    }
-
-    function closeModal(modalId) {
-      document.getElementById(modalId).classList.add('hidden');
-    }
-
-    // Show Klaster Detail Modal
-    function showKlasterDetail(id) {
-      const data = klasterData[id];
-      if (!data) return;
-
-      document.getElementById('klasterModalBadge').innerText = data.badge;
-      document.getElementById('klasterModalTitle').innerText = data.title;
-      document.getElementById('klasterModalDesc').innerText = data.desc;
-      document.getElementById('klasterModalIcon').innerHTML = `<i class="fa-solid ${data.icon}"></i>`;
-
-      const listContainer = document.getElementById('klasterModalList');
-      listContainer.innerHTML = '';
-      
-      data.items.forEach(item => {
-        const li = document.createElement('li');
-        li.className = 'flex items-start gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-100';
-        li.innerHTML = `
-          <i class="fa-solid fa-circle-check text-emerald-600 text-sm mt-0.5"></i>
-          <span class="font-medium">${item}</span>
-        `;
-        listContainer.appendChild(li);
-      });
-
-      openModal('klasterModal');
-    }
-
-    // Toast Notification System
-    function showToast(message, type = 'success') {
-      const container = document.getElementById('toastContainer');
-      const toast = document.createElement('div');
-      toast.className = `pointer-events-auto bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl text-xs font-semibold flex items-center gap-3 transition-all transform duration-300 translate-y-2 opacity-0 border-l-4 ${type === 'success' ? 'border-emerald-500' : 'border-amber-500'}`;
-      toast.innerHTML = `
-        <i class="${type === 'success' ? 'fa-solid fa-circle-check text-emerald-400' : 'fa-solid fa-triangle-exclamation text-amber-400'} text-base"></i>
-        <span>${message}</span>
-      `;
-      container.appendChild(toast);
-
-      setTimeout(() => {
-        toast.classList.remove('translate-y-2', 'opacity-0');
-      }, 10);
-
-      setTimeout(() => {
-        toast.classList.add('opacity-0', 'translate-y-2');
-        setTimeout(() => toast.remove(), 300);
-      }, 3500);
-    }
-
-    // Doctor Schedule Day Filter
-    function filterDoctorDay(day) {
-      const buttons = document.querySelectorAll('.day-btn');
-      buttons.forEach(btn => {
-        btn.classList.remove('bg-kemenkes-700', 'text-white');
-        btn.classList.add('bg-slate-100', 'text-slate-700');
-      });
-
-      if (event && event.target) {
-        event.target.classList.remove('bg-slate-100', 'text-slate-700');
-        event.target.classList.add('bg-kemenkes-700', 'text-white');
-      }
-
-      const cards = document.querySelectorAll('.doctor-card');
-      cards.forEach(card => {
-        const days = card.dataset.days ? card.dataset.days.split(',') : [];
-        if (day === 'all' || days.includes(day)) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-    }
-
-    // Doctor Search Filter
-    function filterDoctors() {
-      const query = document.getElementById('doctorSearchInput').value.toLowerCase();
-      const cards = document.querySelectorAll('.doctor-card');
-
-      cards.forEach(card => {
-        const searchText = card.dataset.search ? card.dataset.search.toLowerCase() : '';
-        if (searchText.includes(query)) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-    }
-
-    // FAQ Toggle
-    function toggleFaq(button) {
-      const content = button.nextElementSibling;
-      const icon = button.querySelector('i');
-      content.classList.toggle('hidden');
-      if (icon) {
-        icon.classList.toggle('rotate-180');
-      }
-    }
-
-    // Contact Form Submission Handler
-    function handleContactSubmit(event) {
-      event.preventDefault();
-      showToast('Pesan Anda berhasil dikirim! Terima kasih atas masukan Anda.');
-      event.target.reset();
-    }
-
-    // Upload Berita Handler
-    function handleBeritaSubmit(event) {
-      event.preventDefault();
-
-      const judul = document.getElementById('beritaJudul').value;
-      const kategori = document.getElementById('beritaKategori').value;
-      const gambar = document.getElementById('beritaGambar').value || 'https://images.unsplash.com/photo-1504813184591-01552f34c240?w=500&auto=format&fit=crop&q=60';
-      const isi = document.getElementById('beritaIsi').value;
-
-      const beritaGrid = document.getElementById('beritaGrid');
-      
-      const newCard = document.createElement('div');
-      newCard.className = 'bg-slate-800 rounded-2xl overflow-hidden border border-slate-700/80 hover:border-emerald-500/50 transition-all flex flex-col justify-between';
-      newCard.innerHTML = `
-        <div>
-          <div class="h-36 bg-slate-700 relative overflow-hidden">
-            <img src="${gambar}" alt="${judul}" class="w-full h-full object-cover">
-            <span class="absolute top-3 left-3 bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-md uppercase">${kategori}</span>
-          </div>
-          <div class="p-4 space-y-2">
-            <span class="text-[10px] text-slate-400 block"><i class="fa-regular fa-calendar text-emerald-400 mr-1"></i> Hari ini</span>
-            <h4 class="font-bold text-sm text-white line-clamp-2 hover:text-emerald-400 transition-colors">
-              ${judul}
-            </h4>
-            <p class="text-xs text-slate-400 line-clamp-2">
-              ${isi}
-            </p>
-          </div>
-        </div>
-        <div class="p-4 pt-0">
-          <button onclick="showBeritaDetail('${judul.replace(/'/g, "\\'")}', '${isi.replace(/'/g, "\\'")}')" class="text-xs font-semibold text-emerald-400 hover:underline">Baca Selengkapnya &rarr;</button>
-        </div>
-      `;
-
-      beritaGrid.prepend(newCard);
-      closeModal('uploadBeritaModal');
-      event.target.reset();
-      showToast('Berita berhasil diunggah ke footer!');
-    }
-
-    // Detail Berita Alert / Modal
-    function showBeritaDetail(judul, isi) {
-      alert(`[BERITA PUSKESMAS GARUDA]\n\nJudul: ${judul}\n\nIsi: ${isi}`);
-    }
-  </script>
-</body>
-</html>
+  );
+}
