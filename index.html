@@ -27,11 +27,11 @@
           colors: {
             kemenkes: {
               50: '#f0fdf4',
-              100: '#d1fae5', // #d1fae5
+              100: '#d1fae5',
               200: '#a7f3d0',
-              300: '#34d399', // #34d399
-              400: '#10b981', // #10b981
-              500: '#059669', // #059669
+              300: '#34d399',
+              400: '#10b981',
+              500: '#059669',
               600: '#047857',
               700: '#065f46',
               800: '#064e3b',
@@ -109,9 +109,10 @@
           </div>
         </a>
 
-        <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-stone-700">
+        <nav class="hidden lg:flex items-center gap-5 text-sm font-medium text-stone-700">
           <a href="#beranda" class="hover:text-kemenkes-500 transition-colors py-1 border-b-2 border-kemenkes-500 text-kemenkes-600 font-semibold">Beranda</a>
           <a href="#profil" class="hover:text-kemenkes-500 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-500">Profil & Visi Misi</a>
+          <a href="#denah" class="hover:text-kemenkes-500 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-500">Denah Puskesmas</a>
           <a href="#layanan" class="hover:text-kemenkes-500 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-500">Klaster Layanan</a>
           <a href="#jadwal" class="hover:text-kemenkes-500 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-500">Jadwal Dokter</a>
           <a href="#faq" class="hover:text-kemenkes-500 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-500">FAQ</a>
@@ -137,6 +138,7 @@
     <div id="mobileMenu" class="hidden lg:hidden px-4 pt-2 pb-4 space-y-2 bg-white border-b border-emerald-100">
       <a href="#beranda" class="block py-2 text-sm text-stone-700 font-medium">Beranda</a>
       <a href="#profil" class="block py-2 text-sm text-stone-700 font-medium">Profil & Visi Misi</a>
+      <a href="#denah" class="block py-2 text-sm text-stone-700 font-medium">Denah Puskesmas</a>
       <a href="#layanan" class="block py-2 text-sm text-stone-700 font-medium">Klaster Layanan</a>
       <a href="#jadwal" class="block py-2 text-sm text-stone-700 font-medium">Jadwal Dokter</a>
       <a href="#faq" class="block py-2 text-sm text-stone-700 font-medium">FAQ</a>
@@ -178,7 +180,7 @@
     </div>
   </section>
 
-  <!-- SECTION: PROFIL, VISI MISI & STRUKTUR -->
+  <!-- SECTION: PROFIL, VISI MISI, STRUKTUR & DENAH -->
   <section id="profil" class="py-16 sm:py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
       
@@ -216,10 +218,29 @@
         <div id="publicStructureContainer" class="space-y-8"></div>
       </div>
 
+      <!-- DENAH PUSKESMAS (DITAMBAHKAN DI BAWAH HIRARKI) -->
+      <div id="denah" class="space-y-8 pt-12 border-t border-emerald-100">
+        <div class="text-center max-w-xl mx-auto space-y-2">
+          <span class="inline-block bg-kemenkes-100 text-kemenkes-700 font-semibold text-xs px-3.5 py-1 rounded-full uppercase border border-kemenkes-200">Denah Lokasi Ruangan</span>
+          <h3 class="font-display font-bold text-2xl sm:text-3xl text-stone-900">Denah Puskesmas Tarailu</h3>
+          <p class="text-xs text-stone-500">Peta tata letak ruangan dan fasilitas pelayanan di dalam gedung Puskesmas Satelit Tarailu</p>
+        </div>
+        <div class="bg-emerald-50/40 rounded-2xl p-4 sm:p-8 border border-emerald-100 shadow-sm text-center">
+          <div class="overflow-hidden rounded-2xl shadow-md border border-emerald-200 bg-white inline-block max-w-5xl w-full">
+            <img src="WhatsApp Image 2026-09-25 at 14.45.11.jpeg" alt="Denah Puskesmas Tarailu" class="w-full h-auto object-contain mx-auto max-h-[700px] hover:scale-[1.01] transition-transform duration-300" onerror="this.src='https://via.placeholder.com/900x600?text=Denah+Puskesmas+Tarailu'">
+          </div>
+          <div class="mt-6 flex flex-wrap justify-center gap-3">
+            <a href="WhatsApp Image 2026-09-25 at 14.45.11.jpeg" target="_blank" class="bg-kemenkes-500 hover:bg-kemenkes-600 text-white font-bold px-6 py-3 rounded-xl text-xs flex items-center gap-2 shadow-sm transition-all">
+              <i class="fa-solid fa-expand text-sm"></i> Buka Ukuran Penuh (Zoom)
+            </a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- SECTION: KLASTER LAYANAN (DILENGKAPI DENGAN FITUR DETAIL ILP) -->
+  <!-- SECTION: KLASTER LAYANAN -->
   <section id="layanan" class="py-16 sm:py-24 bg-emerald-50/40 border-y border-emerald-100/60">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center max-w-3xl mx-auto space-y-3 mb-12">
@@ -455,7 +476,8 @@
           <table class="w-full text-left text-xs">
             <thead class="bg-kemenkes-50 text-kemenkes-800 uppercase font-bold border-b border-kemenkes-100">
               <tr>
-                <th class="p-3 rounded-l-xl">Grup Klaster</th>
+                <th class="p-3 rounded-l-xl">No</th>
+                <th class="p-3">Grup Klaster</th>
                 <th class="p-3">Jabatan / Unit</th>
                 <th class="p-3">Nama Pejabat / Petugas</th>
                 <th class="p-3">Kategori</th>
@@ -500,7 +522,8 @@
           <table class="w-full text-left text-xs">
             <thead class="bg-kemenkes-50 text-kemenkes-800 uppercase font-bold border-b border-kemenkes-100">
               <tr>
-                <th class="p-3 rounded-l-xl">Tanggal & Waktu</th>
+                <th class="p-3 rounded-l-xl">No</th>
+                <th class="p-3">Tanggal & Waktu</th>
                 <th class="p-3">Nama & Pekerjaan</th>
                 <th class="p-3">Asal Lembaga</th>
                 <th class="p-3">Kontak</th>
@@ -753,7 +776,7 @@
     }
 
     // ==========================================
-    // 1. FUNGSI BUKU TAMU (DENGAN PAGINASI)
+    // 1. FUNGSI BUKU TAMU (DENGAN PAGINASI & INDEKS)
     // ==========================================
     async function handleGuestBookSubmit(e) {
       e.preventDefault();
@@ -799,12 +822,12 @@
 
       if (error) {
         showToast('Gagal memuat data tamu: ' + error.message);
-        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-xs text-stone-500 py-6">Gagal memuat data dari database.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center text-xs text-stone-500 py-6">Gagal memuat data dari database.</td></tr>`;
         return;
       }
 
       if (!data || data.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-xs text-stone-500 py-6">Belum ada data kunjungan tamu.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center text-xs text-stone-500 py-6">Belum ada data kunjungan tamu.</td></tr>`;
         document.getElementById('guestPaginationInfo').innerText = 'Menampilkan 0 dari 0 data';
         document.getElementById('guestPaginationControls').innerHTML = '';
         return;
@@ -821,7 +844,7 @@
       tbody.innerHTML = '';
 
       if (data.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-xs text-stone-500 py-6">Data tidak ditemukan.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center text-xs text-stone-500 py-6">Data tidak ditemukan.</td></tr>`;
         document.getElementById('guestPaginationInfo').innerText = 'Menampilkan 0 dari 0 data';
         document.getElementById('guestPaginationControls').innerHTML = '';
         return;
@@ -835,9 +858,11 @@
       const end = start + guestRowsPerPage;
       const paginatedData = data.slice(start, end);
 
-      paginatedData.forEach(item => {
+      paginatedData.forEach((item, index) => {
+        const rowNumber = start + index + 1;
         tbody.innerHTML += `
           <tr class="hover:bg-emerald-50/35 transition-colors">
+            <td class="p-3 font-bold text-stone-700">${rowNumber}</td>
             <td class="p-3 font-semibold text-stone-800">${item.hari_tanggal}<br><span class="text-[10px] text-stone-500 font-normal"><i class="fa-regular fa-clock"></i> ${item.waktu_kunjungan}</span></td>
             <td class="p-3">
               <div class="font-bold text-stone-900">${item.nama_lengkap}</div>
@@ -991,9 +1016,10 @@
       if (!tbody) return;
       tbody.innerHTML = '';
 
-      data.forEach(item => {
+      data.forEach((item, index) => {
         tbody.innerHTML += `
           <tr class="hover:bg-emerald-50/35 transition-colors">
+            <td class="p-3 font-bold text-stone-700">${index + 1}</td>
             <td class="p-3 font-bold text-kemenkes-600">${item.cluster_group}</td>
             <td class="p-3 font-medium text-stone-900">${item.position_title}</td>
             <td class="p-3 text-stone-700">${item.person_name}</td>
@@ -1066,7 +1092,7 @@
         return;
       }
 
-      data.forEach(doc => {
+      data.forEach((doc, index) => {
         if (grid) {
           grid.innerHTML += `
             <div class="doctor-card bg-white rounded-2xl p-5 border border-emerald-100 shadow-sm hover:border-kemenkes-300 transition-all" data-search="${doc.name.toLowerCase()} ${doc.specialty.toLowerCase()}">
@@ -1087,6 +1113,7 @@
         if (adminTable) {
           adminTable.innerHTML += `
             <tr class="hover:bg-emerald-50/35 transition-colors">
+              <td class="p-3 font-bold text-stone-700">${index + 1}</td>
               <td class="p-3 font-bold text-stone-900">${doc.name} <span class="text-stone-500 font-normal">(${doc.specialty})</span></td>
               <td class="p-3 text-right space-x-2">
                 <button onclick="deleteDoctor(${doc.id})" class="text-rose-600 font-bold hover:underline">Hapus</button>
@@ -1159,7 +1186,7 @@
         return;
       }
 
-      data.forEach(faq => {
+      data.forEach((faq, index) => {
         if (container) {
           container.innerHTML += `
             <div class="bg-white rounded-2xl border border-emerald-100 overflow-hidden shadow-sm hover:border-kemenkes-300 transition-all">
@@ -1172,6 +1199,7 @@
         if (adminTable) {
           adminTable.innerHTML += `
             <tr class="hover:bg-emerald-50/35 transition-colors">
+              <td class="p-3 font-bold text-stone-700">${index + 1}</td>
               <td class="p-3 font-medium text-stone-800">${faq.question}</td>
               <td class="p-3 text-right"><button onclick="deleteFaq(${faq.id})" class="text-rose-600 font-bold hover:underline">Hapus</button></td>
             </tr>`;
