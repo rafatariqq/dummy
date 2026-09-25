@@ -603,7 +603,7 @@
   <!-- JavaScript Logic & Supabase Integration -->
   <script>
     const SUPABASE_URL = 'https://paofqksfdajcylhnzpki.supabase.co';       
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBhb2Zxa3NmZGFqY3lsaG56cGtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAzMTQ1NTksImV4cCI6MjEwNTg5MDU1OX0.sLCTWqZJIMWPsf9kMtOTYSDp-YL_ImU4ncGPVAK4I_g'; 
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBhb2Zxa3NmZGFjY3lsaG56cGtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAzMTQ1NTksImV4cCI6MjEwNTg5MDU1OX0.sLCTWqZJIMWPsf9kMtOTYSDp-YL_ImU4ncGPVAK4I_g'; 
 
     const { createClient } = supabase;
     const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -651,12 +651,19 @@
 
     let allGuestsData = [];
     async function loadAdminGuests() {
-      const { data, error } = await db.from('buku_tamu').order('created_at', { ascending: false });
+      // Diperbaiki: Menggunakan 'id' untuk pengurutan agar tidak error jika 'created_at' belum tersedia
+      const { data, error } = await db.from('buku_tamu').order('id', { ascending: false });
       const tbody = document.getElementById('adminGuestTableBody');
       if (!tbody) return;
       tbody.innerHTML = '';
 
-      if (error || !data || data.length === 0) {
+      if (error) {
+        showToast('Gagal memuat data tamu: ' + error.message);
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-xs text-slate-500 py-6">Gagal memuat data dari database.</td></tr>`;
+        return;
+      }
+
+      if (!data || data.length === 0) {
         tbody.innerHTML = `<tr><td colspan="6" class="text-center text-xs text-slate-500 py-6">Belum ada data kunjungan tamu.</td></tr>`;
         return;
       }
@@ -718,7 +725,7 @@
           <div><strong>Asal Lembaga / Instansi:</strong><br>${guest.asal_lembaga}</div>
           <div><strong>Maksud & Tujuan:</strong><br><p class="bg-white p-2.5 rounded-xl border border-slate-100 text-slate-800 mt-1">${guest.maksud_tujuan}</p></div>
           <div><strong>Pesan & Kesan / Saran:</strong><br><p class="bg-white p-2.5 rounded-xl border border-slate-100 text-slate-800 mt-1 italic">${guest.pesan_kesan || '-'}</p></div>
-          <div class="text-[10px] text-slate-400 pt-1">Dicatat pada: ${new Date(guest.created_at).toLocaleString('id-ID')}</div>
+          <div class="text-[10px] text-slate-400 pt-1">ID Data: ${guest.id}</div>
         </div>
       `;
       openModal('guestDetailModal');
