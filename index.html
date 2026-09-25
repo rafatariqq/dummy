@@ -651,7 +651,6 @@
 
     let allGuestsData = [];
     async function loadAdminGuests() {
-      // Diperbaiki: Menggunakan 'id' untuk pengurutan agar tidak error jika 'created_at' belum tersedia
       const { data, error } = await db.from('buku_tamu').order('id', { ascending: false });
       const tbody = document.getElementById('adminGuestTableBody');
       if (!tbody) return;
@@ -1037,15 +1036,26 @@
     }
 
     // ==========================================
-    // 5. AUTENTIKASI & UTILITAS
+    // 5. AUTENTIKASI & UTILITAS (DIPERBAIKI)
     // ==========================================
     async function handleLoginSubmit(e) {
       e.preventDefault();
-      const username = document.getElementById('loginUsername').value;
-      const password = document.getElementById('loginPassword').value;
+      const username = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
 
-      const { data, error } = await db.from('petugas').select('*').eq('username', username).eq('password', password).single();
-      if (error || !data) {
+      // Perbaikan: menggunakan query biasa tanpa .single() agar tidak throw error jika tabel kosong / rls
+      const { data, error } = await db
+        .from('petugas')
+        .select('*')
+        .eq('username', username)
+        .eq('password', password);
+
+      if (error) {
+        showToast('Gagal terhubung ke database: ' + error.message);
+        return;
+      }
+
+      if (!data || data.length === 0) {
         showToast('Username atau password salah!');
         return;
       }
