@@ -83,6 +83,18 @@
 
   <!-- HEADER UTAMA -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100">
+    <div class="bg-emerald-900 text-emerald-100 text-xs py-1.5 px-4 hidden sm:block">
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="flex items-center gap-6">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-clock text-emerald-300"></i> Layanan UGD: <strong>24 Jam Siaga</strong></span>
+          <span class="flex items-center gap-1.5"><i class="fa-brands fa-whatsapp text-emerald-300"></i> Hotline: <strong>0823-5368-5324</strong></span>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-envelope text-emerald-300"></i> pkmsatelittarailu@gmail.com</span>
+        </div>
+      </div>
+    </div>
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-20">
         <a href="#" class="flex items-center gap-3 group">
@@ -262,35 +274,59 @@
     </div>
   </section>
 
-  <!-- Kontak -->
+  <!-- SECTION KONTAK -->
   <section id="kontak" class="py-16 sm:py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center max-w-3xl mx-auto space-y-3 mb-12">
-        <span class="inline-block bg-emerald-100 text-emerald-800 font-semibold text-xs px-4 py-1.5 rounded-full uppercase">Hubungi Kami</span>
-        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900">Lokasi & Informasi Kontak</h2>
-        <p class="text-xs text-slate-500">Silakan kunjungi lokasi kami atau hubungi melalui saluran komunikasi resmi di bawah ini.</p>
+        <span class="inline-block bg-emerald-100 text-emerald-800 font-semibold text-xs px-4 py-1.5 rounded-full uppercase tracking-wider">Kontak & Lokasi</span>
+        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900">Hubungi & Kunjungi Kami</h2>
+        <p class="text-xs sm:text-sm text-slate-600">Silakan hubungi layanan kami melalui WhatsApp, Email resmi, atau kunjungi lokasi Puskesmas Satelit Tarailu.</p>
       </div>
+
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 text-center space-y-3">
-          <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center text-xl mx-auto">
-            <i class="fa-solid fa-location-dot"></i>
-          </div>
-          <h3 class="font-display font-bold text-slate-900 text-base">Alamat</h3>
-          <p class="text-xs text-slate-600">Tarailu, Kec. Sampaga, Kabupaten Mamuju, Sulawesi Barat</p>
-        </div>
-        <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 text-center space-y-3">
-          <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center text-xl mx-auto">
+        <!-- WhatsApp Card -->
+        <div class="bg-slate-50/50 rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col items-center text-center space-y-4 hover:shadow-md transition-all">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl shadow-sm">
             <i class="fa-brands fa-whatsapp"></i>
           </div>
-          <h3 class="font-display font-bold text-slate-900 text-base">WhatsApp / Hotline</h3>
-          <p class="text-xs text-slate-600">0823-5368-5324</p>
+          <div>
+            <h3 class="font-display font-bold text-lg text-slate-900">WhatsApp Hotline</h3>
+            <p class="text-xs text-slate-500 mt-1">Layanan Informasi & Konsultasi Cepat</p>
+          </div>
+          <p class="text-sm font-bold text-slate-800">0823-5368-5324</p>
+          <a href="https://wa.me/6282353685324" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition-all">
+            <i class="fa-brands fa-whatsapp text-sm"></i> Chat WhatsApp
+          </a>
         </div>
-        <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 text-center space-y-3">
-          <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center text-xl mx-auto">
+
+        <!-- Email Card -->
+        <div class="bg-slate-50/50 rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col items-center text-center space-y-4 hover:shadow-md transition-all">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl shadow-sm">
             <i class="fa-solid fa-envelope"></i>
           </div>
-          <h3 class="font-display font-bold text-slate-900 text-base">Email Resmi</h3>
-          <p class="text-xs text-slate-600">pkmsatelittarailu@gmail.com</p>
+          <div>
+            <h3 class="font-display font-bold text-lg text-slate-900">Email Resmi</h3>
+            <p class="text-xs text-slate-500 mt-1">Kirimkan surat atau dokumen resmi</p>
+          </div>
+          <p class="text-sm font-bold text-slate-800 break-all">pkmsatelittarailu@gmail.com</p>
+          <a href="mailto:pkmsatelittarailu@gmail.com" class="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition-all">
+            <i class="fa-solid fa-envelope text-sm"></i> Kirim Email
+          </a>
+        </div>
+
+        <!-- Lokasi / Google Maps Card -->
+        <div class="bg-slate-50/50 rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col items-center text-center space-y-4 hover:shadow-md transition-all">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl shadow-sm">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-lg text-slate-900">Lokasi Puskesmas</h3>
+            <p class="text-xs text-slate-500 mt-1">Tarailu, Kec. Sampaga, Kab. Mamuju, Sulawesi Barat</p>
+          </div>
+          <p class="text-xs text-slate-600 font-medium">Jl. Poros Mamuju - Topoyo</p>
+          <a href="https://www.google.com/maps/place/Puskesmas+Satelit+Tarailu/@-2.3111475,119.1754624,18z/data=!4m23!1m16!4m15!1m6!1m2!1s0x2d92d833d4d70f27:0xec8b6ecb8c7bb406!2sJl.+Poros+Mamuju+-+Topoyo,+Sulawesi+Barat!2m2!1d119.1621854!2d-2.4195697!1m6!1m2!1s0x2d9290f914f05173:0xb0b84e39a98a507!2sTarailu,+Kec.+Sampaga,+Kabupaten+Mamuju,+Sulawesi+Barat!2m2!1d119.179765!2d-2.3173016!3e0!3m5!1s0x2d9291e7019333a9:0x7ba3c2a8525060fc!8m2!3d-2.3112276!4d119.1766989!16s%2Fg%2F11ghsjk6wk?entry=ttu&g_ep=EgoyMDI2MDkyMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition-all">
+            <i class="fa-solid fa-map-location-dot text-sm"></i> Buka Google Maps
+          </a>
         </div>
       </div>
     </div>
@@ -358,29 +394,7 @@
 
   <!-- FOOTER -->
   <footer class="bg-slate-900 text-slate-300 pt-16 pb-8 border-t border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 pb-12 border-b border-slate-800">
-      <div class="space-y-4">
-        <div class="font-display font-bold text-white text-base">PKM SATELIT TARAILU</div>
-        <p class="text-xs text-slate-400 leading-relaxed">
-          Puskesmas Satelit Tarailu berkomitmen memberikan pelayanan kesehatan primer yang berkualitas, cepat, dan terintegrasi untuk masyarakat Mamuju.
-        </p>
-      </div>
-      <div class="space-y-3">
-        <h4 class="font-display font-bold text-white text-sm">Informasi Kontak & Layanan</h4>
-        <ul class="space-y-2 text-xs text-slate-400">
-          <li class="flex items-center gap-2"><i class="fa-solid fa-clock text-emerald-400"></i> Layanan UGD: <strong>24 Jam Siaga</strong></li>
-          <li class="flex items-center gap-2"><i class="fa-brands fa-whatsapp text-emerald-400"></i> Hotline: <strong>0823-5368-5324</strong></li>
-          <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-emerald-400"></i> pkmsatelittarailu@gmail.com</li>
-        </ul>
-      </div>
-      <div class="space-y-3">
-        <h4 class="font-display font-bold text-white text-sm">Alamat Puskesmas</h4>
-        <p class="text-xs text-slate-400 leading-relaxed">
-          Tarailu, Kec. Sampaga, Kabupaten Mamuju, Sulawesi Barat
-        </p>
-      </div>
-    </div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
       <span>&copy; 2026 Puskesmas Satelit Tarailu - Kabupaten Mamuju. All Rights Reserved.</span>
     </div>
   </footer>
