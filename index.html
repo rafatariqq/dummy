@@ -57,12 +57,6 @@
     .bg-kemenkes-gradient {
       background: linear-gradient(135deg, #009639 0%, #00768a 100%);
     }
-    .bg-mint-tint {
-      background-color: #f0fdf4;
-    }
-    .border-mint-accent {
-      border-color: #d1fae5;
-    }
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
@@ -110,7 +104,6 @@
           <a href="#profil" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Profil & Visi Misi</a>
           <a href="#layanan" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Klaster Layanan</a>
           <a href="#jadwal" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Jadwal Dokter</a>
-          <a href="#program" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Program ILP</a>
           <a href="#faq" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">FAQ</a>
           <a href="#kontak" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Kontak</a>
         </nav>
@@ -123,148 +116,64 @@
             <i class="fa-solid fa-right-to-bracket text-sm"></i> <span>Login Petugas</span>
           </button>
         </div>
-
-        <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none">
-          <i class="fa-solid fa-bars text-xl"></i>
-        </button>
       </div>
     </div>
   </header>
 
   <!-- Hero Section -->
   <section id="beranda" class="relative bg-kemenkes-gradient text-white pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden">
-    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="max-w-3xl mx-auto text-center space-y-6">
-        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-xs sm:text-sm font-medium">
-          <span class="w-2 h-2 rounded-full bg-emerald-300 animate-ping"></span>
-          <span>Integrasi Layanan Primer (ILP) Kabupaten Mamuju</span>
-        </div>
-        <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
-          Puskesmas Satelit Tarailu <span class="text-emerald-200">Sehat & Terpercaya</span>
-        </h1>
-        <p class="text-emerald-50 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
-          Berkomitmen memberikan pelayanan kesehatan primer yang cepat, profesional, ramah, dan terintegrasi untuk masyarakat Tarailu, Kecamatan Sampaga, Kabupaten Mamuju.
-        </p>
-        <div class="pt-2 flex flex-wrap justify-center gap-3">
-          <a href="#jadwal" class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-7 py-3.5 rounded-2xl shadow-xl transition-all flex items-center gap-2 text-sm">
-            <i class="fa-regular fa-calendar-alt text-lg"></i> Lihat Jadwal Dokter
-          </a>
-          <a href="https://wa.me/6282353685324" target="_blank" class="bg-emerald-500 hover:bg-emerald-400 text-white font-bold px-7 py-3.5 rounded-2xl shadow-xl transition-all flex items-center gap-2 text-sm">
-            <i class="fa-brands fa-whatsapp text-lg"></i> Hubungi WA Kami
-          </a>
-        </div>
-      </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-6">
+      <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+        Puskesmas Satelit Tarailu <span class="text-emerald-200">Sehat & Terpercaya</span>
+      </h1>
+      <p class="text-emerald-50 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+        Berkomitmen memberikan pelayanan kesehatan primer yang cepat, profesional, ramah, dan terintegrasi untuk masyarakat Tarailu.
+      </p>
     </div>
   </section>
 
-  <!-- SECTION: PROFIL, VISI MISI & STRUKTUR -->
+  <!-- SECTION: PROFIL & STRUKTUR -->
   <section id="profil" class="py-16 sm:py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-      
-      <div class="text-center max-w-3xl mx-auto space-y-3">
-        <span class="inline-block bg-emerald-100 text-emerald-800 font-semibold text-xs px-4 py-1.5 rounded-full uppercase tracking-wider">Profil & Informasi Kelembagaan</span>
-        <h2 class="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">Tentang Puskesmas Satelit Tarailu</h2>
+      <div class="text-center max-w-xl mx-auto space-y-2">
+        <h3 class="font-display font-bold text-2xl sm:text-3xl text-slate-900">Struktur Organisasi & Hirarki</h3>
+        <p class="text-xs text-slate-500">Bagan tata kelola dan penanggung jawab klaster pelayanan UPTD Puskesmas Tarailu</p>
       </div>
-
-      <!-- Visi Misi -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="bg-gradient-to-br from-emerald-800 to-emerald-950 text-white rounded-3xl p-8 shadow-xl flex flex-col justify-between">
-          <div class="space-y-4">
-            <div class="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-emerald-300 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-eye"></i></div>
-            <h3 class="font-display text-xl font-bold">Visi Puskesmas</h3>
-            <p class="text-emerald-50 text-sm sm:text-base italic leading-relaxed font-light">"Terwujudnya Masyarakat Tarailu yang Sehat, Mandiri, dan Berkualitas Melalui Pelayanan Kesehatan Primer yang Bermutu dan Berintegrasi."</p>
-          </div>
-        </div>
-        <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-lg flex flex-col justify-between">
-          <div class="space-y-4">
-            <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-list-check"></i></div>
-            <h3 class="font-display text-xl font-bold text-slate-900">Misi Puskesmas</h3>
-            <ul class="space-y-2.5 text-xs sm:text-sm text-slate-600">
-              <li class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-600 mt-1 shrink-0"></i><span>Menyelenggarakan pelayanan kesehatan dasar yang proaktif dan berorientasi siklus hidup.</span></li>
-              <li class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-600 mt-1 shrink-0"></i><span>Meningkatkan pemberdayaan masyarakat dan lintas sektor.</span></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- STRUKTUR ORGANISASI DINAMIS DARI DATABASE -->
-      <div class="space-y-8 pt-6">
-        <div class="text-center max-w-xl mx-auto space-y-2">
-          <h3 class="font-display font-bold text-2xl sm:text-3xl text-slate-900">Struktur Organisasi & Hirarki</h3>
-          <p class="text-xs text-slate-500">Bagan tata kelola dan penanggung jawab klaster pelayanan UPTD Puskesmas Tarailu</p>
-        </div>
-
-        <!-- Container Struktur Organisasi -->
-        <div id="publicStructureContainer" class="space-y-8">
-          <!-- Data akan dimuat otomatis via Javascript -->
-        </div>
-      </div>
-
+      <div id="publicStructureContainer" class="space-y-8"></div>
     </div>
   </section>
 
   <!-- SECTION: KLASTER LAYANAN -->
-  <section id="layanan" class="py-16 sm:py-24 bg-slate-50/70">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center max-w-3xl mx-auto space-y-3 mb-12">
-        <span class="inline-block bg-emerald-100 text-emerald-800 font-semibold text-xs px-4 py-1.5 rounded-full uppercase">Integrasi Layanan Primer (ILP)</span>
-        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900">Klaster Layanan Kesehatan</h2>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
-          <h3 class="font-display font-bold text-xl text-slate-900 mb-2">Klaster 1: Manajemen</h3>
-          <p class="text-xs text-slate-500">Pengelolaan administrasi, informasi, mutu, dan jaringan.</p>
-        </div>
-        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
-          <h3 class="font-display font-bold text-xl text-slate-900 mb-2">Klaster 2: Ibu & Anak</h3>
-          <p class="text-xs text-slate-500">Pelayanan kesehatan ibu hamil, bayi, balita, dan remaja.</p>
-        </div>
-        <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
-          <h3 class="font-display font-bold text-xl text-slate-900 mb-2">Klaster 3: Dewasa & Lansia</h3>
-          <p class="text-xs text-slate-500">Skrining PTM, usia produktif, dan geriatri.</p>
-        </div>
-      </div>
+  <section id="layanan" class="py-16 bg-slate-50/70">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <h2 class="text-2xl font-bold mb-4">Klaster Layanan Kesehatan</h2>
     </div>
   </section>
 
   <!-- Doctor Schedule Section -->
-  <section id="jadwal" class="py-16 sm:py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-slate-100">
-        <div class="space-y-2">
-          <span class="inline-block bg-emerald-100 text-emerald-800 font-semibold text-xs px-3.5 py-1 rounded-full uppercase">Jadwal Praktik</span>
-          <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900">Jadwal Dokter & Tenaga Medis</h2>
-        </div>
-        <div class="w-full md:w-72 relative">
-          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-          <input type="text" id="doctorSearchInput" oninput="filterDoctors()" placeholder="Cari nama dokter / poli..." class="w-full pl-10 pr-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none">
-        </div>
-      </div>
-      <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="doctorsGrid"></div>
+  <section id="jadwal" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-4">Jadwal Dokter & Tenaga Medis</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="doctorsGrid"></div>
     </div>
   </section>
 
   <!-- FAQ Section -->
-  <section id="faq" class="py-16 sm:py-24 bg-slate-50">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center space-y-3 mb-12">
-        <span class="inline-block bg-emerald-100 text-emerald-800 font-semibold text-xs px-3.5 py-1 rounded-full uppercase">FAQ</span>
-        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900">Pertanyaan Sering Diajukan</h2>
-      </div>
+  <section id="faq" class="py-16 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-2xl font-bold mb-4 text-center">FAQ</h2>
       <div class="space-y-4"></div>
     </div>
   </section>
 
   <!-- Kontak -->
-  <section id="kontak" class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-2xl font-bold mb-4">Lokasi & Kontak Puskesmas Satelit Tarailu</h2>
-      <p class="text-xs text-slate-600">Tarailu, Kec. Sampaga, Kabupaten Mamuju, Sulawesi Barat</p>
-    </div>
+  <section id="kontak" class="py-16 bg-white text-center">
+    <h2 class="text-2xl font-bold mb-4">Lokasi & Kontak</h2>
   </section>
 
-  <!-- DASHBOARD ADMIN -->
+  <!-- ========================================== -->
+  <!-- DASHBOARD ADMIN                           -->
+  <!-- ========================================== -->
   <div id="adminDashboard" class="hidden min-h-screen bg-slate-100 py-10 px-4 sm:px-6 lg:px-8">
     <div class="max-w-7xl mx-auto space-y-8">
       <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -277,7 +186,7 @@
         </button>
       </div>
 
-      <!-- KELOLA STRUKTUR ORGANISASI / HIRARKI (BARU) -->
+      <!-- KELOLA STRUKTUR ORGANISASI / HIRARKI (VIEW, EDIT, DELETE) -->
       <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
         <div class="flex items-center justify-between">
           <h3 class="font-display font-bold text-lg text-slate-900 flex items-center gap-2">
@@ -295,7 +204,7 @@
                 <th class="p-3">Jabatan / Unit</th>
                 <th class="p-3">Nama Pejabat / Petugas</th>
                 <th class="p-3">Kategori</th>
-                <th class="p-3 text-right rounded-r-xl">Aksi</th>
+                <th class="p-3 text-right rounded-r-xl">Aksi (View, Edit, Delete)</th>
               </tr>
             </thead>
             <tbody id="adminStructureTableBody" class="divide-y divide-slate-100"></tbody>
@@ -325,10 +234,8 @@
   </div>
 
   <!-- FOOTER -->
-  <footer class="bg-slate-900 text-slate-300 pt-16 pb-8 border-t border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
-      <span>&copy; 2026 Puskesmas Satelit Tarailu - Kabupaten Mamuju. All Rights Reserved.</span>
-    </div>
+  <footer class="bg-slate-900 text-slate-300 pt-16 pb-8 border-t border-slate-800 text-center text-xs">
+    <span>&copy; 2026 Puskesmas Satelit Tarailu - Kabupaten Mamuju. All Rights Reserved.</span>
   </footer>
 
   <!-- MODAL LOGIN -->
@@ -344,7 +251,26 @@
     </div>
   </div>
 
-  <!-- MODAL TAMBAH/EDIT STRUKTUR ORGANISASI (BARU) -->
+  <!-- MODAL VIEW DETAIL STRUKTUR ORGANISASI (BARU) -->
+  <div id="viewStructureModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative space-y-4">
+      <div class="flex justify-between items-center">
+        <h3 class="font-display font-bold text-lg text-slate-900">Detail Lengkap Hirarki / Struktur</h3>
+        <button onclick="closeModal('viewStructureModal')" class="text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="space-y-3 text-xs text-slate-700 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+        <div><strong class="text-slate-900 block mb-0.5">Grup Klaster:</strong> <span id="viewStructGroup">-</span></div>
+        <div><strong class="text-slate-900 block mb-0.5">Jabatan / Unit:</strong> <span id="viewStructTitle">-</span></div>
+        <div><strong class="text-slate-900 block mb-0.5">Nama Pejabat / Petugas:</strong> <span id="viewStructName">-</span></div>
+        <div><strong class="text-slate-900 block mb-0.5">Kategori Peran:</strong> <span id="viewStructCategory">-</span></div>
+      </div>
+      <div class="flex justify-end pt-2">
+        <button type="button" onclick="closeModal('viewStructureModal')" class="px-5 py-2 bg-slate-800 text-white rounded-xl font-bold shadow-md">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL TAMBAH/EDIT STRUKTUR ORGANISASI -->
   <div id="structureModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
       <h3 id="structureModalTitle" class="font-display font-bold text-lg text-slate-900 mb-4">Tambah Struktur Organisasi</h3>
@@ -385,34 +311,6 @@
     </div>
   </div>
 
-  <!-- MODAL DOKTER & FAQ -->
-  <div id="doctorModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
-      <h3 id="doctorModalTitle" class="font-display font-bold text-lg text-slate-900 mb-4">Tambah Dokter</h3>
-      <form id="doctorForm" onsubmit="saveDoctor(event)" class="space-y-3 text-xs">
-        <input type="hidden" id="doctorId">
-        <input type="text" id="docName" required placeholder="Nama Dokter" class="w-full px-3 py-2 bg-slate-50 border rounded-xl">
-        <input type="text" id="docTitle" required placeholder="Jabatan" class="w-full px-3 py-2 bg-slate-50 border rounded-xl">
-        <input type="text" id="docSpecialty" required placeholder="Poli" class="w-full px-3 py-2 bg-slate-50 border rounded-xl">
-        <input type="text" id="docDays" required placeholder="Hari (Senin,Rabu)" class="w-full px-3 py-2 bg-slate-50 border rounded-xl">
-        <input type="text" id="docTime" required placeholder="Jam" class="w-full px-3 py-2 bg-slate-50 border rounded-xl">
-        <button type="submit" class="w-full bg-emerald-600 text-white py-2 rounded-xl font-bold">Simpan</button>
-      </form>
-    </div>
-  </div>
-
-  <div id="faqModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
-      <h3 id="faqModalTitle" class="font-display font-bold text-lg text-slate-900 mb-4">Tambah FAQ</h3>
-      <form id="faqForm" onsubmit="saveFaq(event)" class="space-y-3 text-xs">
-        <input type="hidden" id="faqId">
-        <input type="text" id="faqQuestion" required placeholder="Pertanyaan" class="w-full px-3 py-2 bg-slate-50 border rounded-xl">
-        <textarea id="faqAnswer" rows="3" required placeholder="Jawaban" class="w-full px-3 py-2 bg-slate-50 border rounded-xl"></textarea>
-        <button type="submit" class="w-full bg-emerald-600 text-white py-2 rounded-xl font-bold">Simpan</button>
-      </form>
-    </div>
-  </div>
-
   <!-- JavaScript Logic & Supabase Integration -->
   <script>
     const SUPABASE_URL = 'https://paofqksfdajcylhnzpki.supabase.co';       
@@ -422,8 +320,6 @@
     const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     document.addEventListener("DOMContentLoaded", () => {
-      loadPublicDoctors();
-      loadPublicFaqs();
       loadPublicStructure();
     });
 
@@ -441,7 +337,7 @@
         return;
       }
 
-      // Filter Pimpinan Tertinggi
+      // Render Tampilan Publik
       const leader = data.find(item => item.category === 'leader');
       let html = '';
 
@@ -458,7 +354,6 @@
         `;
       }
 
-      // Kelompokkan klaster
       const clusters = ['Klaster 1', 'Klaster 2', 'Klaster 3', 'Klaster 4', 'Lintas Klaster'];
       html += `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">`;
 
@@ -497,6 +392,7 @@
       loadAdminStructureTable(data);
     }
 
+    // Memuat Tabel Admin dengan Tombol View, Edit, dan Delete
     function loadAdminStructureTable(data) {
       const tbody = document.getElementById('adminStructureTableBody');
       if (!tbody) return;
@@ -510,12 +406,22 @@
             <td class="p-3 text-slate-700">${item.person_name}</td>
             <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] bg-slate-100 font-semibold">${item.category}</span></td>
             <td class="p-3 text-right space-x-2">
+              <button onclick="viewStructure('${item.cluster_group}', '${item.position_title.replace(/'/g, "\\'")}', '${item.person_name.replace(/'/g, "\\'")}', '${item.category}')" class="text-emerald-600 font-bold hover:underline">View</button>
               <button onclick="editStructure(${item.id}, '${item.cluster_group}', '${item.position_title.replace(/'/g, "\\'")}', '${item.person_name.replace(/'/g, "\\'")}', '${item.category}')" class="text-amber-600 font-bold hover:underline">Edit</button>
               <button onclick="deleteStructure(${item.id})" class="text-rose-600 font-bold hover:underline">Hapus</button>
             </td>
           </tr>
         `;
       });
+    }
+
+    // Fungsi View Detail Struktur
+    function viewStructure(cluster_group, position_title, person_name, category) {
+      document.getElementById('viewStructGroup').innerText = cluster_group;
+      document.getElementById('viewStructTitle').innerText = position_title;
+      document.getElementById('viewStructName').innerText = person_name;
+      document.getElementById('viewStructCategory').innerText = category;
+      openModal('viewStructureModal');
     }
 
     function openStructureModal() {
@@ -562,73 +468,7 @@
       }
     }
 
-    // ==========================================
-    // 2. FUNGSI DOKTER & FAQ LAINNYA
-    // ==========================================
-    async function loadPublicDoctors() {
-      const { data, error } = await db.from('doctors').select('*').order('id', { ascending: true });
-      const grid = document.getElementById('doctorsGrid');
-      const adminTable = document.getElementById('adminDoctorsTableBody');
-      if (grid) grid.innerHTML = '';
-      if (adminTable) adminTable.innerHTML = '';
-
-      if (error || !data || data.length === 0) return;
-
-      data.forEach(doc => {
-        if (grid) {
-          grid.innerHTML += `
-            <div class="doctor-card bg-slate-50 rounded-2xl p-5 border border-slate-200" data-days="${doc.days}" data-search="${doc.name.toLowerCase()}">
-              <div class="flex items-start gap-4">
-                <div class="w-12 h-12 bg-emerald-700 text-white rounded-2xl flex items-center justify-center font-bold"><i class="fa-solid fa-user-doctor"></i></div>
-                <div>
-                  <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">${doc.specialty}</span>
-                  <h4 class="font-display font-bold text-slate-900 text-sm mt-1">${doc.name}</h4>
-                  <p class="text-xs text-slate-500">${doc.title}</p>
-                </div>
-              </div>
-            </div>`;
-        }
-        if (adminTable) {
-          adminTable.innerHTML += `
-            <tr>
-              <td class="p-3 font-bold text-slate-900">${doc.name}</td>
-              <td class="p-3 text-right space-x-2">
-                <button onclick="deleteDoctor(${doc.id})" class="text-rose-600 font-bold hover:underline">Hapus</button>
-              </td>
-            </tr>`;
-        }
-      });
-    }
-
-    async function loadPublicFaqs() {
-      const { data, error } = await db.from('faqs').select('*').order('id', { ascending: true });
-      const container = document.querySelector('#faq .space-y-4');
-      const adminTable = document.getElementById('adminFaqTableBody');
-      if (container) container.innerHTML = '';
-      if (adminTable) adminTable.innerHTML = '';
-
-      if (error || !data) return;
-
-      data.forEach(faq => {
-        if (container) {
-          container.innerHTML += `
-            <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-              <button onclick="toggleFaq(this)" class="w-full p-5 text-left font-display font-semibold text-slate-800 flex justify-between items-center text-sm">
-                <span>${faq.question}</span><i class="fa-solid fa-chevron-down text-xs"></i>
-              </button>
-              <div class="hidden p-5 pt-0 text-xs text-slate-600 border-t bg-slate-50/50">${faq.answer}</div>
-            </div>`;
-        }
-        if (adminTable) {
-          adminTable.innerHTML += `
-            <tr>
-              <td class="p-3 font-medium text-slate-800">${faq.question}</td>
-              <td class="p-3 text-right"><button onclick="deleteFaq(${faq.id})" class="text-rose-600 font-bold hover:underline">Hapus</button></td>
-            </tr>`;
-        }
-      });
-    }
-
+    // Login & UI Helpers
     async function handleLoginSubmit(e) {
       e.preventDefault();
       const username = document.getElementById('loginUsername').value;
@@ -654,10 +494,8 @@
     }
 
     function handleLogout() { location.reload(); }
-    function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
     function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
     function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-    function toggleFaq(btn) { btn.nextElementSibling.classList.toggle('hidden'); }
 
     function showToast(message) {
       const container = document.getElementById('toastContainer');
