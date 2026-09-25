@@ -65,10 +65,6 @@
     .border-mint-accent {
       border-color: #d1fae5;
     }
-    .glass-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(10px);
-    }
     /* Custom Scrollbar */
     ::-webkit-scrollbar {
       width: 8px;
@@ -120,7 +116,7 @@
         
         <!-- Branding Logo & Titles -->
         <a href="#" class="flex items-center gap-3 group">
-          <img src="logo-puskesmas-tarailu.png" alt="Logo Puskesmas Garuda" class="h-10 sm:h-12 w-auto object-contain group-hover:scale-105 transition-transform">
+          <img src="logo-puskesmas-tarailu.png" alt="Logo Puskesmas Garuda" class="h-10 sm:h-12 w-auto object-contain group-hover:scale-105 transition-transform" onerror="this.src='https://via.placeholder.com/48x48?text=PUSKESMAS'">
           <div class="flex flex-col">
             <span class="font-display font-extrabold text-lg sm:text-xl text-slate-800 tracking-tight leading-none group-hover:text-kemenkes-700 transition-colors">
               PUSKESMAS GARUDA
@@ -134,7 +130,7 @@
         <!-- Desktop Navigation Links -->
         <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-700">
           <a href="#beranda" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-kemenkes-600 text-kemenkes-700 font-semibold">Beranda</a>
-          <a href="#layanan" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Layanan Medis</a>
+          <a href="#layanan" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Klaster Layanan</a>
           <a href="#jadwal" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Jadwal Dokter</a>
           <a href="#program" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Program ILP</a>
           <a href="#faq" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">FAQ</a>
@@ -158,7 +154,7 @@
     <!-- Mobile Dropdown Menu -->
     <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-3">
       <a href="#beranda" onclick="toggleMobileMenu()" class="block py-2 text-slate-800 font-semibold">Beranda</a>
-      <a href="#layanan" onclick="toggleMobileMenu()" class="block py-2 text-slate-600 hover:text-kemenkes-700">Layanan Medis</a>
+      <a href="#layanan" onclick="toggleMobileMenu()" class="block py-2 text-slate-600 hover:text-kemenkes-700">Klaster Layanan</a>
       <a href="#jadwal" onclick="toggleMobileMenu()" class="block py-2 text-slate-600 hover:text-kemenkes-700">Jadwal Dokter</a>
       <a href="#program" onclick="toggleMobileMenu()" class="block py-2 text-slate-600 hover:text-kemenkes-700">Program ILP</a>
       <a href="#faq" onclick="toggleMobileMenu()" class="block py-2 text-slate-600 hover:text-kemenkes-700">FAQ</a>
@@ -173,7 +169,6 @@
 
   <!-- Hero Section -->
   <section id="beranda" class="relative bg-kemenkes-gradient text-white pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden">
-    <!-- Subtle Background Pattern -->
     <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -235,229 +230,181 @@
     </div>
   </div>
 
-  <!-- Quick Action & Highlight Features Cards -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      
-      <!-- Feature 1 -->
-      <div class="bg-white rounded-2xl p-5 shadow-lg border border-mint-accent hover:shadow-xl transition-all group">
-        <div class="flex items-center gap-4">
-          <div class="w-12 h-12 rounded-xl bg-emerald-100 text-kemenkes-700 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
-            <i class="fa-solid fa-mobile-screen-button"></i>
-          </div>
-          <div>
-            <h4 class="font-display font-bold text-slate-800 text-sm">Pendaftaran Online</h4>
-            <p class="text-xs text-slate-500 mt-0.5">Daftar dari rumah dengan mudah dan cepat</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Feature 2 -->
-      <div class="bg-white rounded-2xl p-5 shadow-lg border border-mint-accent hover:shadow-xl transition-all group">
-        <div class="flex items-center gap-4">
-          <div class="w-12 h-12 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
-            <i class="fa-solid fa-id-card"></i>
-          </div>
-          <div>
-            <h4 class="font-display font-bold text-slate-800 text-sm">Layanan BPJS Gratis</h4>
-            <p class="text-xs text-slate-500 mt-0.5">Faskes 1 terintegrasi e-Puskesmas</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Feature 3 -->
-      <div class="bg-white rounded-2xl p-5 shadow-lg border border-mint-accent hover:shadow-xl transition-all group">
-        <div class="flex items-center gap-4">
-          <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
-            <i class="fa-solid fa-truck-medical"></i>
-          </div>
-          <div>
-            <h4 class="font-display font-bold text-slate-800 text-sm">Ambulans & UGD 24 Jam</h4>
-            <p class="text-xs text-slate-500 mt-0.5">Siap siaga penanganan darurat</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Feature 4 -->
-      <div class="bg-white rounded-2xl p-5 shadow-lg border border-mint-accent hover:shadow-xl transition-all group">
-        <div class="flex items-center gap-4">
-          <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
-            <i class="fa-solid fa-heart-circle-check"></i>
-          </div>
-          <div>
-            <h4 class="font-display font-bold text-slate-800 text-sm">Sertifikasi Akreditasi</h4>
-            <p class="text-xs text-slate-500 mt-0.5">Predikat Paripurna Kemenkes RI</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Healthcare Services Section -->
-  <section id="layanan" class="py-16 sm:py-24 bg-slate-50">
+  <!-- SECTION: KLASTER LAYANAN INTEGRASI PRIMER (ILP) -->
+  <section id="layanan" class="py-16 sm:py-24 bg-slate-50/70">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <!-- Section Header -->
-      <div class="text-center max-w-3xl mx-auto space-y-3">
+      <div class="text-center max-w-3xl mx-auto space-y-3 mb-12">
         <span class="inline-block bg-emerald-100 text-emerald-800 font-semibold text-xs px-4 py-1.5 rounded-full uppercase tracking-wider">
-          Pelayanan Medis Terpadu
+          Integrasi Layanan Primer (ILP)
         </span>
-        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-          Layanan Kesehatan Spesialis & Umum
+        <h2 class="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
+          Klaster Layanan Kesehatan
         </h2>
         <p class="text-slate-600 text-sm sm:text-base">
-          Fasilitas kesehatan primer dengan standar medis modern untuk seluruh anggota keluarga Anda.
+          Penyelenggaraan pelayanan kesehatan terpadu berorientasi pada siklus hidup manusia untuk meningkatkan mutu layanan bagi masyarakat.
         </p>
       </div>
 
-      <!-- Service Category Filter Tabs -->
-      <div class="mt-8 flex justify-center flex-wrap gap-2 text-xs sm:text-sm font-medium">
-        <button onclick="filterServices('all')" class="service-tab active border border-kemenkes-600 bg-kemenkes-600 text-white px-4 py-2 rounded-xl font-semibold transition-all">Semua Layanan</button>
-        <button onclick="filterServices('medis-dasar')" class="service-tab border border-slate-200 bg-white text-slate-700 hover:border-kemenkes-500 px-4 py-2 rounded-xl transition-all">Medis Dasar</button>
-        <button onclick="filterServices('ibu-anak')" class="service-tab border border-slate-200 bg-white text-slate-700 hover:border-kemenkes-500 px-4 py-2 rounded-xl transition-all">Ibu & Anak (KIA)</button>
-        <button onclick="filterServices('penunjang')" class="service-tab border border-slate-200 bg-white text-slate-700 hover:border-kemenkes-500 px-4 py-2 rounded-xl transition-all">Penunjang & Spesialis</button>
-        <button onclick="filterServices('darurat')" class="service-tab border border-slate-200 bg-white text-slate-700 hover:border-kemenkes-500 px-4 py-2 rounded-xl transition-all">UGD 24 Jam</button>
-      </div>
-
-      <!-- Service Cards Grid -->
-      <div class="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="servicesGrid">
+      <!-- Klaster Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         
-        <!-- Card 1: Poli Umum -->
-        <div class="service-card bg-white rounded-3xl p-6 shadow-md hover:shadow-xl border border-emerald-100 transition-all flex flex-col justify-between" data-category="medis-dasar">
+        <!-- KLASTER 1: Manajemen -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group flex flex-col justify-between">
+          <!-- Card Header & Number Watermark -->
           <div>
-            <div class="w-12 h-12 bg-emerald-100 text-kemenkes-700 rounded-2xl flex items-center justify-center text-xl font-bold mb-4">
-              <i class="fa-solid fa-user-doctor"></i>
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-100/70 text-emerald-700 flex items-center justify-center text-xl font-bold group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all">
+                <i class="fa-solid fa-sitemap"></i>
+              </div>
+              <span class="font-display font-extrabold text-4xl text-slate-200/80 tracking-tighter select-none">01</span>
             </div>
-            <span class="inline-block text-[11px] font-bold bg-emerald-50 text-kemenkes-800 px-2.5 py-0.5 rounded-md mb-2">Medis Dasar</span>
-            <h3 class="font-display font-bold text-lg text-slate-800">Poli Umum & Lansia</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-              Pemeriksaan kesehatan menyeluruh, konsultasi penyakit umum, pengobatan penyakit kronis (Hipertensi & Diabetes), serta pemeriksaan kesehatan lansia.
+
+            <!-- Title & Subtitle Badge -->
+            <span class="block text-[11px] font-extrabold text-emerald-700 uppercase tracking-widest mb-1">
+              KLASTER 1
+            </span>
+            <h3 class="font-display font-bold text-xl text-slate-900 group-hover:text-emerald-700 transition-colors">
+              Manajemen
+            </h3>
+            <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+              Pengelolaan administrasi, informasi, mutu, dan koordinasi pelayanan Puskesmas.
             </p>
-            <ul class="mt-4 space-y-1.5 text-xs text-slate-600">
-              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-kemenkes-600"></i> Konsultasi & Diagnosa Dokter</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-kemenkes-600"></i> Skrining Penyakit Tidak Menular</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-kemenkes-600"></i> Surat Keterangan Sehat</li>
-            </ul>
           </div>
-          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-            <span class="text-xs text-slate-500"><i class="fa-regular fa-clock mr-1"></i>07:30 - 14:00</span>
-            <button onclick="openModal('registerModal')" class="text-xs font-bold text-kemenkes-700 hover:text-kemenkes-900">Daftar Ke Poli &rarr;</button>
+
+          <!-- Card Footer -->
+          <div class="mt-8 pt-4 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs text-slate-500 font-medium flex items-center gap-1.5">
+              <i class="fa-regular fa-circle-check text-emerald-600"></i> 4 Layanan
+            </span>
+            <button onclick="showKlasterDetail(1)" class="text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Lihat detail <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
           </div>
         </div>
 
-        <!-- Card 2: Poli Gigi & Mulut -->
-        <div class="service-card bg-white rounded-3xl p-6 shadow-md hover:shadow-xl border border-emerald-100 transition-all flex flex-col justify-between" data-category="medis-dasar">
+        <!-- KLASTER 2: Ibu dan Anak -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group flex flex-col justify-between">
           <div>
-            <div class="w-12 h-12 bg-teal-100 text-teal-700 rounded-2xl flex items-center justify-center text-xl font-bold mb-4">
-              <i class="fa-solid fa-tooth"></i>
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-100/70 text-emerald-700 flex items-center justify-center text-xl font-bold group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all">
+                <i class="fa-solid fa-globe"></i>
+              </div>
+              <span class="font-display font-extrabold text-4xl text-slate-200/80 tracking-tighter select-none">02</span>
             </div>
-            <span class="inline-block text-[11px] font-bold bg-teal-50 text-teal-800 px-2.5 py-0.5 rounded-md mb-2">Medis Dasar</span>
-            <h3 class="font-display font-bold text-lg text-slate-800">Poli Kesehatan Gigi & Mulut</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-              Pelayanan kesehatan gigi lengkap mulai dari penambalan, pencabutan, pembersihan karang gigi (scaling), hingga edukasi kesehatan mulut anak.
+
+            <span class="block text-[11px] font-extrabold text-emerald-700 uppercase tracking-widest mb-1">
+              KLASTER 2
+            </span>
+            <h3 class="font-display font-bold text-xl text-slate-900 group-hover:text-emerald-700 transition-colors">
+              Ibu dan Anak
+            </h3>
+            <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+              Pelayanan kesehatan bagi ibu, bayi, balita, anak, dan remaja.
             </p>
-            <ul class="mt-4 space-y-1.5 text-xs text-slate-600">
-              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-teal-600"></i> Penambalan & Pencabutan Gigi</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-teal-600"></i> Pembersihan Karang Gigi (Scaling)</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-teal-600"></i> Pengobatan Infeksi Gusi</li>
-            </ul>
           </div>
-          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-            <span class="text-xs text-slate-500"><i class="fa-regular fa-clock mr-1"></i>08:00 - 13:00</span>
-            <button onclick="openModal('registerModal')" class="text-xs font-bold text-kemenkes-700 hover:text-kemenkes-900">Daftar Ke Poli &rarr;</button>
+
+          <div class="mt-8 pt-4 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs text-slate-500 font-medium flex items-center gap-1.5">
+              <i class="fa-regular fa-circle-check text-emerald-600"></i> 4 Layanan
+            </span>
+            <button onclick="showKlasterDetail(2)" class="text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Lihat detail <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
           </div>
         </div>
 
-        <!-- Card 3: Poli KIA & KB -->
-        <div class="service-card bg-white rounded-3xl p-6 shadow-md hover:shadow-xl border border-emerald-100 transition-all flex flex-col justify-between" data-category="ibu-anak">
+        <!-- KLASTER 3: Usia Dewasa & Lansia -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group flex flex-col justify-between">
           <div>
-            <div class="w-12 h-12 bg-rose-100 text-rose-700 rounded-2xl flex items-center justify-center text-xl font-bold mb-4">
-              <i class="fa-solid fa-baby-carriage"></i>
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-100/70 text-emerald-700 flex items-center justify-center text-xl font-bold group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all">
+                <i class="fa-regular fa-user"></i>
+              </div>
+              <span class="font-display font-extrabold text-4xl text-slate-200/80 tracking-tighter select-none">03</span>
             </div>
-            <span class="inline-block text-[11px] font-bold bg-rose-50 text-rose-800 px-2.5 py-0.5 rounded-md mb-2">Ibu & Anak</span>
-            <h3 class="font-display font-bold text-lg text-slate-800">Poli KIA, KB & Imunisasi</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-              Pemeriksaan kehamilan (ANC), pemantauan tumbuh kembang balita, pelayanan KB lengkap (IUD, Implan, Suntik, Pil), dan imunisasi dasar lengkap.
+
+            <span class="block text-[11px] font-extrabold text-emerald-700 uppercase tracking-widest mb-1">
+              KLASTER 3
+            </span>
+            <h3 class="font-display font-bold text-xl text-slate-900 group-hover:text-emerald-700 transition-colors">
+              Usia Dewasa & Lansia
+            </h3>
+            <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+              Pelayanan kesehatan untuk masyarakat usia dewasa hingga lanjut usia.
             </p>
-            <ul class="mt-4 space-y-1.5 text-xs text-slate-600">
-              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-rose-600"></i> Pemeriksaan Kehamilan & USG dasar</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-rose-600"></i> Konseling & Pelayanan Alat Kontrasepsi</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-rose-600"></i> Imunisasi Rutin Anak & BIAN</li>
-            </ul>
           </div>
-          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-            <span class="text-xs text-slate-500"><i class="fa-regular fa-clock mr-1"></i>08:00 - 13:30</span>
-            <button onclick="openModal('registerModal')" class="text-xs font-bold text-kemenkes-700 hover:text-kemenkes-900">Daftar Ke Poli &rarr;</button>
+
+          <div class="mt-8 pt-4 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs text-slate-500 font-medium flex items-center gap-1.5">
+              <i class="fa-regular fa-circle-check text-emerald-600"></i> 4 Layanan
+            </span>
+            <button onclick="showKlasterDetail(3)" class="text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Lihat detail <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
           </div>
         </div>
 
-        <!-- Card 4: Laboratorium Medis -->
-        <div class="service-card bg-white rounded-3xl p-6 shadow-md hover:shadow-xl border border-emerald-100 transition-all flex flex-col justify-between" data-category="penunjang">
+        <!-- KLASTER 4: Penanggulangan Penyakit Menular -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group flex flex-col justify-between">
           <div>
-            <div class="w-12 h-12 bg-blue-100 text-blue-700 rounded-2xl flex items-center justify-center text-xl font-bold mb-4">
-              <i class="fa-solid fa-flask-vial"></i>
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-100/70 text-emerald-700 flex items-center justify-center text-xl font-bold group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all">
+                <i class="fa-regular fa-shield text-xl"></i>
+              </div>
+              <span class="font-display font-extrabold text-4xl text-slate-200/80 tracking-tighter select-none">04</span>
             </div>
-            <span class="inline-block text-[11px] font-bold bg-blue-50 text-blue-800 px-2.5 py-0.5 rounded-md mb-2">Penunjang Spesialis</span>
-            <h3 class="font-display font-bold text-lg text-slate-800">Laboratorium Klinik</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-              Fasilitas pengujian darah lengkap, gula darah, kolesterol, asam urat, urinalisis, tes TBC (TCM), dan pemeriksaan swab/rapid tes.
+
+            <span class="block text-[11px] font-extrabold text-emerald-700 uppercase tracking-widest mb-1">
+              KLASTER 4
+            </span>
+            <h3 class="font-display font-bold text-xl text-slate-900 group-hover:text-emerald-700 transition-colors">
+              Penanggulangan Penyakit Menular
+            </h3>
+            <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+              Upaya pencegahan, pemantauan, dan pengendalian penyakit menular.
             </p>
-            <ul class="mt-4 space-y-1.5 text-xs text-slate-600">
-              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-blue-600"></i> Cek Darah Lengkap & Kimia Darah</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-blue-600"></i> Pemeriksaan Dahak TBC / TCM</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-blue-600"></i> Tes Urin & Bebas Narkoba</li>
-            </ul>
           </div>
-          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-            <span class="text-xs text-slate-500"><i class="fa-regular fa-clock mr-1"></i>07:30 - 12:00</span>
-            <button onclick="openModal('registerModal')" class="text-xs font-bold text-kemenkes-700 hover:text-kemenkes-900">Daftar Ke Poli &rarr;</button>
+
+          <div class="mt-8 pt-4 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs text-slate-500 font-medium flex items-center gap-1.5">
+              <i class="fa-regular fa-circle-check text-emerald-600"></i> 4 Layanan
+            </span>
+            <button onclick="showKlasterDetail(4)" class="text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Lihat detail <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
           </div>
         </div>
 
-        <!-- Card 5: UGD & Ambulans -->
-        <div class="service-card bg-white rounded-3xl p-6 shadow-md hover:shadow-xl border border-emerald-100 transition-all flex flex-col justify-between" data-category="darurat">
+        <!-- LINTAS KLASTER: Pelayanan Pendukung (Tengah/Offset Row) -->
+        <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group flex flex-col justify-between md:col-span-2 lg:col-span-1 lg:col-start-2">
           <div>
-            <div class="w-12 h-12 bg-red-100 text-red-700 rounded-2xl flex items-center justify-center text-xl font-bold mb-4">
-              <i class="fa-solid fa-kit-medical"></i>
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-100/70 text-emerald-700 flex items-center justify-center text-xl font-bold group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all">
+                <i class="fa-solid fa-house-medical"></i>
+              </div>
+              <span class="font-display font-extrabold text-4xl text-slate-200/80 tracking-tighter select-none">05</span>
             </div>
-            <span class="inline-block text-[11px] font-bold bg-red-50 text-red-800 px-2.5 py-0.5 rounded-md mb-2">UGD 24 Jam</span>
-            <h3 class="font-display font-bold text-lg text-slate-800">Unit Gawat Darurat & Ambulans</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-              Penanganan kasus darurat medis, tindakan bedah minor/heacting luka, observasi darurat, dan layanan rujukan ambulans 24 jam.
-            </p>
-            <ul class="mt-4 space-y-1.5 text-xs text-slate-600">
-              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-red-600"></i> Penanganan Luka & Jahit Luka</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-red-600"></i> Stabilisasi Pasien Kritis</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-red-600"></i> Layanan Ambulans Rujukan</li>
-            </ul>
-          </div>
-          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-            <span class="text-xs text-red-600 font-bold"><i class="fa-solid fa-bolt mr-1"></i>Buka 24 Jam Nonstop</span>
-            <a href="tel:0226011718" class="text-xs font-bold text-red-600 hover:text-red-800">Panggil UGD &rarr;</a>
-          </div>
-        </div>
 
-        <!-- Card 6: Farmasi & Apotek -->
-        <div class="service-card bg-white rounded-3xl p-6 shadow-md hover:shadow-xl border border-emerald-100 transition-all flex flex-col justify-between" data-category="penunjang">
-          <div>
-            <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center text-xl font-bold mb-4">
-              <i class="fa-solid fa-pills"></i>
-            </div>
-            <span class="inline-block text-[11px] font-bold bg-amber-50 text-amber-800 px-2.5 py-0.5 rounded-md mb-2">Penunjang</span>
-            <h3 class="font-display font-bold text-lg text-slate-800">Pelayanan Farmasi & Obat</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-              Penyediaan obat resep lengkap standar Kemenkes, konseling apoteker mengenai aturan pakai obat, serta informasi efek samping obat.
+            <span class="block text-[11px] font-extrabold text-emerald-700 uppercase tracking-widest mb-1">
+              LINTAS KLASTER
+            </span>
+            <h3 class="font-display font-bold text-xl text-slate-900 group-hover:text-emerald-700 transition-colors">
+              Pelayanan Pendukung
+            </h3>
+            <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+              Pelayanan yang mendukung kebutuhan kesehatan lintas kelompok dan kondisi khusus.
             </p>
-            <ul class="mt-4 space-y-1.5 text-xs text-slate-600">
-              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-amber-600"></i> Penerimaan Resep Dokter Puskesmas</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-amber-600"></i> Edukasi & Konseling Farmasi</li>
-              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-amber-600"></i> Obat BPJS Gratis Sesuai Formularium</li>
-            </ul>
           </div>
-          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-            <span class="text-xs text-slate-500"><i class="fa-regular fa-clock mr-1"></i>07:30 - 14:00</span>
-            <span class="text-xs font-semibold text-emerald-700">Tersedia Setiap Hari Kerja</span>
+
+          <div class="mt-8 pt-4 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs text-slate-500 font-medium flex items-center gap-1.5">
+              <i class="fa-regular fa-circle-check text-emerald-600"></i> 4 Layanan
+            </span>
+            <button onclick="showKlasterDetail(5)" class="text-xs font-bold text-emerald-700 hover:text-emerald-900 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              Lihat detail <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
           </div>
         </div>
 
@@ -910,7 +857,7 @@
           <h4 class="font-display font-bold text-white text-sm mb-4">Navigasi Utama</h4>
           <ul class="space-y-2 text-xs text-slate-400">
             <li><a href="#beranda" class="hover:text-emerald-400 transition-colors">Beranda Utama</a></li>
-            <li><a href="#layanan" class="hover:text-emerald-400 transition-colors">Layanan Medis</a></li>
+            <li><a href="#layanan" class="hover:text-emerald-400 transition-colors">Klaster Layanan</a></li>
             <li><a href="#jadwal" class="hover:text-emerald-400 transition-colors">Jadwal Praktik Dokter</a></li>
             <li><a href="#program" class="hover:text-emerald-400 transition-colors">Program ILP Bandung</a></li>
             <li><a href="#faq" class="hover:text-emerald-400 transition-colors">FAQ & Bantuan</a></li>
@@ -945,6 +892,39 @@
       </div>
     </div>
   </footer>
+
+  <!-- MODAL: Detail Sub-Layanan Klaster -->
+  <div id="klasterModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-emerald-100 my-8 relative">
+      <button onclick="closeModal('klasterModal')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 text-lg">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="flex items-center gap-3 mb-3">
+        <div id="klasterModalIcon" class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg">
+          <i class="fa-solid fa-sitemap"></i>
+        </div>
+        <div>
+          <span id="klasterModalBadge" class="text-[10px] font-extrabold text-emerald-700 uppercase tracking-widest">KLASTER 1</span>
+          <h3 id="klasterModalTitle" class="font-display font-bold text-lg text-slate-900 leading-tight">Manajemen</h3>
+        </div>
+      </div>
+
+      <p id="klasterModalDesc" class="text-xs text-slate-500 mb-5 leading-relaxed"></p>
+
+      <div class="border-t border-slate-100 pt-4">
+        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-3">Daftar Layanan Terpadu (4 Layanan):</h4>
+        <ul id="klasterModalList" class="space-y-2.5 text-xs text-slate-700">
+          <!-- Populated by JS -->
+        </ul>
+      </div>
+
+      <div class="mt-6 pt-4 border-t border-slate-100 flex justify-end gap-3">
+        <button onclick="closeModal('klasterModal')" class="px-4 py-2 bg-slate-100 text-slate-700 font-semibold rounded-xl text-xs hover:bg-slate-200">Tutup</button>
+        <button onclick="closeModal('klasterModal'); openModal('registerModal')" class="px-5 py-2 bg-kemenkes-gradient text-white font-semibold rounded-xl text-xs shadow-md">Daftar Berobat</button>
+      </div>
+    </div>
+  </div>
 
   <!-- MODAL: Pendaftaran Online Pasien -->
   <div id="registerModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
@@ -985,12 +965,13 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label class="block font-semibold text-slate-700 mb-1">Pilih Poliklinik</label>
+            <label class="block font-semibold text-slate-700 mb-1">Pilih Poliklinik / Klaster</label>
             <select id="modalPoliSelect" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-kemenkes-500">
-              <option value="Poli Umum">Poli Umum</option>
-              <option value="Poli Gigi">Poli Gigi</option>
-              <option value="Poli KIA & KB">Poli KIA & KB</option>
-              <option value="Laboratorium">Laboratorium</option>
+              <option value="Poli Umum">Poli Umum (Klaster 3)</option>
+              <option value="Poli Gigi">Poli Gigi & Mulut</option>
+              <option value="Poli KIA & KB">Poli KIA & KB (Klaster 2)</option>
+              <option value="Laboratorium">Laboratorium (Pelayanan Pendukung)</option>
+              <option value="UGD">UGD & Gawat Darurat</option>
             </select>
           </div>
           <div>
@@ -1018,6 +999,70 @@
 
   <!-- Application Logic JavaScript -->
   <script>
+    // Data Klaster ILP
+    const klasterData = {
+      1: {
+        badge: "KLASTER 1",
+        title: "Manajemen",
+        icon: "fa-sitemap",
+        desc: "Pengelolaan administrasi, informasi, mutu, dan koordinasi pelayanan Puskesmas.",
+        items: [
+          "Ketatausahaan & Keuangan Puskesmas",
+          "Manajemen Mutu & Keselamatan Pasien",
+          "Sistem Informasi Puskesmas (e-Puskesmas & SatuSehat)",
+          "Manajemen Jejaring & Fasilitas Kesehatan Wilayah"
+        ]
+      },
+      2: {
+        badge: "KLASTER 2",
+        title: "Ibu dan Anak",
+        icon: "fa-globe",
+        desc: "Pelayanan kesehatan bagi ibu, bayi, balita, anak, dan remaja.",
+        items: [
+          "Kesehatan Ibu Hamil, Bersalin & Nifas (ANC & USG)",
+          "Pelayanan Kesehatan Bayi, Balita & Imunisasi Dasar",
+          "Pemantauan Tumbuh Kembang & Pencegahan Stunting",
+          "Pelayanan Kesehatan Anak Sekolah & Remaja"
+        ]
+      },
+      3: {
+        badge: "KLASTER 3",
+        title: "Usia Dewasa & Lansia",
+        icon: "fa-user",
+        desc: "Pelayanan kesehatan untuk masyarakat usia dewasa hingga lanjut usia.",
+        items: [
+          "Skrining & Pengobatan Penyakit Tidak Menular (Hipertensi, DM)",
+          "Pelayanan Kesehatan Jiwa & NAPZA",
+          "Pemeriksaan Kesehatan Lansia & Geriatri",
+          "Pelayanan Keluarga Berencana (KB) & Kesehatan Reproduksi"
+        ]
+      },
+      4: {
+        badge: "KLASTER 4",
+        title: "Penanggulangan Penyakit Menular",
+        icon: "fa-shield",
+        desc: "Upaya pencegahan, pemantauan, dan pengendalian penyakit menular.",
+        items: [
+          "Pencegahan & Pengendalian TBC, DBD, & Malaria",
+          "Surveilans Epidemiologi & Penanggulangan KLB",
+          "Pemeriksaan & Konseling HIV/AIDS & IMS",
+          "Konseling Penyehatan Lingkungan & Sanitasi Dasar"
+        ]
+      },
+      5: {
+        badge: "LINTAS KLASTER",
+        title: "Pelayanan Pendukung",
+        icon: "fa-house-medical",
+        desc: "Pelayanan yang mendukung kebutuhan kesehatan lintas kelompok dan kondisi khusus.",
+        items: [
+          "Unit Gawat Darurat (UGD 24 Jam) & Ambulans Rujukan",
+          "Pelayanan Kefarmasian & Apotek",
+          "Laboratorium Klinik Sederhana & TCM",
+          "Layanan Rawat Inap & Observasi Medis"
+        ]
+      }
+    };
+
     // Initialize Input Constraints on Window Load
     document.addEventListener('DOMContentLoaded', () => {
       const today = new Date();
@@ -1048,6 +1093,32 @@
       document.getElementById(modalId).classList.add('hidden');
     }
 
+    // Show Klaster Detail Modal
+    function showKlasterDetail(id) {
+      const data = klasterData[id];
+      if (!data) return;
+
+      document.getElementById('klasterModalBadge').innerText = data.badge;
+      document.getElementById('klasterModalTitle').innerText = data.title;
+      document.getElementById('klasterModalDesc').innerText = data.desc;
+      document.getElementById('klasterModalIcon').innerHTML = `<i class="fa-solid ${data.icon}"></i>`;
+
+      const listContainer = document.getElementById('klasterModalList');
+      listContainer.innerHTML = '';
+      
+      data.items.forEach(item => {
+        const li = document.createElement('li');
+        li.className = 'flex items-start gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-100';
+        li.innerHTML = `
+          <i class="fa-solid fa-circle-check text-emerald-600 text-sm mt-0.5"></i>
+          <span class="font-medium">${item}</span>
+        `;
+        listContainer.appendChild(li);
+      });
+
+      openModal('klasterModal');
+    }
+
     // Toast Notification System
     function showToast(message, type = 'success') {
       const container = document.getElementById('toastContainer');
@@ -1067,30 +1138,6 @@
         toast.classList.add('opacity-0', 'translate-y-2');
         setTimeout(() => toast.remove(), 300);
       }, 3500);
-    }
-
-    // Service Filtering Logic
-    function filterServices(category) {
-      const cards = document.querySelectorAll('.service-card');
-      const tabs = document.querySelectorAll('.service-tab');
-
-      tabs.forEach(tab => {
-        tab.classList.remove('bg-kemenkes-600', 'text-white', 'border-kemenkes-600');
-        tab.classList.add('bg-white', 'text-slate-700', 'border-slate-200');
-      });
-
-      if (event && event.target) {
-        event.target.classList.remove('bg-white', 'text-slate-700', 'border-slate-200');
-        event.target.classList.add('bg-kemenkes-600', 'text-white', 'border-kemenkes-600');
-      }
-
-      cards.forEach(card => {
-        if (category === 'all' || card.dataset.category === category) {
-          card.classList.remove('hidden');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
     }
 
     // Doctor Schedule Day Filter
