@@ -326,6 +326,8 @@
   <!-- DASHBOARD ADMIN -->
   <div id="adminDashboard" class="hidden min-h-screen bg-slate-100 py-10 px-4 sm:px-6 lg:px-8">
     <div class="max-w-7xl mx-auto space-y-8">
+      
+      <!-- Top Bar Admin -->
       <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
           <span class="bg-amber-100 text-amber-800 text-xs font-bold px-3 py-1 rounded-full uppercase">Panel Admin / Petugas</span>
@@ -336,35 +338,25 @@
         </button>
       </div>
 
-      <!-- KELOLA BUKU TAMU -->
-      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <h3 class="font-display font-bold text-lg text-slate-900 flex items-center gap-2">
-            <i class="fa-solid fa-address-book text-emerald-600"></i> Daftar Tamu Berkunjung (Buku Tamu)
-          </h3>
-          <div class="flex items-center gap-2 w-full sm:w-auto">
-            <input type="text" id="adminGuestSearch" oninput="filterAdminGuests()" placeholder="Cari nama / instansi..." class="px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl w-full sm:w-64 focus:outline-none">
-          </div>
+      <!-- DROPDOWN NAVIGASI / AKSES FITUR (Mengurangi Tampilan Floaded) -->
+      <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+          <label for="adminFeatureSelect" class="text-xs font-bold text-slate-700 whitespace-nowrap">
+            <i class="fa-solid fa-filter text-emerald-600 mr-1.5"></i> Pilih Menu Fitur:
+          </label>
+          <select id="adminFeatureSelect" onchange="switchAdminFeature(this.value)" class="px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl font-semibold text-slate-800 focus:outline-none focus:border-emerald-500 w-full sm:w-72">
+            <option value="all">Semua Fitur (Tampil Ringkas)</option>
+            <option value="struktur">Kelola Struktur Organisasi</option>
+            <option value="dokter">Kelola Jadwal Dokter</option>
+            <option value="faq">Kelola FAQ</option>
+            <option value="tamu">Daftar Tamu Berkunjung (Buku Tamu)</option>
+          </select>
         </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
-            <thead class="bg-slate-50 text-slate-600 uppercase">
-              <tr>
-                <th class="p-3 rounded-l-xl">Tanggal & Waktu</th>
-                <th class="p-3">Nama & Pekerjaan</th>
-                <th class="p-3">Asal Lembaga</th>
-                <th class="p-3">Kontak</th>
-                <th class="p-3">Maksud & Tujuan</th>
-                <th class="p-3 text-right rounded-r-xl">Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="adminGuestTableBody" class="divide-y divide-slate-100"></tbody>
-          </table>
-        </div>
+        <div class="text-xs text-slate-500 hidden md:block">Gunakan dropdown di atas untuk menyaring dan memfokuskan pengelolaan fitur.</div>
       </div>
 
       <!-- KELOLA STRUKTUR ORGANISASI -->
-      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
+      <div id="adminSecStruktur" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
         <div class="flex items-center justify-between">
           <h3 class="font-display font-bold text-lg text-slate-900 flex items-center gap-2">
             <i class="fa-solid fa-sitemap text-emerald-600"></i> Kelola Struktur Organisasi / Hirarki
@@ -390,7 +382,7 @@
       </div>
 
       <!-- Kelola Dokter & FAQ -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div id="adminSecDokterFaq" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
           <div class="flex items-center justify-between">
             <h3 class="font-display font-bold text-lg text-slate-900">Kelola Jadwal Dokter</h3>
@@ -407,6 +399,39 @@
           <div class="overflow-x-auto"><table class="w-full text-left text-xs"><tbody id="adminFaqTableBody"></tbody></table></div>
         </div>
       </div>
+
+      <!-- KELOLA BUKU TAMU (Dipindah ke Paling Bawah dengan Paginasi) -->
+      <div id="adminSecTamu" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <h3 class="font-display font-bold text-lg text-slate-900 flex items-center gap-2">
+            <i class="fa-solid fa-address-book text-emerald-600"></i> Daftar Tamu Berkunjung (Buku Tamu)
+          </h3>
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <input type="text" id="adminGuestSearch" oninput="filterAdminGuests()" placeholder="Cari nama / instansi..." class="px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl w-full sm:w-64 focus:outline-none">
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-50 text-slate-600 uppercase">
+              <tr>
+                <th class="p-3 rounded-l-xl">Tanggal & Waktu</th>
+                <th class="p-3">Nama & Pekerjaan</th>
+                <th class="p-3">Asal Lembaga</th>
+                <th class="p-3">Kontak</th>
+                <th class="p-3">Maksud & Tujuan</th>
+                <th class="p-3 text-right rounded-r-xl">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="adminGuestTableBody" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+        <!-- Kontrol Paginasi Tabel Buku Tamu -->
+        <div class="flex flex-col sm:flex-row items-center justify-between pt-4 border-t border-slate-100 gap-3">
+          <div id="guestPaginationInfo" class="text-xs text-slate-500">Menampilkan 0 dari 0 data</div>
+          <div id="guestPaginationControls" class="flex items-center gap-1"></div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -615,7 +640,34 @@
     });
 
     // ==========================================
-    // 1. FUNGSI BUKU TAMU
+    // FUNGSI SWITCH FITUR ADMIN (DROPDOWN)
+    // ==========================================
+    function switchAdminFeature(val) {
+      const secStruktur = document.getElementById('adminSecStruktur');
+      const secDokterFaq = document.getElementById('adminSecDokterFaq');
+      const secTamu = document.getElementById('adminSecTamu');
+      
+      if (val === 'all') {
+        secStruktur.classList.remove('hidden');
+        secDokterFaq.classList.remove('hidden');
+        secTamu.classList.remove('hidden');
+      } else if (val === 'struktur') {
+        secStruktur.classList.remove('hidden');
+        secDokterFaq.classList.add('hidden');
+        secTamu.classList.add('hidden');
+      } else if (val === 'dokter' || val === 'faq') {
+        secStruktur.classList.add('hidden');
+        secDokterFaq.classList.remove('hidden');
+        secTamu.classList.add('hidden');
+      } else if (val === 'tamu') {
+        secStruktur.classList.add('hidden');
+        secDokterFaq.classList.add('hidden');
+        secTamu.classList.remove('hidden');
+      }
+    }
+
+    // ==========================================
+    // 1. FUNGSI BUKU TAMU (DENGAN PAGINASI)
     // ==========================================
     async function handleGuestBookSubmit(e) {
       e.preventDefault();
@@ -650,12 +702,14 @@
     }
 
     let allGuestsData = [];
+    let filteredGuestsData = [];
+    let currentGuestPage = 1;
+    const guestRowsPerPage = 5;
+
     async function loadAdminGuests() {
-      // PERBAIKAN: Menambahkan .select('*') sebelum .order()
       const { data, error } = await db.from('buku_tamu').select('*').order('id', { ascending: false });
       const tbody = document.getElementById('adminGuestTableBody');
       if (!tbody) return;
-      tbody.innerHTML = '';
 
       if (error) {
         showToast('Gagal memuat data tamu: ' + error.message);
@@ -665,10 +719,13 @@
 
       if (!data || data.length === 0) {
         tbody.innerHTML = `<tr><td colspan="6" class="text-center text-xs text-slate-500 py-6">Belum ada data kunjungan tamu.</td></tr>`;
+        document.getElementById('guestPaginationInfo').innerText = 'Menampilkan 0 dari 0 data';
+        document.getElementById('guestPaginationControls').innerHTML = '';
         return;
       }
 
       allGuestsData = data;
+      filteredGuestsData = data;
       renderAdminGuests(data);
     }
 
@@ -677,7 +734,22 @@
       if (!tbody) return;
       tbody.innerHTML = '';
 
-      data.forEach(item => {
+      if (data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-xs text-slate-500 py-6">Data tidak ditemukan.</td></tr>`;
+        document.getElementById('guestPaginationInfo').innerText = 'Menampilkan 0 dari 0 data';
+        document.getElementById('guestPaginationControls').innerHTML = '';
+        return;
+      }
+
+      const totalPages = Math.ceil(data.length / guestRowsPerPage);
+      if (currentGuestPage > totalPages) currentGuestPage = totalPages;
+      if (currentGuestPage < 1) currentGuestPage = 1;
+
+      const start = (currentGuestPage - 1) * guestRowsPerPage;
+      const end = start + guestRowsPerPage;
+      const paginatedData = data.slice(start, end);
+
+      paginatedData.forEach(item => {
         tbody.innerHTML += `
           <tr class="hover:bg-slate-50/80 transition-colors">
             <td class="p-3 font-semibold text-slate-800">${item.hari_tanggal}<br><span class="text-[10px] text-slate-500 font-normal"><i class="fa-regular fa-clock"></i> ${item.waktu_kunjungan}</span></td>
@@ -695,16 +767,35 @@
           </tr>
         `;
       });
+
+      // Info paginasi
+      document.getElementById('guestPaginationInfo').innerText = `Menampilkan ${start + 1}-${Math.min(end, data.length)} dari ${data.length} data`;
+
+      // Kontrol tombol paginasi
+      let controlsHtml = '';
+      controlsHtml += `<button onclick="changeGuestPage(${currentGuestPage - 1})" ${currentGuestPage === 1 ? 'disabled class="px-3 py-1.5 bg-slate-100 text-slate-400 rounded-lg cursor-not-allowed text-xs"' : 'class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-xs font-semibold"'}>Sebelumnya</button>`;
+      controlsHtml += `<span class="text-xs font-bold text-slate-700 px-2">Hal ${currentGuestPage} / ${totalPages || 1}</span>`;
+      controlsHtml += `<button onclick="changeGuestPage(${currentGuestPage + 1})" ${currentGuestPage >= totalPages ? 'disabled class="px-3 py-1.5 bg-slate-100 text-slate-400 rounded-lg cursor-not-allowed text-xs"' : 'class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold"'}>Selanjutnya</button>`;
+      
+      document.getElementById('guestPaginationControls').innerHTML = controlsHtml;
+    }
+
+    function changeGuestPage(page) {
+      const totalPages = Math.ceil(filteredGuestsData.length / guestRowsPerPage);
+      if (page < 1 || page > totalPages) return;
+      currentGuestPage = page;
+      renderAdminGuests(filteredGuestsData);
     }
 
     function filterAdminGuests() {
       const query = document.getElementById('adminGuestSearch').value.toLowerCase();
-      const filtered = allGuestsData.filter(item => 
+      filteredGuestsData = allGuestsData.filter(item => 
         item.nama_lengkap.toLowerCase().includes(query) || 
         item.asal_lembaga.toLowerCase().includes(query) ||
         item.pekerjaan.toLowerCase().includes(query)
       );
-      renderAdminGuests(filtered);
+      currentGuestPage = 1; // Reset ke halaman pertama saat mencari
+      renderAdminGuests(filteredGuestsData);
     }
 
     function viewGuestDetail(id) {
