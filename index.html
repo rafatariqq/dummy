@@ -81,7 +81,6 @@
 </head>
 <body class="antialiased selection:bg-kemenkes-500 selection:text-white">
 
-  <!-- Toast Notification Box -->
   <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
   <!-- Main Navigation Bar (Header) -->
@@ -112,17 +111,15 @@
           <a href="#kontak" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Kontak</a>
         </nav>
 
-        <!-- Quick Action Buttons & Login Header -->
+        <!-- Quick Action Buttons & Prominent Desktop Login Button -->
         <div class="hidden md:flex items-center gap-3">
-          <a href="https://wa.me/6282353685324" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 shadow-sm transition-all">
+          <a href="https://wa.me/6282353685324" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 shadow-sm transition-all">
             <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
           </a>
-          <a href="mailto:pkmsatelittarailu@gmail.com" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all">
-            <i class="fa-solid fa-envelope text-sm"></i> Email
-          </a>
-          <!-- Tombol Login Desktop -->
-          <button onclick="openModal('loginModal')" class="bg-kemenkes-700 hover:bg-kemenkes-800 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 shadow-sm transition-all">
-            <i class="fa-solid fa-right-to-bracket text-sm"></i> Login
+          <!-- Tombol Login Desktop yang Sangat Menonjol & Estetik -->
+          <button onclick="openModal('loginModal')" class="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 border border-amber-400/50">
+            <i class="fa-solid fa-right-to-bracket text-sm"></i> 
+            <span>Login Petugas / Sistem</span>
           </button>
         </div>
 
@@ -150,9 +147,9 @@
             <i class="fa-solid fa-envelope"></i> Email
           </a>
         </div>
-        <!-- Tombol Login Mobile -->
-        <button onclick="toggleMobileMenu(); openModal('loginModal');" class="w-full bg-kemenkes-700 text-white text-center py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
-          <i class="fa-solid fa-right-to-bracket"></i> Login Akun / Petugas
+        <!-- Tombol Login Mobile yang Sangat Menonjol & Jelas -->
+        <button onclick="toggleMobileMenu(); openModal('loginModal');" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white text-center py-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-md">
+          <i class="fa-solid fa-right-to-bracket text-sm"></i> Login Petugas & Akun Sistem
         </button>
       </div>
     </div>
@@ -684,7 +681,7 @@
         <i class="fa-solid fa-xmark"></i>
       </button>
       <div class="text-center mb-6">
-        <div class="w-12 h-12 bg-kemenkes-100 text-kemenkes-700 rounded-2xl flex items-center justify-center text-xl mx-auto mb-3 font-bold">
+        <div class="w-12 h-12 bg-amber-100 text-amber-700 rounded-2xl flex items-center justify-center text-xl mx-auto mb-3 font-bold">
           <i class="fa-solid fa-lock"></i>
         </div>
         <h3 class="font-display font-bold text-xl text-slate-900">Login Sistem</h3>
@@ -696,7 +693,7 @@
           <label class="block text-xs font-semibold text-slate-700 mb-1">Username / NIP / Email</label>
           <div class="relative">
             <i class="fa-solid fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-            <input type="text" required placeholder="Masukkan username..." class="w-full pl-10 pr-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-kemenkes-500">
+            <input type="text" required placeholder="Masukkan username..." class="w-full pl-10 pr-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500">
           </div>
         </div>
 
@@ -704,18 +701,18 @@
           <label class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
           <div class="relative">
             <i class="fa-solid fa-key absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-            <input type="password" required placeholder="••••••••" class="w-full pl-10 pr-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-kemenkes-500">
+            <input type="password" required placeholder="••••••••" class="w-full pl-10 pr-4 py-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-amber-500">
           </div>
         </div>
 
         <div class="flex items-center justify-between text-xs">
           <label class="flex items-center gap-2 cursor-pointer text-slate-600">
-            <input type="checkbox" class="rounded border-slate-300 text-kemenkes-600 focus:ring-kemenkes-500"> Ingat saya
+            <input type="checkbox" class="rounded border-slate-300 text-amber-600 focus:ring-amber-500"> Ingat saya
           </label>
-          <a href="#" onclick="showToast('Fitur reset password silakan hubungi admin IT'); return false;" class="text-kemenkes-700 font-semibold hover:underline">Lupa password?</a>
+          <a href="#" onclick="showToast('Fitur reset password silakan hubungi admin IT'); return false;" class="text-amber-700 font-semibold hover:underline">Lupa password?</a>
         </div>
 
-        <button type="submit" class="w-full bg-kemenkes-gradient hover:opacity-95 text-white font-bold py-3 rounded-xl text-xs shadow-md transition-all mt-2">
+        <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold py-3 rounded-xl text-xs shadow-md transition-all mt-2">
           <i class="fa-solid fa-right-to-bracket mr-2"></i> Masuk Dashboard
         </button>
       </form>
@@ -760,8 +757,8 @@
     function showToast(message) {
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
-      toast.className = `bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl text-xs font-semibold flex items-center gap-3 border-l-4 border-emerald-500`;
-      toast.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i><span>${message}</span>`;
+      toast.className = `bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl text-xs font-semibold flex items-center gap-3 border-l-4 border-amber-500`;
+      toast.innerHTML = `<i class="fa-solid fa-circle-check text-amber-400"></i><span>${message}</span>`;
       container.appendChild(toast);
       setTimeout(() => toast.remove(), 3500);
     }
