@@ -3,389 +3,1551 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UPTD Puskesmas Satelit Tarailu - Layanan Kesehatan Masyarakat</title>
+  <title>PUSKESMAS SATELIT TARAILU - DINAS KESEHATAN KABUPATEN MAMUJU</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Supabase JS Client CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- Google Fonts: Inter & Manrope -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Styling & Animations (Emerald Palette) -->
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
             kemenkes: {
-              50: '#e6f4ea',
-              100: '#cce8d5',
-              200: '#99d1ab',
-              300: '#66b980',
-              400: '#33a256',
-              500: '#008a2c',
-              600: '#006e23',
-              700: '#00531a',
-              800: '#003711',
-              900: '#001c09',
-              950: '#000e05',
+              50: '#f0fdf4',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              300: '#34d399',
+              400: '#10b981',
+              500: '#059669',
+              600: '#047857',
+              700: '#065f46',
+              800: '#064e3b',
+              900: '#022c22',
+              950: '#011c16',
             }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Manrope', 'sans-serif'],
           }
         }
       }
     }
   </script>
-
-  <!-- FontAwesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
     }
-    /* Custom Scrollbar */
+    h1, h2, h3, h4, .font-display {
+      font-family: 'Manrope', sans-serif;
+      letter-spacing: -0.01em;
+    }
+    .bg-kemenkes-gradient {
+      background: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);
+    }
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
     }
     ::-webkit-scrollbar-track {
-      background: #f1f1f1;
+      background: #f1f5f9;
     }
     ::-webkit-scrollbar-thumb {
-      background: #008a2c;
-      border-radius: 4px;
+      background: #34d399;
+      border-radius: 9999px;
     }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #006e23;
-    }
+    .sec-room-element { cursor: pointer; transition: all 0.2s ease-in-out; }
+    .sec-room-element:hover { filter: brightness(0.95); transform: translateY(-1px); }
+    .sec-room-active { filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25)); }
+    .sec-room-active rect, .sec-room-active path { stroke: #0f172a !important; stroke-width: 3.5px !important; fill: #cbd5e1 !important; }
+    .blueprint-grid { background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px); background-size: 24px 24px; }
   </style>
 </head>
-<body class="bg-stone-50 text-stone-800 antialiased selection:bg-kemenkes-500 selection:text-white">
+<body class="antialiased selection:bg-kemenkes-400 selection:text-white">
 
-  <!-- HEADER / NAVBAR -->
-  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-stone-200 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-kemenkes-500 text-white rounded-xl flex items-center justify-center font-extrabold text-xl shadow-md">
-          <i class="fa-solid fa-star-of-life"></i>
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- FLOATING BUTTON BUKU TAMU -->
+  <button onclick="openModal('guestBookModal')" class="fixed bottom-6 right-6 z-40 bg-kemenkes-500 hover:bg-kemenkes-600 text-white px-5 py-3.5 rounded-full shadow-lg flex items-center gap-3 font-display font-bold text-sm transition-all transform hover:scale-105 border border-white/20">
+    <i class="fa-solid fa-address-book text-lg"></i>
+    <span>Buku Tamu</span>
+  </button>
+
+  <!-- HEADER UTAMA -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-emerald-100">
+    <div class="bg-kemenkes-900 text-emerald-100 text-xs py-1.5 px-4 hidden sm:block">
+      <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="flex items-center gap-6">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-clock text-kemenkes-300"></i> Layanan UGD: <strong>24 Jam Siaga</strong></span>
+          <span class="flex items-center gap-1.5"><i class="fa-brands fa-whatsapp text-kemenkes-300"></i> Hotline: <strong>0823-5368-5324</strong></span>
         </div>
-        <div>
-          <h1 class="font-bold text-base sm:text-lg text-stone-900 tracking-tight leading-tight">PUSKESMAS TARAILU</h1>
-          <p class="text-[11px] text-kemenkes-700 font-semibold uppercase tracking-wider">Kabupaten Mamuju</p>
+        <div class="flex items-center gap-4">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-envelope text-kemenkes-300"></i> pkmsatelittarailu@gmail.com</span>
         </div>
       </div>
-      
-      <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-stone-600">
-        <a href="#beranda" class="hover:text-kemenkes-600 transition">Beranda</a>
-        <a href="#layanan" class="hover:text-kemenkes-600 transition">Layanan</a>
-        <a href="#denah" class="text-kemenkes-600 font-bold">Denah Interaktif</a>
-        <a href="#kontak" class="hover:text-kemenkes-600 transition">Kontak</a>
-      </nav>
+    </div>
 
-      <div class="flex items-center gap-2">
-        <button onclick="openModal('roomIndexModal')" class="bg-kemenkes-500 hover:bg-kemenkes-600 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-sm transition flex items-center gap-2">
-          <i class="fa-solid fa-map"></i> <span class="hidden sm:inline">Indeks Ruangan</span>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a href="#" class="flex items-center gap-3 group">
+          <img src="logo-puskesmas-tarailu.png" alt="Logo" class="h-10 sm:h-12 w-auto object-contain group-hover:scale-105 transition-transform" onerror="this.src='https://via.placeholder.com/48x48?text=PKM'">
+          <div class="flex flex-col">
+            <span class="font-display font-extrabold text-lg sm:text-xl text-stone-800 tracking-tight leading-none group-hover:text-kemenkes-500 transition-colors">PKM SATELIT TARAILU</span>
+            <span class="text-[10px] sm:text-[11px] font-semibold text-kemenkes-600 tracking-wider uppercase mt-1">DINAS KESEHATAN KAB. MAMUJU</span>
+          </div>
+        </a>
+
+        <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-stone-700">
+          <a href="#beranda" class="hover:text-kemenkes-500 transition-colors py-1 border-b-2 border-kemenkes-500 text-kemenkes-600 font-semibold">Beranda</a>
+          <a href="#profil" class="hover:text-kemenkes-500 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-500">Profil & Visi Misi</a>
+          <a href="#layanan" class="hover:text-kemenkes-500 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-500">Klaster Layanan</a>
+          <a href="#jadwal" class="hover:text-kemenkes-500 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-500">Jadwal Dokter</a>
+          <a href="#faq" class="hover:text-kemenkes-500 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-500">FAQ</a>
+          <a href="#kontak" class="hover:text-kemenkes-500 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-500">Kontak</a>
+        </nav>
+
+        <div class="hidden md:flex items-center gap-3">
+          <a href="https://wa.me/6282353685324" target="_blank" class="bg-kemenkes-500 hover:bg-kemenkes-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 shadow-sm transition-all">
+            <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
+          </a>
+          <button onclick="openModal('loginModal')" class="bg-stone-900 hover:bg-stone-800 text-white px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 shadow-sm transition-all border border-stone-700/50">
+            <i class="fa-solid fa-right-to-bracket text-sm"></i> <span>Login Petugas</span>
+          </button>
+        </div>
+
+        <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg text-stone-600 hover:text-stone-900 hover:bg-stone-100 focus:outline-none">
+          <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mobile Menu Dropdown -->
+    <div id="mobileMenu" class="hidden lg:hidden px-4 pt-2 pb-4 space-y-2 bg-white border-b border-emerald-100">
+      <a href="#beranda" class="block py-2 text-sm text-stone-700 font-medium">Beranda</a>
+      <a href="#profil" class="block py-2 text-sm text-stone-700 font-medium">Profil & Visi Misi</a>
+      <a href="#layanan" class="block py-2 text-sm text-stone-700 font-medium">Klaster Layanan</a>
+      <a href="#jadwal" class="block py-2 text-sm text-stone-700 font-medium">Jadwal Dokter</a>
+      <a href="#faq" class="block py-2 text-sm text-stone-700 font-medium">FAQ</a>
+      <a href="#kontak" class="block py-2 text-sm text-stone-700 font-medium">Kontak</a>
+      <div class="pt-2 flex flex-col gap-2">
+        <a href="https://wa.me/6282353685324" target="_blank" class="bg-kemenkes-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+          <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
+        </a>
+        <button onclick="openModal('loginModal')" class="bg-stone-900 text-white px-5 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+          <i class="fa-solid fa-right-to-bracket text-sm"></i> <span>Login Petugas</span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- KONTEN UTAMA -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
-
-    <!-- HERO SECTION -->
-    <section id="beranda" class="bg-gradient-to-br from-kemenkes-900 via-kemenkes-800 to-emerald-900 rounded-3xl p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
-      <div class="absolute -right-10 -bottom-10 w-96 h-96 bg-kemenkes-600/20 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="max-w-2xl space-y-6 relative z-10">
-        <span class="bg-kemenkes-700 text-kemenkes-100 text-xs font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider border border-kemenkes-600">UPTD Puskesmas Satelit Tarailu</span>
-        <h2 class="font-display font-extrabold text-3xl sm:text-5xl leading-tight tracking-tight">Melayani dengan Sepenuh Hati, Sehat Bersama Kami</h2>
-        <p class="text-stone-200 text-sm sm:text-base leading-relaxed">Pusat kesehatan masyarakat terpadu yang siap memberikan pelayanan kesehatan terbaik, cepat, dan ramah untuk seluruh warga Tarailu dan sekitarnya.</p>
-        <div class="flex flex-wrap gap-3 pt-2">
-          <a href="#denah" class="bg-white hover:bg-stone-100 text-kemenkes-900 font-bold px-6 py-3 rounded-xl shadow-md transition text-xs sm:text-sm flex items-center gap-2">
-            <i class="fa-solid fa-compass"></i> Lihat Denah Ruangan
+  <!-- Hero Section -->
+  <section id="beranda" class="relative bg-kemenkes-gradient text-white pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden shadow-inner">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="max-w-3xl mx-auto text-center space-y-6">
+        <div class="inline-flex items-center gap-2 bg-white/20 px-3.5 py-1.5 rounded-full border border-white/30 text-xs sm:text-sm font-medium backdrop-blur-sm">
+          <span class="w-2 h-2 rounded-full bg-emerald-200 animate-pulse"></span>
+          <span>Integrasi Layanan Primer (ILP) Kabupaten Mamuju</span>
+        </div>
+        <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight drop-shadow-sm">
+          Puskesmas Satelit Tarailu <span class="text-emerald-100">Sehat & Terpercaya</span>
+        </h1>
+        <p class="text-emerald-50 text-base sm:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+          Berkomitmen memberikan pelayanan kesehatan primer yang cepat, profesional, ramah, dan terintegrasi untuk masyarakat Tarailu, Kecamatan Sampaga, Kabupaten Mamuju.
+        </p>
+        <div class="pt-2 flex flex-wrap justify-center gap-3">
+          <a href="#jadwal" class="bg-white hover:bg-emerald-50 text-kemenkes-700 font-bold px-7 py-3.5 rounded-xl shadow-md transition-all flex items-center gap-2 text-sm">
+            <i class="fa-regular fa-calendar-alt text-lg text-kemenkes-500"></i> Lihat Jadwal Dokter
           </a>
-          <button onclick="openModal('roomIndexModal')" class="bg-kemenkes-700 hover:bg-kemenkes-600 text-white font-bold px-6 py-3 rounded-xl shadow-md transition text-xs sm:text-sm border border-kemenkes-500 flex items-center gap-2">
-            <i class="fa-solid fa-list-ul"></i> Daftar Ruangan
+          <button onclick="openModal('guestBookModal')" class="border border-white/40 hover:bg-white/15 text-white font-bold px-7 py-3.5 rounded-xl transition-all flex items-center gap-2 text-sm backdrop-blur-sm">
+            <i class="fa-solid fa-address-book text-lg"></i> Isi Buku Tamu
           </button>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- BAGIAN DENAH INTERAKTIF PUSKESMAS -->
-    <section id="denah" class="space-y-6 pt-4">
-      <div class="text-center max-w-xl mx-auto space-y-2">
-        <span class="inline-block bg-kemenkes-100 text-kemenkes-700 font-semibold text-xs px-4 py-1.5 rounded-full uppercase tracking-wider border border-kemenkes-200">Denah Interaktif</span>
-        <h3 class="font-display font-bold text-2xl sm:text-3xl text-stone-900">Denah Tata Letak Ruangan Puskesmas</h3>
-        <p class="text-xs text-stone-500">Denah arsitektural UPTD Puskesmas Satelit Tarailu dengan penyesuaian tema warna Kemenkes[cite: 7, 8].</p>
-      </div>
+  <!-- SECTION: PROFIL, VISI MISI, DENAH INTERAKTIF & STRUKTUR -->
+  <section id="profil" class="py-16 sm:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
       
-      <!-- Wrapper Kontrol & Peta Vektor -->
-      <div class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-emerald-800 shadow-xl max-w-6xl mx-auto relative overflow-hidden">
-        
-        <!-- Header Kontrol Denah -->
-        <div class="flex flex-col sm:flex-row items-center justify-between border-b-2 border-emerald-800 pb-4 mb-6 gap-4">
-          <div class="flex items-center gap-3">
-            <div class="bg-kemenkes-500 text-white p-2.5 rounded-xl shadow-sm"><i class="fa-solid fa-map text-lg"></i></div>
-            <div>
-              <h4 class="font-display font-extrabold text-lg sm:text-xl text-stone-900 tracking-wider">BLUEPRINT PUSKESMAS TARAILU[cite: 7]</h4>
-              <p class="text-[11px] text-stone-500">Klik salah satu ruangan untuk melihat informasi detail</p>
-            </div>
-          </div>
-          
-          <div class="flex items-center gap-2 flex-wrap">
-            <button onclick="openModal('roomIndexModal')" class="bg-kemenkes-500 hover:bg-kemenkes-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition shadow-sm flex items-center gap-2">
-              <i class="fa-solid fa-list-ul"></i> Indeks Ruangan
-            </button>
-            <div class="flex items-center gap-1.5 bg-emerald-50 px-2.5 py-1.5 rounded-xl border border-emerald-200">
-              <button onclick="zoomDenah(1.2)" class="p-1.5 bg-white hover:bg-emerald-100 rounded-lg text-kemenkes-700 text-xs font-bold transition shadow-sm" title="Zoom In"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
-              <button onclick="zoomDenah(0.8)" class="p-1.5 bg-white hover:bg-emerald-100 rounded-lg text-kemenkes-700 text-xs font-bold transition shadow-sm" title="Zoom Out"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
-              <button onclick="resetDenahZoom()" class="px-2.5 py-1 bg-white hover:bg-emerald-100 rounded-lg text-kemenkes-700 text-xs font-semibold transition shadow-sm">Reset</button>
-            </div>
+      <div class="text-center max-w-3xl mx-auto space-y-3">
+        <span class="inline-block bg-kemenkes-100 text-kemenkes-700 font-semibold text-xs px-4 py-1.5 rounded-full uppercase tracking-wider border border-kemenkes-200">Profil & Informasi Kelembagaan</span>
+        <h2 class="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-stone-900 tracking-tight">Tentang Puskesmas Satelit Tarailu</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-gradient-to-br from-kemenkes-700 to-kemenkes-900 text-white rounded-2xl p-8 shadow-md flex flex-col justify-between border border-kemenkes-600">
+          <div class="space-y-4">
+            <div class="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-md border border-white/20 text-emerald-200 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-eye"></i></div>
+            <h3 class="font-display text-xl font-bold">Visi Puskesmas</h3>
+            <p class="text-emerald-50 text-sm sm:text-base italic leading-relaxed font-light">"Terwujudnya Masyarakat Tarailu yang Sehat, Mandiri, dan Berkualitas Melalui Pelayanan Kesehatan Primer yang Bermutu dan Berintegrasi."</p>
           </div>
         </div>
+        <div class="bg-white rounded-2xl p-8 border border-emerald-100 shadow-md flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="w-12 h-12 rounded-2xl bg-kemenkes-100 text-kemenkes-600 flex items-center justify-center text-xl font-bold"><i class="fa-solid fa-list-check"></i></div>
+            <h3 class="font-display text-xl font-bold text-stone-900">Misi Puskesmas</h3>
+            <ul class="space-y-2.5 text-xs sm:text-sm text-stone-600">
+              <li class="flex items-start gap-2.5"><i class="fa-solid fa-check text-kemenkes-500 mt-1 shrink-0"></i><span>Menyelenggarakan pelayanan kesehatan dasar yang proaktif dan berorientasi siklus hidup.</span></li>
+              <li class="flex items-start gap-2.5"><i class="fa-solid fa-check text-kemenkes-500 mt-1 shrink-0"></i><span>Meningkatkan pemberdayaan masyarakat dan lintas sektor.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-        <!-- Area Tampilan Denah Grid Terintegrasi -->
-        <div id="denahZoomContainer" class="overflow-x-auto bg-emerald-50/20 p-6 rounded-2xl border-2 border-emerald-800 transition-transform duration-300 origin-center">
-          <div class="min-w-[950px] space-y-4">
+      <!-- KONTENER DENAH PUSKESMAS INTERAKTIF (BARU SESUAI FILE-1) -->
+      <div class="space-y-6 pt-6">
+        <div class="text-center max-w-xl mx-auto space-y-2">
+          <span class="bg-slate-200 text-slate-800 border border-slate-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Denah Interaktif</span>
+          <h3 class="font-display font-bold text-2xl sm:text-3xl text-stone-900">Tata Letak Ruangan Puskesmas Tarailu</h3>
+          <p class="text-xs text-stone-500">Klik salah satu ruangan pada denah atau gunakan fitur pencarian untuk melihat informasi detail.</p>
+        </div>
+
+        <!-- Controls & Search Bar -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-300 shadow-sm max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="relative w-full md:w-80">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                    <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                </span>
+                <input type="text" id="sectionSearchInput" placeholder="Cari ruangan (Cth: UGD, Poli Gigi)..." 
+                       class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900 transition">
+            </div>
             
-            <!-- Baris Atas -->
-            <div class="grid grid-cols-12 gap-3">
-              <!-- Kolom Kiri -->
-              <div class="col-span-3 space-y-3">
-                <div onclick="showRoomInfo('Perawatan Anak', 'Klaster 2 (Ibu & Anak)', 'Rawat inap khusus anak dan pediatri.', 'Bidan / Perawat Jaga', '24 Jam')" class="bg-white hover:bg-emerald-50 border-2 border-emerald-800 p-3 rounded-xl text-center shadow-sm cursor-pointer transition-all">
-                  <span class="text-[11px] font-extrabold text-stone-800 block">PERAWATAN ANAK[cite: 7]</span>
-                </div>
-                <div onclick="showRoomInfo('P Care', 'Klaster 1 (Manajemen)', 'Layanan administrasi BPJS dan sistem rujukan online.', 'Petugas P Care', '08:00 - 14:00')" class="bg-emerald-100 hover:bg-emerald-200 border-2 border-emerald-800 p-3 rounded-xl text-center shadow-sm cursor-pointer transition-all">
-                  <span class="text-[11px] font-extrabold text-emerald-900 block">P CARE[cite: 7]</span>
-                </div>
-                <div onclick="showRoomInfo('Mushala', 'Fasilitas Umum', 'Tempat ibadah bagi pasien, keluarga, dan petugas.', '-', '24 Jam')" class="bg-white hover:bg-emerald-50 border-2 border-emerald-800 p-2.5 rounded-xl text-center shadow-sm cursor-pointer transition-all">
-                  <span class="text-[10px] font-bold text-stone-800 block">MUSHALA[cite: 7]</span>
-                </div>
-                <div onclick="showRoomInfo('Ruang Sterilisasi', 'Lintas Klaster', 'Sterilisasi alat medis dan keperawatan.', 'Tim Sanitasi', '08:00 - 14:00')" class="bg-emerald-100 hover:bg-emerald-200 border-2 border-emerald-800 p-2.5 rounded-xl text-center shadow-sm cursor-pointer transition-all">
-                  <span class="text-[10px] font-bold text-emerald-900 block">RUANG STERILISASI[cite: 7]</span>
-                </div>
-                <div onclick="showRoomInfo('Laboratorium', 'Lintas Klaster', 'Pemeriksaan darah, urine, dan diagnostik klinis.', 'Analis Kesehatan', '24 Jam')" class="bg-kemenkes-100 hover:bg-kemenkes-200 border-2 border-emerald-800 p-3 rounded-xl text-center shadow-sm cursor-pointer transition-all">
-                  <span class="text-[11px] font-extrabold text-kemenkes-900 block">LABORATORIUM[cite: 7]</span>
-                </div>
-                <div onclick="showRoomInfo('UGD (Unit Gawat Darurat)', 'Gawat Darurat', 'Penanganan kasus kegawatdaruratan medis.', 'Dokter & Perawat UGD', '24 Jam Siaga')" class="bg-kemenkes-200 hover:bg-kemenkes-300 border-2 border-emerald-800 p-4 rounded-xl text-center shadow-sm relative cursor-pointer transition-all">
-                  <span class="text-[11px] font-extrabold text-kemenkes-950 block">UGD[cite: 7]</span>
-                  <div class="absolute bottom-1 right-2 w-3 h-3 border-t-2 border-l-2 border-emerald-800 rounded-tl-full"></div>
-                </div>
-              </div>
+            <div class="flex items-center gap-2 w-full md:w-auto justify-end flex-wrap">
+                <button onclick="sectionZoomMap(1.25)" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-slate-800 text-xs font-bold transition shadow-sm flex items-center gap-1.5" title="Zoom In">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i> Zoom In
+                </button>
+                <button onclick="sectionZoomMap(0.8)" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-slate-800 text-xs font-bold transition shadow-sm flex items-center gap-1.5" title="Zoom Out">
+                    <i class="fa-solid fa-magnifying-glass-minus"></i> Zoom Out
+                </button>
+                <button onclick="sectionResetZoom()" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-slate-800 text-xs font-semibold transition shadow-sm">
+                    Reset Posisi
+                </button>
+            </div>
+        </div>
 
-              <!-- Kolom Tengah Kiri -->
-              <div class="col-span-2 space-y-3">
-                <div onclick="showRoomInfo('Ruang Perawatan Pria', 'Klaster 3 (Dewasa & Lansia)', 'Rawat inap khusus pasien laki-laki.', 'Perawat Jaga', '24 Jam')" class="bg-sky-50 hover:bg-sky-100 border-2 border-emerald-800 p-4 rounded-xl text-center shadow-sm cursor-pointer transition-all">
-                  <span class="text-[11px] font-extrabold text-sky-900 block leading-tight">RUANG PERAWATAN PRIA[cite: 7]</span>
-                </div>
-                <div onclick="showRoomInfo('Ruang Perawatan Wanita', 'Klaster 2 & 3', 'Rawat inap khusus pasien perempuan.', 'Perawat Jaga', '24 Jam')" class="bg-sky-50 hover:bg-sky-100 border-2 border-emerald-800 p-4 rounded-xl text-center shadow-sm cursor-pointer transition-all">
-                  <span class="text-[11px] font-extrabold text-sky-900 block leading-tight">RUANG PERAWATAN WANITA[cite: 7]</span>
-                </div>
-              </div>
+        <!-- Grid Layout: Map & Inspector Sidebar -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start max-w-6xl mx-auto">
+            
+            <!-- SVG Map Area (3 Columns) -->
+            <div class="lg:col-span-3 bg-white p-4 rounded-2xl border border-slate-300 shadow-sm relative overflow-hidden">
+                <div class="relative overflow-hidden border border-slate-300 rounded-xl bg-white blueprint-grid flex items-center justify-center min-h-[550px]" id="sectionMapContainer">
+                    <svg id="sectionVectorMap" viewBox="0 0 1100 750" class="w-full h-full max-h-[650px] transition-transform duration-300 origin-center select-none">
+                        
+                        <defs>
+                            <filter id="sectionShadow" x="-15%" y="-15%" width="130%" height="130%">
+                                <feDropShadow dx="2" dy="5" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+                            </filter>
+                        </defs>
 
-              <!-- Kolom Tengah (Gedung KIA, Apotek, Rekam Medik) -->
-              <div class="col-span-4 space-y-3">
-                <div class="bg-white border-2 border-emerald-800 p-4 rounded-xl shadow-sm space-y-3">
-                  <div class="text-center">
-                    <span class="text-xs font-extrabold text-stone-900 tracking-wider">GEDUNG KIA[cite: 7]</span>
-                  </div>
-                  <div class="grid grid-cols-2 gap-2">
-                    <div onclick="showRoomInfo('Imunisasi', 'Klaster 2', 'Pemberian vaksin dan imunisasi dasar lengkap.', 'Bidan Puskesmas', '08:00 - 12:00')" class="bg-emerald-100 hover:bg-emerald-200 border-2 border-emerald-800 p-2.5 rounded-lg text-center cursor-pointer transition-all">
-                      <span class="text-[10px] font-bold text-emerald-900 block">IMUNISASI[cite: 7]</span>
+                        <!-- Base Building Outer Wall Structure -->
+                        <rect x="40" y="30" width="1020" height="660" rx="14" fill="#ffffff" stroke="#0f172a" stroke-width="4.5" filter="url(#sectionShadow)"/>
+                        <rect x="48" y="38" width="1004" height="644" rx="10" fill="none" stroke="#64748b" stroke-width="2"/>
+
+                        <!-- LEFT WING -->
+                        <g class="sec-room-element" onclick="selectSectionRoom('perawatan-anak')" data-id="perawatan-anak">
+                            <rect x="60" y="50" width="120" height="65" rx="8" fill="#f1f5f9" stroke="#0f172a" stroke-width="2"/>
+                            <text x="126" y="80" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">PERAWATAN</text>
+                            <text x="126" y="96" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">ANAK</text>
+                        </g>
+                        <g class="sec-room-element" onclick="selectSectionRoom('p-care')" data-id="p-care">
+                            <rect x="60" y="125" width="120" height="50" rx="8" fill="#ffffff" stroke="#334155" stroke-width="2"/>
+                            <text x="120" y="155" font-size="12" font-weight="700" fill="#0f172a" text-anchor="middle">P CARE</text>
+                        </g>
+                        <g class="sec-room-element" onclick="selectSectionRoom('mushala')" data-id="mushala">
+                            <rect x="60" y="185" width="120" height="45" rx="8" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
+                            <text x="120" y="212" font-size="12" font-weight="700" fill="#0f172a" text-anchor="middle">MUSHALA</text>
+                        </g>
+                        <g class="sec-room-element" onclick="selectSectionRoom('sterilisasi')" data-id="sterilisasi">
+                            <rect x="60" y="240" width="120" height="45" rx="8" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+                            <text x="120" y="260" font-size="10" font-weight="700" fill="#0f172a" text-anchor="middle">RUANG</text>
+                            <text x="120" y="274" font-size="10" font-weight="700" fill="#0f172a" text-anchor="middle">STERILISASI</text>
+                        </g>
+                        <g class="sec-room-element" onclick="selectSectionRoom('laboratorium')" data-id="laboratorium">
+                            <rect x="60" y="295" width="120" height="60" rx="8" fill="#e2e8f0" stroke="#0f172a" stroke-width="2"/>
+                            <text x="120" y="329" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">LABORATORIUM</text>
+                        </g>
+                        <g class="sec-room-element" onclick="selectSectionRoom('ugd')" data-id="ugd">
+                            <rect x="60" y="365" width="120" height="85" rx="8" fill="#e2e8f0" stroke="#0f172a" stroke-width="2.5"/>
+                            <text x="125" y="412" font-size="13" font-weight="800" fill="#0f172a" text-anchor="middle">UGD 24 JAM</text>
+                        </g>
+
+                        <!-- WING TENGAH KIRI -->
+                        <g class="sec-room-element" onclick="selectSectionRoom('perawatan-pria')" data-id="perawatan-pria">
+                            <rect x="195" y="50" width="130" height="95" rx="8" fill="#f1f5f9" stroke="#0f172a" stroke-width="2"/>
+                            <text x="260" y="93" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">RUANG PERAWATAN</text>
+                            <text x="260" y="111" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">PRIA</text>
+                        </g>
+                        <g class="sec-room-element" onclick="selectSectionRoom('perawatan-wanita')" data-id="perawatan-wanita">
+                            <rect x="195" y="155" width="130" height="95" rx="8" fill="#f1f5f9" stroke="#0f172a" stroke-width="2"/>
+                            <text x="260" y="197" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">RUANG PERAWATAN</text>
+                            <text x="260" y="215" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">WANITA</text>
+                        </g>
+                        <g class="sec-room-element" onclick="selectSectionRoom('apotek')" data-id="apotek">
+                            <rect x="210" y="465" width="130" height="75" rx="8" fill="#f8fafc" stroke="#334155" stroke-width="2"/>
+                            <text x="275" y="507" font-size="13" font-weight="700" fill="#0f172a" text-anchor="middle">APOTEK</text>
+                        </g>
+                        <g class="sec-room-element" onclick="selectSectionRoom('rekam-medik')" data-id="rekam-medik">
+                            <rect x="210" y="550" width="130" height="85" rx="8" fill="#e2e8f0" stroke="#0f172a" stroke-width="2"/>
+                            <text x="275" y="593" font-size="12" font-weight="700" fill="#0f172a" text-anchor="middle">REKAM MEDIK</text>
+                        </g>
+
+                        <!-- GEDUNG KIA UTAMA -->
+                        <g class="sec-room-element" onclick="selectSectionRoom('gedung-kia')" data-id="gedung-kia">
+                            <rect x="420" y="50" width="280" height="135" rx="10" fill="#e2e8f0" stroke="#0f172a" stroke-width="2.5"/>
+                            <text x="560" y="90" font-size="15" font-weight="800" fill="#0f172a" text-anchor="middle">GEDUNG KIA</text>
+                        </g>
+
+                        <!-- POLI BLOCKS & LAYANAN TENGAH -->
+                        <g class="sec-room-element" onclick="selectSectionRoom('mtbs-asi')" data-id="mtbs-asi">
+                            <rect x="380" y="340" width="105" height="65" rx="8" fill="#ffffff" stroke="#334155" stroke-width="2"/>
+                            <text x="432" y="369" font-size="10" font-weight="700" fill="#0f172a" text-anchor="middle">MTBS &</text>
+                            <text x="432" y="384" font-size="10" font-weight="700" fill="#0f172a" text-anchor="middle">RUANG ASI</text>
+                        </g>
+                        <g class="sec-room-element" onclick="selectSectionRoom('poli-umum')" data-id="poli-umum">
+                            <rect x="490" y="340" width="90" height="65" rx="8" fill="#f1f5f9" stroke="#334155" stroke-width="2"/>
+                            <text x="535" y="375" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">POLI UMUM</text>
+                        </g>
+                        <g class="sec-room-element" onclick="selectSectionRoom('poli-gigi')" data-id="poli-gigi">
+                            <rect x="585" y="340" width="90" height="65" rx="8" fill="#e2e8f0" stroke="#0f172a" stroke-width="2"/>
+                            <text x="630" y="375" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">POLI GIGI</text>
+                        </g>
+                        <g class="sec-room-element" onclick="selectSectionRoom('promkes')" data-id="promkes">
+                            <rect x="680" y="340" width="95" height="65" rx="8" fill="#f8fafc" stroke="#334155" stroke-width="2"/>
+                            <text x="727" y="364" font-size="10" font-weight="700" fill="#0f172a" text-anchor="middle">PROMOSI</text>
+                            <text x="727" y="379" font-size="10" font-weight="700" fill="#0f172a" text-anchor="middle">KESEHATAN</text>
+                        </g>
+                        <g class="sec-room-element" onclick="selectSectionRoom('gudang-obat')" data-id="gudang-obat">
+                            <rect x="780" y="340" width="95" height="65" rx="8" fill="#f1f5f9" stroke="#475569" stroke-width="2"/>
+                            <text x="827" y="369" font-size="10" font-weight="700" fill="#0f172a" text-anchor="middle">GUDANG</text>
+                            <text x="827" y="384" font-size="10" font-weight="700" fill="#0f172a" text-anchor="middle">OBAT</text>
+                        </g>
+
+                        <!-- RUANG TUNGGU -->
+                        <g>
+                            <rect x="420" y="440" width="460" height="150" rx="10" fill="#ffffff" fill-opacity="0.8" stroke="#64748b" stroke-dasharray="6" stroke-width="2"/>
+                            <text x="560" y="495" font-size="16" font-weight="800" fill="#475569" text-anchor="middle" letter-spacing="1">RUANG TUNGGU UTAMA</text>
+                        </g>
+
+                        <!-- RIGHT WING -->
+                        <g class="sec-room-element" onclick="selectSectionRoom('dapur')" data-id="dapur">
+                            <rect x="750" y="200" width="110" height="55" rx="8" fill="#f8fafc" stroke="#334155" stroke-width="2"/>
+                            <text x="805" y="233" font-size="12" font-weight="700" fill="#0f172a" text-anchor="middle">DAPUR</text>
+                        </g>
+                        <g class="sec-room-element" onclick="selectSectionRoom('gudang-mid')" data-id="gudang-mid">
+                            <rect x="750" y="260" width="110" height="40" rx="8" fill="#f8fafc" stroke="#334155" stroke-width="2"/>
+                            <text x="805" y="285" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">GUDANG</text>
+                        </g>
+                        <g class="sec-room-element" onclick="selectSectionRoom('aula')" data-id="aula">
+                            <rect x="880" y="155" width="130" height="110" rx="10" fill="#e2e8f0" stroke="#0f172a" stroke-width="2"/>
+                            <text x="945" y="215" font-size="14" font-weight="800" fill="#0f172a" text-anchor="middle">AULA</text>
+                        </g>
+                        <g class="sec-room-element" onclick="selectSectionRoom('administrasi')" data-id="administrasi">
+                            <rect x="880" y="270" width="130" height="110" rx="10" fill="#e2e8f0" stroke="#0f172a" stroke-width="2"/>
+                            <text x="945" y="330" font-size="12" font-weight="800" fill="#0f172a" text-anchor="middle">ADMINISTRASI</text>
+                        </g>
+                        <g class="sec-room-element" onclick="selectSectionRoom('kepala-puskesmas')" data-id="kepala-puskesmas">
+                            <rect x="725" y="590" width="150" height="75" rx="8" fill="#f1f5f9" stroke="#0f172a" stroke-width="2"/>
+                            <text x="800" y="623" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">RUANG KEPALA</text>
+                            <text x="800" y="639" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">PUSKESMAS</text>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Room Inspector Sidebar (1 Column) -->
+            <div class="lg:col-span-1 bg-white p-5 rounded-2xl border border-slate-300 shadow-sm relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-28 h-28 bg-slate-100 rounded-bl-full pointer-events-none"></div>
+                <div class="flex items-center gap-3.5 mb-3.5">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-900 flex items-center justify-center text-xl font-bold border border-slate-300">
+                        <i class="fa-solid fa-hospital-user"></i>
                     </div>
-                    <div onclick="showRoomInfo('Ruang Gizi', 'Klaster 2', 'Konsultasi gizi balita dan ibu hamil.', 'Nutrisionis', '08:00 - 14:00')" class="bg-emerald-100 hover:bg-emerald-200 border-2 border-emerald-800 p-2.5 rounded-lg text-center cursor-pointer transition-all">
-                      <span class="text-[10px] font-bold text-emerald-900 block">RUANG GIZI[cite: 7]</span>
+                    <div>
+                        <h3 id="secDetailTitle" class="font-bold text-slate-900 text-base">Puskesmas Tarailu</h3>
+                        <p id="secDetailCategory" class="text-xs text-slate-600 font-medium">Pilih ruang pada denah</p>
                     </div>
-                  </div>
                 </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                  <div onclick="showRoomInfo('Apotek', 'Lintas Klaster', 'Penyaluran dan pengelolaan obat resep.', 'Apoteker / Asisten', '08:00 - 14:00')" class="bg-sky-50 hover:bg-sky-100 border-2 border-emerald-800 p-3 rounded-xl text-center shadow-sm cursor-pointer transition-all">
-                    <span class="text-[11px] font-extrabold text-sky-900 block">APOTEK[cite: 7]</span>
-                  </div>
-                  <div onclick="showRoomInfo('Rekam Medik', 'Klaster 1', 'Pengelolaan berkas dan data rekam medis pasien.', 'Petugas Rekam Medik', '08:00 - 14:00')" class="bg-white hover:bg-emerald-50 border-2 border-emerald-800 p-3 rounded-xl text-center shadow-sm cursor-pointer transition-all">
-                    <span class="text-[11px] font-extrabold text-stone-800 block">REKAM MEDIK[cite: 7]</span>
-                  </div>
+                <div class="space-y-3.5 text-sm border-t border-slate-200 pt-3.5">
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Fungsi & Layanan Ruangan</span>
+                        <p id="secDetailDesc" class="text-slate-700 text-xs leading-relaxed">Klik salah satu objek ruangan pada denah vektor di samping untuk melihat detail fungsi, staf penanggung jawab, serta jam operasional.</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2.5 pt-1">
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <span class="text-[9px] uppercase font-bold text-slate-500 block mb-1">Penanggung Jawab</span>
+                            <span id="secDetailStaff" class="text-xs font-semibold text-slate-800">-</span>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <span class="text-[9px] uppercase font-bold text-slate-500 block mb-1">Jam Operasional</span>
+                            <span id="secDetailHours" class="text-xs font-semibold text-slate-900">08:00 - 14:00</span>
+                        </div>
+                    </div>
                 </div>
-              </div>
-
-              <!-- Kolom Kanan -->
-              <div class="col-span-3 space-y-3">
-                <div class="grid grid-cols-2 gap-2">
-                  <div class="bg-white border-2 border-emerald-800 p-2.5 rounded-xl text-center"><span class="text-[10px] font-bold text-stone-800 block">DAPUR[cite: 7]</span></div>
-                  <div class="bg-sky-50 border-2 border-emerald-800 p-2.5 rounded-xl text-center"><span class="text-[10px] font-bold text-sky-900 block">GUDANG[cite: 7]</span></div>
-                </div>
-                <div class="bg-white border-2 border-emerald-800 p-2 rounded-xl text-center"><span class="text-[10px] font-bold text-stone-800 block">WC[cite: 7]</span></div>
-                <div class="bg-sky-50 border-2 border-emerald-800 p-3 rounded-xl text-center"><span class="text-[11px] font-extrabold text-sky-900 block">GUDANG[cite: 7]</span></div>
-                <div class="bg-white border-2 border-emerald-800 p-2 rounded-xl text-center"><span class="text-[10px] font-bold text-stone-800 block">WC[cite: 7]</span></div>
-                <div onclick="showRoomInfo('Aula', 'Manajemen', 'Ruang rapat, pertemuan lintas sektor, dan penyuluhan.', 'Tim Promkes', 'Kondisional')" class="bg-kemenkes-50 hover:bg-kemenkes-100 border-2 border-emerald-800 p-4 rounded-xl text-center cursor-pointer transition-all">
-                  <span class="text-[11px] font-extrabold text-kemenkes-900 block">AULA[cite: 7]</span>
-                </div>
-                <div onclick="showRoomInfo('Administrasi', 'Klaster 1', 'Kantor tata usaha dan administrasi umum.', 'Kepala Tata Usaha', '08:00 - 14:00')" class="bg-white hover:bg-emerald-50 border-2 border-emerald-800 p-3 rounded-xl text-center cursor-pointer transition-all">
-                  <span class="text-[11px] font-extrabold text-stone-800 block">ADMINISTRASI[cite: 7]</span>
-                </div>
-              </div>
             </div>
 
-            <!-- Baris Tengah (Poli & Ruang Kepala Puskesmas) -->
-            <div class="grid grid-cols-12 gap-3 pt-2">
-              <div class="col-span-7 flex items-center gap-2">
-                <div onclick="showRoomInfo('MTBS & Ruang ASI', 'Klaster 2', 'Manajemen Terpadu Balita Sakit & Ruang laktasi ibu.', 'Bidan / Petugas KIA', '08:00 - 14:00')" class="bg-white hover:bg-emerald-50 border-2 border-emerald-800 p-2.5 rounded-xl text-center flex-1 shadow-sm cursor-pointer transition-all">
-                  <span class="text-[10px] font-extrabold text-stone-900 block leading-tight">MTBS & ASI[cite: 7]</span>
-                </div>
-                <div onclick="showRoomInfo('Poli Umum', 'Klaster 3', 'Pelayanan pemeriksaan kesehatan umum dewasa.', 'Dokter Umum', '08:00 - 14:00')" class="bg-sky-50 hover:bg-sky-100 border-2 border-emerald-800 p-2.5 rounded-xl text-center flex-1 shadow-sm cursor-pointer transition-all">
-                  <span class="text-[10px] font-extrabold text-sky-900 block">POLI UMUM[cite: 7]</span>
-                </div>
-                <div onclick="showRoomInfo('Poli Gigi', 'Klaster 2 & 3', 'Pemeriksaan dan perawatan kesehatan gigi mulut.', 'Dokter Gigi', '08:00 - 14:00')" class="bg-emerald-100 hover:bg-emerald-200 border-2 border-emerald-800 p-2.5 rounded-xl text-center flex-1 shadow-sm cursor-pointer transition-all">
-                  <span class="text-[10px] font-extrabold text-emerald-900 block">POLI GIGI[cite: 7]</span>
-                </div>
-                <div onclick="showRoomInfo('Promosi Kesehatan', 'Klaster 1', 'Penyuluhan dan edukasi kesehatan masyarakat.', 'Petugas Promkes', '08:00 - 14:00')" class="bg-kemenkes-100 hover:bg-kemenkes-200 border-2 border-emerald-800 p-2.5 rounded-xl text-center flex-1 shadow-sm cursor-pointer transition-all">
-                  <span class="text-[10px] font-extrabold text-kemenkes-900 block">PROMKES[cite: 7]</span>
-                </div>
-                <div onclick="showRoomInfo('Gudang Obat', 'Lintas Klaster', 'Penyimpanan stok obat farmasi.', 'Apoteker', '08:00 - 14:00')" class="bg-white hover:bg-emerald-50 border-2 border-emerald-800 p-2.5 rounded-xl text-center flex-1 shadow-sm cursor-pointer transition-all">
-                  <span class="text-[10px] font-extrabold text-stone-900 block">GUDANG OBAT[cite: 7]</span>
-                </div>
-              </div>
+        </div>
+      </div>
 
-              <div class="col-span-5 flex flex-col justify-between">
-                <div onclick="showRoomInfo('Ruang Kepala Puskesmas', 'Pimpinan', 'Kantor pimpinan tertinggi UPTD Puskesmas.', 'Kepala Puskesmas', '08:00 - 14:00')" class="bg-sky-100 hover:bg-sky-200 border-2 border-emerald-800 p-3 rounded-xl text-center shadow-sm cursor-pointer transition-all">
-                  <span class="text-[11px] font-extrabold text-sky-900 block">RUANG KEPALA PUSKESMAS[cite: 7]</span>
-                </div>
-              </div>
+      <!-- STRUKTUR ORGANISASI -->
+      <div class="space-y-8 pt-6">
+        <div class="text-center max-w-xl mx-auto space-y-2">
+          <h3 class="font-display font-bold text-2xl sm:text-3xl text-stone-900">Struktur Organisasi & Hirarki</h3>
+          <p class="text-xs text-stone-500">Bagan tata kelola dan penanggung jawab klaster pelayanan UPTD Puskesmas Tarailu</p>
+        </div>
+        <div id="publicStructureContainer" class="space-y-8"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION: KLASTER LAYANAN -->
+  <section id="layanan" class="py-16 sm:py-24 bg-emerald-50/40 border-y border-emerald-100/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto space-y-3 mb-12">
+        <span class="inline-block bg-kemenkes-100 text-kemenkes-700 font-semibold text-xs px-4 py-1.5 rounded-full uppercase border border-kemenkes-200">Integrasi Layanan Primer (ILP)</span>
+        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-stone-900">Klaster Layanan Kesehatan & Fitur Detail</h2>
+        <p class="text-xs sm:text-sm text-stone-600">Standar operasional pelayanan kesehatan klaster berorientasi siklus hidup di Puskesmas Satelit Tarailu.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Klaster 1: Manajemen -->
+        <div class="bg-white rounded-2xl p-6 border border-emerald-100 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-kemenkes-300 transition-all">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-kemenkes-100 text-kemenkes-600 flex items-center justify-center font-bold mb-4 shadow-sm">
+              <i class="fa-solid fa-file-lines"></i>
             </div>
+            <span class="text-[10px] font-bold text-kemenkes-600 uppercase tracking-wider bg-kemenkes-50 px-2.5 py-1 rounded-md border border-kemenkes-100">Klaster 1</span>
+            <h3 class="font-display font-bold text-lg text-stone-900 mt-2 mb-2">Manajemen</h3>
+            <p class="text-xs text-stone-500 mb-4">Pengelolaan administrasi, tata kelola sumber daya, mutu, dan jaringan fasilitas.</p>
+            <ul class="space-y-2 text-xs text-stone-600 border-t border-emerald-50 pt-3">
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Perencanaan & Evaluasi Puskesmas</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Manajemen Keuangan & Aset</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Pengelolaan Mutu & Akreditasi</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Sistem Informasi Puskesmas (SIPP)</span></li>
+            </ul>
+          </div>
+        </div>
 
-            <!-- Ruang Tunggu & Parkiran -->
-            <div onclick="showRoomInfo('Ruang Tunggu Utama', 'Fasilitas Umum', 'Area tunggu pasien pendaftaran dan pelayanan.', 'Petugas Front Office', '08:00 - 14:00')" class="bg-white hover:bg-emerald-50 border-2 border-emerald-800 p-4 rounded-2xl text-center relative shadow-sm cursor-pointer transition-all">
-              <span class="font-display font-extrabold text-base sm:text-lg text-stone-800 tracking-wider block">R. TUNGGU[cite: 7]</span>
-              <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-8 h-4 border-t-2 border-emerald-800 rounded-t-full"></div>
+        <!-- Klaster 2: Ibu & Anak -->
+        <div class="bg-white rounded-2xl p-6 border border-emerald-100 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-kemenkes-300 transition-all">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-kemenkes-100 text-kemenkes-600 flex items-center justify-center font-bold mb-4 shadow-sm">
+              <i class="fa-solid fa-child-reaching"></i>
             </div>
+            <span class="text-[10px] font-bold text-kemenkes-600 uppercase tracking-wider bg-kemenkes-50 px-2.5 py-1 rounded-md border border-kemenkes-100">Klaster 2</span>
+            <h3 class="font-display font-bold text-lg text-stone-900 mt-2 mb-2">Ibu & Anak</h3>
+            <p class="text-xs text-stone-500 mb-4">Pelayanan kesehatan berorientasi siklus hidup bagi ibu, bayi, balita, dan anak sekolah.</p>
+            <ul class="space-y-2 text-xs text-stone-600 border-t border-emerald-50 pt-3">
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Kesehatan Ibu Hamil, Bersalin & Nifas</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Pelayanan Neonatus, Bayi & Balita</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Pelayanan Anak Usia Sekolah & Remaja</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Pelayanan KB (Keluarga Berencana)</span></li>
+            </ul>
+          </div>
+        </div>
 
-            <div class="bg-emerald-900 text-white py-3 rounded-xl text-center shadow-md">
-              <span class="font-display font-bold text-xs sm:text-sm tracking-widest uppercase">PARKIRAN KENDARAAN[cite: 7]</span>
+        <!-- Klaster 3: Dewasa & Lansia -->
+        <div class="bg-white rounded-2xl p-6 border border-emerald-100 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-kemenkes-300 transition-all">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-kemenkes-100 text-kemenkes-600 flex items-center justify-center font-bold mb-4 shadow-sm">
+              <i class="fa-solid fa-user-injured"></i>
             </div>
+            <span class="text-[10px] font-bold text-kemenkes-600 uppercase tracking-wider bg-kemenkes-50 px-2.5 py-1 rounded-md border border-kemenkes-100">Klaster 3</span>
+            <h3 class="font-display font-bold text-lg text-stone-900 mt-2 mb-2">Dewasa & Lansia</h3>
+            <p class="text-xs text-stone-500 mb-4">Skrining dan penanganan kesehatan usia produktif serta lanjut usia (geriatri).</p>
+            <ul class="space-y-2 text-xs text-stone-600 border-t border-emerald-50 pt-3">
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Skrining Penyakit Tidak Menular (PTM)</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Kesehatan Usia Produktif</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Pelayanan Geriatri & Posyandu Lansia</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Konsultasi & Manajemen PTM</span></li>
+            </ul>
+          </div>
+        </div>
 
+        <!-- Klaster 4: Penyakit Menular -->
+        <div class="bg-white rounded-2xl p-6 border border-emerald-100 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-kemenkes-300 transition-all">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-kemenkes-100 text-kemenkes-600 flex items-center justify-center font-bold mb-4 shadow-sm">
+              <i class="fa-solid fa-virus-covid"></i>
+            </div>
+            <span class="text-[10px] font-bold text-kemenkes-600 uppercase tracking-wider bg-kemenkes-50 px-2.5 py-1 rounded-md border border-kemenkes-100">Klaster 4</span>
+            <h3 class="font-display font-bold text-lg text-stone-900 mt-2 mb-2">Penyakit Menular</h3>
+            <p class="text-xs text-stone-500 mb-4">Pencegahan, surveilans, dan penanggulangan penyakit menular serta imunisasi.</p>
+            <ul class="space-y-2 text-xs text-stone-600 border-t border-emerald-50 pt-3">
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Surveilans Epidemiologi & Kewaspadaan Dini</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Pelayanan Imunisasi Rutin & Tambahan</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Pengendalian TBC, HIV, & DBD</span></li>
+              <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Kesehatan Lingkungan & Sanitasi</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Lintas Klaster -->
+        <div class="bg-white rounded-2xl p-6 border border-emerald-100 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-kemenkes-300 transition-all md:col-span-2 lg:col-span-2">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-kemenkes-100 text-kemenkes-600 flex items-center justify-center font-bold mb-4 shadow-sm">
+              <i class="fa-solid fa-hospital-user"></i>
+            </div>
+            <span class="text-[10px] font-bold text-kemenkes-600 uppercase tracking-wider bg-kemenkes-50 px-2.5 py-1 rounded-md border border-kemenkes-100">Lintas Klaster</span>
+            <h3 class="font-display font-bold text-lg text-stone-900 mt-2 mb-2">Pelayanan Penunjang & Gawat Darurat</h3>
+            <p class="text-xs text-stone-500 mb-4">Layanan terpadu pendukung kegawatdaruratan, kefarmasian, dan laboratorium klinis.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 border-t border-emerald-50 pt-3">
+              <ul class="space-y-2 text-xs text-stone-600">
+                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Unit Gawat Darurat (UGD) 24 Jam Siaga</span></li>
+                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Pelayanan Rawat Inap & Observasi</span></li>
+              </ul>
+              <ul class="space-y-2 text-xs text-stone-600">
+                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Pelayanan Laboratorium Kesehatan</span></li>
+                <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kemenkes-500 mt-0.5 shrink-0"></i><span>Pelayanan Kefarmasian & Apotek</span></li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- KONTAK / INFO SECTION -->
-    <section id="kontak" class="bg-white rounded-3xl p-8 sm:p-12 border border-stone-200 shadow-sm grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div class="space-y-4">
-        <h3 class="font-display font-bold text-2xl text-stone-900">Informasi & Lokasi</h3>
-        <p class="text-xs sm:text-sm text-stone-600 leading-relaxed">UPTD Puskesmas Satelit Tarailu berkomitmen memberikan akses informasi kesehatan yang transparan dan mudah dijangkau oleh masyarakat.</p>
-        <div class="space-y-2 text-xs sm:text-sm text-stone-700">
-          <p><i class="fa-solid fa-location-dot text-kemenkes-600 mr-2"></i> Desa Tarailu, Kecamatan Sampaga, Kabupaten Mamuju, Sulawesi Barat</p>
-          <p><i class="fa-solid fa-clock text-kemenkes-600 mr-2"></i> Senin - Sabtu: 08:00 - 14:00 WITA (UGD 24 Jam)</p>
+  <!-- Doctor Schedule Section -->
+  <section id="jadwal" class="py-16 sm:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-emerald-100">
+        <div class="space-y-2">
+          <span class="inline-block bg-kemenkes-100 text-kemenkes-700 font-semibold text-xs px-3.5 py-1 rounded-full uppercase border border-kemenkes-200">Jadwal Praktik</span>
+          <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-stone-900">Jadwal Dokter & Tenaga Medis</h2>
+        </div>
+        <div class="w-full md:w-72 relative">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 text-sm"></i>
+          <input type="text" id="doctorSearchInput" oninput="filterDoctors()" placeholder="Cari nama dokter / poli..." class="w-full pl-10 pr-4 py-2.5 text-xs bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400">
         </div>
       </div>
-      <div class="bg-emerald-50/50 rounded-2xl p-6 border border-emerald-100 flex flex-col justify-center items-center text-center space-y-3">
-        <div class="w-12 h-12 bg-kemenkes-500 text-white rounded-2xl flex items-center justify-center text-xl shadow-md">
-          <i class="fa-solid fa-phone-volume"></i>
-        </div>
-        <h4 class="font-bold text-lg text-stone-900">Butuh Bantuan Darurat?</h4>
-        <p class="text-xs text-stone-500">Layanan ambulans dan UGD siap siaga 24 jam untuk melayani kegawatdaruratan medis Anda.</p>
-        <span class="inline-block bg-kemenkes-700 text-white font-bold text-sm px-5 py-2.5 rounded-xl shadow-sm">Siaga 24 Jam</span>
-      </div>
-    </section>
+      <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="doctorsGrid"></div>
+    </div>
+  </section>
 
-  </main>
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 sm:py-24 bg-emerald-50/30 border-t border-emerald-100/50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center space-y-3 mb-12">
+        <span class="inline-block bg-kemenkes-100 text-kemenkes-700 font-semibold text-xs px-3.5 py-1 rounded-full uppercase border border-kemenkes-200">FAQ</span>
+        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-stone-900">Pertanyaan Sering Diajukan</h2>
+      </div>
+      <div class="space-y-4"></div>
+    </div>
+  </section>
+
+  <!-- SECTION KONTAK -->
+  <section id="kontak" class="py-16 sm:py-24 bg-white border-t border-emerald-100/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto space-y-3 mb-12">
+        <span class="inline-block bg-kemenkes-100 text-kemenkes-700 font-semibold text-xs px-4 py-1.5 rounded-full uppercase tracking-wider border border-kemenkes-200">Kontak & Lokasi</span>
+        <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-stone-900">Hubungi & Kunjungi Kami</h2>
+        <p class="text-xs sm:text-sm text-stone-600">Silakan hubungi layanan kami melalui WhatsApp, Email resmi, atau kunjungi lokasi Puskesmas Satelit Tarailu.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-2xl p-8 border border-emerald-100 shadow-sm flex flex-col items-center text-center space-y-4 hover:shadow-md hover:border-kemenkes-300 transition-all">
+          <div class="w-14 h-14 rounded-2xl bg-kemenkes-100 text-kemenkes-600 flex items-center justify-center text-2xl shadow-sm">
+            <i class="fa-brands fa-whatsapp"></i>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-lg text-stone-900">WhatsApp Hotline</h3>
+            <p class="text-xs text-stone-500 mt-1">Layanan Informasi & Konsultasi Cepat</p>
+          </div>
+          <p class="text-sm font-bold text-stone-800">0823-5368-5324</p>
+          <a href="https://wa.me/6282353685324" target="_blank" class="w-full bg-kemenkes-500 hover:bg-kemenkes-600 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition-all">
+            <i class="fa-brands fa-whatsapp text-sm"></i> Chat WhatsApp
+          </a>
+        </div>
+
+        <div class="bg-white rounded-2xl p-8 border border-emerald-100 shadow-sm flex flex-col items-center text-center space-y-4 hover:shadow-md hover:border-kemenkes-300 transition-all">
+          <div class="w-14 h-14 rounded-2xl bg-kemenkes-100 text-kemenkes-600 flex items-center justify-center text-2xl shadow-sm">
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-lg text-stone-900">Email Resmi</h3>
+            <p class="text-xs text-stone-500 mt-1">Kirimkan surat atau dokumen resmi</p>
+          </div>
+          <p class="text-sm font-bold text-stone-800 break-all">pkmsatelittarailu@gmail.com</p>
+          <a href="mailto:pkmsatelittarailu@gmail.com" class="w-full bg-kemenkes-600 hover:bg-kemenkes-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition-all">
+            <i class="fa-solid fa-envelope text-sm"></i> Kirim Email
+          </a>
+        </div>
+
+        <div class="bg-white rounded-2xl p-8 border border-emerald-100 shadow-sm flex flex-col items-center text-center space-y-4 hover:shadow-md hover:border-kemenkes-300 transition-all">
+          <div class="w-14 h-14 rounded-2xl bg-kemenkes-100 text-kemenkes-600 flex items-center justify-center text-2xl shadow-sm">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-lg text-stone-900">Lokasi Puskesmas</h3>
+            <p class="text-xs text-stone-500 mt-1">Tarailu, Kec. Sampaga, Kab. Mamuju, Sulawesi Barat</p>
+          </div>
+          <p class="text-xs text-stone-600 font-medium">Jl. Poros Mamuju - Topoyo</p>
+          <a href="https://www.google.com/maps/place/Puskesmas+Satelit+Tarailu/@-2.3111475,119.1754624,18z" target="_blank" class="w-full bg-stone-800 hover:bg-stone-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition-all">
+            <i class="fa-solid fa-map-location-dot text-sm"></i> Buka Google Maps
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD ADMIN -->
+  <div id="adminDashboard" class="hidden min-h-screen bg-stone-100 py-10 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto space-y-8">
+      
+      <!-- Top Bar Admin -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-emerald-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <span class="bg-kemenkes-100 text-kemenkes-800 text-xs font-bold px-3 py-1 rounded-full uppercase border border-kemenkes-200">Panel Admin / Petugas</span>
+          <h1 class="font-display font-extrabold text-2xl text-stone-900 mt-1">Manajemen Puskesmas Satelit Tarailu</h1>
+        </div>
+        <button onclick="handleLogout()" class="bg-rose-600 hover:bg-rose-500 text-white font-bold px-5 py-2.5 rounded-xl text-xs flex items-center gap-2 shadow-sm transition-all">
+          <i class="fa-solid fa-right-from-bracket"></i> Keluar (Logout)
+        </button>
+      </div>
+
+      <!-- DROPDOWN NAVIGASI / AKSES FITUR -->
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-emerald-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+          <label for="adminFeatureSelect" class="text-xs font-bold text-stone-700 whitespace-nowrap">
+            <i class="fa-solid fa-filter text-kemenkes-500 mr-1.5"></i> Pilih Menu Fitur:
+          </label>
+          <select id="adminFeatureSelect" onchange="switchAdminFeature(this.value)" class="px-3.5 py-2 text-xs bg-emerald-50/40 border border-emerald-200 rounded-xl font-semibold text-stone-800 focus:outline-none focus:border-kemenkes-400 w-full sm:w-72">
+            <option value="all">Semua Fitur (Tampil Ringkas)</option>
+            <option value="struktur">Kelola Struktur Organisasi</option>
+            <option value="dokter">Kelola Jadwal Dokter</option>
+            <option value="faq">Kelola FAQ</option>
+            <option value="tamu">Daftar Tamu Berkunjung (Buku Tamu)</option>
+          </select>
+        </div>
+        <div class="text-xs text-stone-500 hidden md:block">Gunakan dropdown di atas untuk menyaring dan memfokuskan pengelolaan fitur.</div>
+      </div>
+
+      <!-- KELOLA STRUKTUR ORGANISASI -->
+      <div id="adminSecStruktur" class="bg-white rounded-2xl p-6 shadow-sm border border-emerald-100 space-y-6">
+        <div class="flex items-center justify-between">
+          <h3 class="font-display font-bold text-lg text-stone-900 flex items-center gap-2">
+            <i class="fa-solid fa-sitemap text-kemenkes-500"></i> Kelola Struktur Organisasi / Hirarki
+          </h3>
+          <button onclick="openStructureModal()" class="bg-kemenkes-500 hover:bg-kemenkes-600 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all">
+            <i class="fa-solid fa-plus"></i> Tambah Posisi Struktur
+          </button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-kemenkes-50 text-kemenkes-800 uppercase font-bold border-b border-kemenkes-100">
+              <tr>
+                <th class="p-3 rounded-l-xl">Grup Klaster</th>
+                <th class="p-3">Jabatan / Unit</th>
+                <th class="p-3">Nama Pejabat / Petugas</th>
+                <th class="p-3">Kategori</th>
+                <th class="p-3 text-right rounded-r-xl">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="adminStructureTableBody" class="divide-y divide-stone-100"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Kelola Dokter & FAQ -->
+      <div id="adminSecDokterFaq" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-emerald-100 space-y-6">
+          <div class="flex items-center justify-between">
+            <h3 class="font-display font-bold text-lg text-stone-900">Kelola Jadwal Dokter</h3>
+            <button onclick="openDoctorModal()" class="bg-kemenkes-500 hover:bg-kemenkes-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-sm transition-all"><i class="fa-solid fa-plus"></i> Tambah</button>
+          </div>
+          <div class="overflow-x-auto"><table class="w-full text-left text-xs"><tbody id="adminDoctorsTableBody" class="divide-y divide-stone-100"></tbody></table></div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-emerald-100 space-y-6">
+          <div class="flex items-center justify-between">
+            <h3 class="font-display font-bold text-lg text-stone-900">Kelola FAQ</h3>
+            <button onclick="openFaqModal()" class="bg-kemenkes-500 hover:bg-kemenkes-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-sm transition-all"><i class="fa-solid fa-plus"></i> Tambah</button>
+          </div>
+          <div class="overflow-x-auto"><table class="w-full text-left text-xs"><tbody id="adminFaqTableBody" class="divide-y divide-stone-100"></tbody></table></div>
+        </div>
+      </div>
+
+      <!-- KELOLA BUKU TAMU -->
+      <div id="adminSecTamu" class="bg-white rounded-2xl p-6 shadow-sm border border-emerald-100 space-y-6">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <h3 class="font-display font-bold text-lg text-stone-900 flex items-center gap-2">
+            <i class="fa-solid fa-address-book text-kemenkes-500"></i> Daftar Tamu Berkunjung (Buku Tamu)
+          </h3>
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <input type="text" id="adminGuestSearch" oninput="filterAdminGuests()" placeholder="Cari nama / instansi..." class="px-3.5 py-2 text-xs bg-emerald-50/40 border border-emerald-200 rounded-xl w-full sm:w-64 focus:outline-none focus:border-kemenkes-400">
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-kemenkes-50 text-kemenkes-800 uppercase font-bold border-b border-kemenkes-100">
+              <tr>
+                <th class="p-3 rounded-l-xl">Tanggal & Waktu</th>
+                <th class="p-3">Nama & Pekerjaan</th>
+                <th class="p-3">Asal Lembaga</th>
+                <th class="p-3">Kontak</th>
+                <th class="p-3">Maksud & Tujuan</th>
+                <th class="p-3 text-right rounded-r-xl">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="adminGuestTableBody" class="divide-y divide-stone-100"></tbody>
+          </table>
+        </div>
+        <!-- Kontrol Paginasi Tabel Buku Tamu -->
+        <div class="flex flex-col sm:flex-row items-center justify-between pt-4 border-t border-emerald-50 gap-3">
+          <div id="guestPaginationInfo" class="text-xs text-stone-500">Menampilkan 0 dari 0 data</div>
+          <div id="guestPaginationControls" class="flex items-center gap-1"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
   <!-- FOOTER -->
-  <footer class="bg-stone-900 text-stone-400 py-10 mt-20 border-t border-stone-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-3">
-      <p class="text-xs">&copy; 2026 UPTD Puskesmas Satelit Tarailu. Hak Cipta Dilindungi.</p>
-      <p class="text-[11px] text-stone-500">Kabupaten Mamuju, Provinsi Sulawesi Barat.</p>
+  <footer class="bg-stone-900 text-stone-300 pt-16 pb-8 border-t border-stone-800">
+    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-stone-500">
+      <span>&copy; 2026 Puskesmas Satelit Tarailu - Kabupaten Mamuju. All Rights Reserved.</span>
     </div>
   </footer>
 
-  <!-- MODAL INDEKS RUANGAN -->
-  <div id="roomIndexModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-    <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-lg relative max-h-[85vh] overflow-y-auto border border-emerald-100">
-      <button onclick="closeModal('roomIndexModal')" class="absolute top-6 right-6 text-stone-400 hover:text-stone-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
+  <!-- MODAL BUKU TAMU -->
+  <div id="guestBookModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-xl w-full p-6 sm:p-8 shadow-lg relative my-8 max-h-[90vh] overflow-y-auto border border-emerald-100">
+      <button onclick="closeModal('guestBookModal')" class="absolute top-6 right-6 text-stone-400 hover:text-stone-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
       <div class="flex items-center gap-3 mb-6">
         <div class="w-12 h-12 bg-kemenkes-100 text-kemenkes-600 rounded-2xl flex items-center justify-center text-xl font-bold shadow-sm">
-          <i class="fa-solid fa-list-ul"></i>
+          <i class="fa-solid fa-address-book"></i>
         </div>
         <div>
-          <h3 class="font-display font-bold text-xl text-stone-900">Indeks Ruangan Puskesmas</h3>
-          <p class="text-xs text-stone-500">Daftar lengkap seluruh fasilitas dan ruangan di Puskesmas Tarailu</p>
+          <h3 class="font-display font-bold text-xl text-stone-900">Buku Tamu Digital</h3>
+          <p class="text-xs text-stone-500">Silakan isi formulir kunjungan Puskesmas Satelit Tarailu</p>
         </div>
       </div>
-      
-      <div class="space-y-3 text-xs">
-        <div class="bg-emerald-50/50 p-3 rounded-xl border border-emerald-100 flex justify-between items-center">
-          <div><strong class="text-stone-900">Poli Umum & Poli Gigi</strong><div class="text-stone-500">Klaster 3 & 2 (Pelayanan Medis Dasar)</div></div>
-          <span class="bg-emerald-200 text-emerald-900 px-2.5 py-1 rounded-lg font-bold">Lantai 1</span>
+      <form onsubmit="handleGuestBookSubmit(event)" class="space-y-4 text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-semibold text-stone-700 mb-1">Hari dan Tanggal *</label>
+            <input type="date" id="gbHariTanggal" required class="w-full px-3.5 py-2.5 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400">
+          </div>
+          <div>
+            <label class="block font-semibold text-stone-700 mb-1">Waktu Kunjungan *</label>
+            <input type="time" id="gbWaktu" required class="w-full px-3.5 py-2.5 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400">
+          </div>
         </div>
-        <div class="bg-emerald-50/50 p-3 rounded-xl border border-emerald-100 flex justify-between items-center">
-          <div><strong class="text-stone-900">Unit Gawat Darurat (UGD)</strong><div class="text-stone-500">Layanan Darurat Siaga 24 Jam</div></div>
-          <span class="bg-rose-200 text-rose-900 px-2.5 py-1 rounded-lg font-bold">Siaga 24 Jam</span>
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1">Nama Lengkap *</label>
+          <input type="text" id="gbNama" required placeholder="Nama lengkap beserta gelar..." class="w-full px-3.5 py-2.5 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400">
         </div>
-        <div class="bg-emerald-50/50 p-3 rounded-xl border border-emerald-100 flex justify-between items-center">
-          <div><strong class="text-stone-900">Gedung KIA & Imunisasi</strong><div class="text-stone-500">Klaster 2 (Kesehatan Ibu & Anak)</div></div>
-          <span class="bg-emerald-200 text-emerald-900 px-2.5 py-1 rounded-lg font-bold">Sayap Tengah</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-semibold text-stone-700 mb-1">Pekerjaan *</label>
+            <input type="text" id="gbPekerjaan" required placeholder="Contoh: PNS / Peneliti / Mahasiswa..." class="w-full px-3.5 py-2.5 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400">
+          </div>
+          <div>
+            <label class="block font-semibold text-stone-700 mb-1">Nomor Telepon / Kontak *</label>
+            <input type="tel" id="gbKontak" required placeholder="Contoh: 081234567890..." class="w-full px-3.5 py-2.5 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400">
+          </div>
         </div>
-        <div class="bg-emerald-50/50 p-3 rounded-xl border border-emerald-100 flex justify-between items-center">
-          <div><strong class="text-stone-900">Laboratorium & Apotek</strong><div class="text-stone-500">Lintas Klaster Penunjang Medis</div></div>
-          <span class="bg-sky-200 text-sky-900 px-2.5 py-1 rounded-lg font-bold">Penunjang</span>
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1">Asal Lembaga / Instansi / Kedinasan *</label>
+          <input type="text" id="gbAsal" required placeholder="Contoh: Dinkes Mamuju / Universitas / Peneliti / Mandiri..." class="w-full px-3.5 py-2.5 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400">
         </div>
-        <div class="bg-emerald-50/50 p-3 rounded-xl border border-emerald-100 flex justify-between items-center">
-          <div><strong class="text-stone-900">Ruang Perawatan (Pria & Wanita)</strong><div class="text-stone-500">Klaster 3 (Rawat Inap)</div></div>
-          <span class="bg-sky-200 text-sky-900 px-2.5 py-1 rounded-lg font-bold">Rawat Inap</span>
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1">Maksud dan Tujuan / Keperluan *</label>
+          <textarea id="gbTujuan" rows="3" required placeholder="Jelaskan maksud dan tujuan kunjungan..." class="w-full px-3.5 py-2.5 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400"></textarea>
         </div>
-      </div>
-      
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1">Pesan dan Kesan / Saran</label>
+          <textarea id="gbPesan" rows="2" placeholder="Tuliskan pesan, kesan, atau saran Anda..." class="w-full px-3.5 py-2.5 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400"></textarea>
+        </div>
+        <div class="pt-2 flex justify-end gap-3">
+          <button type="button" onclick="closeModal('guestBookModal')" class="px-5 py-2.5 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl font-semibold transition-all">Batal</button>
+          <button type="submit" class="px-6 py-2.5 bg-kemenkes-500 hover:bg-kemenkes-600 text-white rounded-xl font-bold shadow-md transition-all">Kirim Buku Tamu</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL DETAIL BUKU TAMU (ADMIN) -->
+  <div id="guestDetailModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-lg relative border border-emerald-100">
+      <button onclick="closeModal('guestDetailModal')" class="absolute top-5 right-5 text-stone-400 hover:text-stone-700"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="font-display font-bold text-lg text-stone-900 mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-circle-info text-kemenkes-500"></i> Detail Kunjungan Tamu
+      </h3>
+      <div id="guestDetailContent" class="space-y-3 text-xs text-stone-700"></div>
       <div class="mt-6 flex justify-end">
-        <button onclick="closeModal('roomIndexModal')" class="px-5 py-2.5 bg-stone-800 hover:bg-stone-700 text-white rounded-xl font-bold transition">Tutup</button>
+        <button onclick="closeModal('guestDetailModal')" class="px-5 py-2 bg-stone-800 text-white rounded-xl font-bold">Tutup</button>
       </div>
     </div>
   </div>
 
-  <!-- TOAST NOTIFICATION CONTAINER -->
-  <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+  <!-- MODAL LOGIN -->
+  <div id="loginModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-lg relative border border-emerald-100">
+      <button onclick="closeModal('loginModal')" class="absolute top-5 right-5 text-stone-400 hover:text-stone-700"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="font-display font-bold text-xl text-stone-900 mb-4">Login Petugas</h3>
+      <form onsubmit="handleLoginSubmit(event)" class="space-y-4 text-xs">
+        <input type="text" id="loginUsername" required placeholder="Username..." class="w-full px-3.5 py-2.5 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400">
+        <input type="password" id="loginPassword" required placeholder="Password..." class="w-full px-3.5 py-2.5 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400">
+        <button type="submit" class="w-full bg-kemenkes-500 hover:bg-kemenkes-600 text-white font-bold py-3 rounded-xl shadow-md transition-all">Masuk</button>
+      </form>
+    </div>
+  </div>
 
-  <!-- JAVASCRIPT LOGIC -->
+  <!-- MODAL STRUKTUR ORGANISASI -->
+  <div id="structureModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-lg relative border border-emerald-100">
+      <h3 id="structureModalTitle" class="font-display font-bold text-lg text-stone-900 mb-4">Tambah Struktur Organisasi</h3>
+      <form id="structureForm" onsubmit="saveStructure(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="structId">
+        <div>
+          <label class="font-semibold text-stone-700">Grup Klaster</label>
+          <select id="structGroup" required class="w-full mt-1 px-3 py-2 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400">
+            <option value="Pimpinan">Pimpinan (Kepala Puskesmas)</option>
+            <option value="Klaster 1">Klaster 1 (Manajemen)</option>
+            <option value="Klaster 2">Klaster 2 (Ibu & Anak)</option>
+            <option value="Klaster 3">Klaster 3 (Dewasa & Lansia)</option>
+            <option value="Klaster 4">Klaster 4 (Penyakit Menular)</option>
+            <option value="Lintas Klaster">Lintas Klaster (Pendukung)</option>
+          </select>
+        </div>
+        <div>
+          <label class="font-semibold text-stone-700">Nama Jabatan / Unit</label>
+          <input type="text" id="structTitle" required placeholder="Contoh: Ketatausahaan / Rawat Inap" class="w-full mt-1 px-3 py-2 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400">
+        </div>
+        <div>
+          <label class="font-semibold text-stone-700">Nama Pejabat / Petugas</label>
+          <textarea id="structName" rows="2" required placeholder="Nama lengkap & gelar..." class="w-full mt-1 px-3 py-2 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400"></textarea>
+        </div>
+        <div>
+          <label class="font-semibold text-stone-700">Kategori Peran</label>
+          <select id="structCategory" required class="w-full mt-1 px-3 py-2 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400">
+            <option value="leader">Pimpinan Tertinggi (Leader)</option>
+            <option value="coordinator">Koordinator Klaster</option>
+            <option value="sub_unit">Sub Unit / Staf</option>
+          </select>
+        </div>
+        <div class="flex justify-end gap-2 pt-3">
+          <button type="button" onclick="closeModal('structureModal')" class="px-4 py-2 bg-stone-100 rounded-xl font-semibold">Batal</button>
+          <button type="submit" class="px-5 py-2 bg-kemenkes-500 hover:bg-kemenkes-600 text-white rounded-xl font-bold shadow-md">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL DOKTER & FAQ -->
+  <div id="doctorModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-lg relative border border-emerald-100">
+      <button onclick="closeModal('doctorModal')" class="absolute top-5 right-5 text-stone-400 hover:text-stone-700"><i class="fa-solid fa-xmark"></i></button>
+      <h3 id="doctorModalTitle" class="font-display font-bold text-lg text-stone-900 mb-4">Tambah Dokter</h3>
+      <form id="doctorForm" onsubmit="saveDoctor(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="doctorId">
+        <div>
+          <label class="font-semibold text-stone-700">Nama Dokter</label>
+          <input type="text" id="docName" required placeholder="Nama Dokter..." class="w-full mt-1 px-3 py-2 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400">
+        </div>
+        <div>
+          <label class="font-semibold text-stone-700">Jabatan</label>
+          <input type="text" id="docTitle" required placeholder="Jabatan..." class="w-full mt-1 px-3 py-2 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400">
+        </div>
+        <div>
+          <label class="font-semibold text-stone-700">Poli / Spesialisasi</label>
+          <input type="text" id="docSpecialty" required placeholder="Poli..." class="w-full mt-1 px-3 py-2 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400">
+        </div>
+        <div>
+          <label class="font-semibold text-stone-700">Hari Praktik</label>
+          <input type="text" id="docDays" required placeholder="Hari..." class="w-full mt-1 px-3 py-2 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400">
+        </div>
+        <div>
+          <label class="font-semibold text-stone-700">Jam Praktik</label>
+          <input type="text" id="docTime" required placeholder="Jam..." class="w-full mt-1 px-3 py-2 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400">
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeModal('doctorModal')" class="px-4 py-2 bg-stone-100 rounded-xl font-semibold">Batal</button>
+          <button type="submit" class="px-5 py-2 bg-kemenkes-500 hover:bg-kemenkes-600 text-white rounded-xl font-bold shadow-md">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="faqModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-lg relative border border-emerald-100">
+      <button onclick="closeModal('faqModal')" class="absolute top-5 right-5 text-stone-400 hover:text-stone-700"><i class="fa-solid fa-xmark"></i></button>
+      <h3 id="faqModalTitle" class="font-display font-bold text-lg text-stone-900 mb-4">Tambah FAQ</h3>
+      <form id="faqForm" onsubmit="saveFaq(event)" class="space-y-3 text-xs">
+        <input type="hidden" id="faqId">
+        <div>
+          <label class="font-semibold text-stone-700">Pertanyaan</label>
+          <input type="text" id="faqQuestion" required placeholder="Pertanyaan..." class="w-full mt-1 px-3 py-2 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400">
+        </div>
+        <div>
+          <label class="font-semibold text-stone-700">Jawaban</label>
+          <textarea id="faqAnswer" rows="3" required placeholder="Jawaban..." class="w-full mt-1 px-3 py-2 bg-emerald-50/40 border border-emerald-200 rounded-xl focus:outline-none focus:border-kemenkes-400"></textarea>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeModal('faqModal')" class="px-4 py-2 bg-stone-100 rounded-xl font-semibold">Batal</button>
+          <button type="submit" class="px-5 py-2 bg-kemenkes-500 hover:bg-kemenkes-600 text-white rounded-xl font-bold shadow-md">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript Logic & Supabase Integration -->
   <script>
-    let currentDenahScale = 1;
+    const SUPABASE_URL = 'https://paofqksfdajcylhnzpki.supabase.co';       
+    const SUPABASE_ANON_KEY = 'sb_publishable_6vlkZRBI1AJhT3fbVLex3Q__kDatp1_'; 
 
-    function zoomDenah(factor) {
-      currentDenahScale *= factor;
-      if (currentDenahScale < 0.8) currentDenahScale = 0.8;
-      if (currentDenahScale > 1.8) currentDenahScale = 1.8;
-      document.getElementById('denahZoomContainer').style.transform = `scale(${currentDenahScale})`;
+    const { createClient } = supabase;
+    const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadPublicDoctors();
+      loadPublicFaqs();
+      loadPublicStructure();
+    });
+
+    // ==========================================
+    // DATABASE RUANGAN & FUNGSI DENAH INTERAKTIF
+    // ==========================================
+    const sectionRoomsDB = {
+        "perawatan-anak": { title: "Perawatan Anak", category: "rawat", desc: "Ruang rawat inap khusus anak yang dilengkapi fasilitas penunjang ramah anak.", staff: "Dr. Ana Sp.A", hours: "24 Jam" },
+        "p-care": { title: "P Care", category: "poli", desc: "Pusat pelayanan digital BPJS kesehatan untuk validasi peserta.", staff: "Petugas Admisi", hours: "08:00 - 13:00" },
+        "mushala": { title: "Mushala", category: "penunjang", desc: "Fasilitas tempat ibadah yang bersih dan nyaman.", staff: "Pengurus", hours: "24 Jam" },
+        "sterilisasi": { title: "Ruang Sterilisasi", category: "penunjang", desc: "Pusat sterilisasi alat medis berstandar higienis tinggi.", staff: "Tim Kesling", hours: "08:00 - 14:00" },
+        "laboratorium": { title: "Laboratorium", category: "poli", desc: "Fasilitas uji diagnostik medis meliputi tes darah dan urin.", staff: "Analis Kesehatan", hours: "08:00 - 12:00" },
+        "ugd": { title: "Unit Gawat Darurat (UGD)", category: "rawat", desc: "Layanan gawat darurat medis siaga 24 jam.", staff: "Tim Medis Shift Jaga", hours: "24 Jam" },
+        "perawatan-pria": { title: "Ruang Perawatan Pria", category: "rawat", desc: "Bangsal rawat inap khusus pasien laki-laki.", staff: "Perawat Jaga", hours: "24 Jam" },
+        "perawatan-wanita": { title: "Ruang Perawatan Wanita", category: "rawat", desc: "Bangsal rawat inap khusus pasien perempuan.", staff: "Bidan & Perawat", hours: "24 Jam" },
+        "apotek": { title: "Apotek / Farmasi", category: "penunjang", desc: "Tempat penyerahan resep obat dokter.", staff: "Apoteker", hours: "08:00 - 14:00" },
+        "rekam-medik": { title: "Rekam Medik", category: "admin", desc: "Pusat pengarsipan rekam jejak kesehatan pasien.", staff: "Petugas Rekam Medik", hours: "08:00 - 14:00" },
+        "gedung-kia": { title: "Gedung KIA", category: "rawat", desc: "Gedung terpadu pelayanan imunisasi balita dan ibu hamil.", staff: "Bidan Senior", hours: "08:00 - 13:00" },
+        "mtbs-asi": { title: "MTBS & Ruang ASI", category: "poli", desc: "Manajemen Terpadu Balita Sakit serta ruang laktasi.", staff: "Konselor", hours: "08:00 - 13:00" },
+        "poli-umum": { title: "Poli Umum", category: "poli", desc: "Pemeriksaan kesehatan umum dan diagnosis penyakit.", staff: "Dokter Umum", hours: "08:00 - 13:00" },
+        "poli-gigi": { title: "Poli Gigi", category: "poli", desc: "Layanan kesehatan gigi dan mulut.", staff: "Dokter Gigi", hours: "08:00 - 13:00" },
+        "promkes": { title: "Promosi Kesehatan", category: "admin", desc: "Pusat penyuluhan kesehatan preventif.", staff: "Tim Promkes", hours: "08:00 - 14:00" },
+        "gudang-obat": { title: "Gudang Obat", category: "penunjang", desc: "Penyimpanan logistik farmasi dan bahan medis.", staff: "Penanggung Jawab", hours: "08:00 - 14:00" },
+        "dapur": { title: "Dapur", category: "penunjang", desc: "Penyediaan nutrisi bagi pasien rawat inap.", staff: "Staf Gizi", hours: "06:00 - 18:00" },
+        "gudang-mid": { title: "Gudang Logistik", category: "penunjang", desc: "Penyimpanan inventaris alat penunjang.", staff: "Bagian Umum", hours: "08:00 - 14:00" },
+        "aula": { title: "Aula Puskesmas", category: "admin", desc: "Ruangan serbaguna rapat dan penyuluhan.", staff: "Bagian Umum", hours: "Sesuai Agenda" },
+        "administrasi": { title: "Administrasi", category: "admin", desc: "Pusat pengurusan surat menyurat dan kepegawaian.", staff: "Kepala Tata Usaha", hours: "08:00 - 14:00" },
+        "kepala-puskesmas": { title: "Ruang Kepala Puskesmas", category: "admin", desc: "Ruang kerja resmi pimpinan Puskesmas.", staff: "Kepala Puskesmas", hours: "08:00 - 15:00" }
+    };
+
+    let secZoomLevel = 1;
+
+    function selectSectionRoom(id) {
+        document.querySelectorAll('#sectionVectorMap .sec-room-element').forEach(el => el.classList.remove('sec-room-active'));
+        
+        const target = document.querySelector(`#sectionVectorMap [data-id="${id}"]`);
+        if (target) {
+            target.classList.add('sec-room-active');
+        }
+
+        const info = sectionRoomsDB[id];
+        if (info) {
+            document.getElementById('secDetailTitle').innerText = info.title;
+            document.getElementById('secDetailCategory').innerText = `Zona: ${info.category.toUpperCase()}`;
+            document.getElementById('secDetailDesc').innerText = info.desc;
+            document.getElementById('secDetailStaff').innerText = info.staff;
+            document.getElementById('secDetailHours').innerText = info.hours;
+        }
     }
 
-    function resetDenahZoom() {
-      currentDenahScale = 1;
-      document.getElementById('denahZoomContainer').style.transform = `scale(1)`;
+    function sectionZoomMap(factor) {
+        secZoomLevel *= factor;
+        if (secZoomLevel < 0.8) secZoomLevel = 0.8;
+        if (secZoomLevel > 2.5) secZoomLevel = 2.5;
+        document.getElementById('sectionVectorMap').style.transform = `scale(${secZoomLevel})`;
     }
 
-    function openModal(modalId) {
-      document.getElementById(modalId).classList.remove('hidden');
+    function sectionResetZoom() {
+        secZoomLevel = 1;
+        document.getElementById('sectionVectorMap').style.transform = `scale(1)`;
     }
 
-    function closeModal(modalId) {
-      document.getElementById(modalId).classList.add('hidden');
+    const sectionSearchInput = document.getElementById('sectionSearchInput');
+    if (sectionSearchInput) {
+        sectionSearchInput.addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            if (query.length < 2) return;
+            for (let id in sectionRoomsDB) {
+                if (sectionRoomsDB[id].title.toLowerCase().includes(query)) {
+                    selectSectionRoom(id);
+                    break;
+                }
+            }
+        });
     }
 
-    function showRoomInfo(name, category, desc, staff, hours) {
-      showToast(`Ruangan: ${name} (${category}) - Jam: ${hours}`);
+    // ==========================================
+    // FUNGSI SWITCH FITUR ADMIN (DROPDOWN)
+    // ==========================================
+    function switchAdminFeature(val) {
+      const secStruktur = document.getElementById('adminSecStruktur');
+      const secDokterFaq = document.getElementById('adminSecDokterFaq');
+      const secTamu = document.getElementById('adminSecTamu');
+      
+      if (val === 'all') {
+        secStruktur.classList.remove('hidden');
+        secDokterFaq.classList.remove('hidden');
+        secTamu.classList.remove('hidden');
+      } else if (val === 'struktur') {
+        secStruktur.classList.remove('hidden');
+        secDokterFaq.classList.add('hidden');
+        secTamu.classList.add('hidden');
+      } else if (val === 'dokter' || val === 'faq') {
+        secStruktur.classList.add('hidden');
+        secDokterFaq.classList.remove('hidden');
+        secTamu.classList.add('hidden');
+      } else if (val === 'tamu') {
+        secStruktur.classList.add('hidden');
+        secDokterFaq.classList.add('hidden');
+        secTamu.classList.remove('hidden');
+      }
     }
+
+    // ==========================================
+    // 1. FUNGSI BUKU TAMU (DENGAN PAGINASI)
+    // ==========================================
+    async function handleGuestBookSubmit(e) {
+      e.preventDefault();
+      const hari_tanggal = document.getElementById('gbHariTanggal').value;
+      const waktu_kunjungan = document.getElementById('gbWaktu').value;
+      const nama_lengkap = document.getElementById('gbNama').value;
+      const pekerjaan = document.getElementById('gbPekerjaan').value;
+      const nomor_telepon = document.getElementById('gbKontak').value;
+      const asal_lembaga = document.getElementById('gbAsal').value;
+      const maksud_tujuan = document.getElementById('gbTujuan').value;
+      const pesan_kesan = document.getElementById('gbPesan').value;
+
+      const { error } = await db.from('buku_tamu').insert([{
+        hari_tanggal,
+        waktu_kunjungan,
+        nama_lengkap,
+        pekerjaan,
+        nomor_telepon,
+        asal_lembaga,
+        maksud_tujuan,
+        pesan_kesan
+      }]);
+
+      if (error) {
+        showToast('Gagal mengirim buku tamu: ' + error.message);
+        return;
+      }
+
+      showToast('Terima kasih! Buku tamu berhasil dikirim.');
+      e.target.reset();
+      closeModal('guestBookModal');
+    }
+
+    let allGuestsData = [];
+    let filteredGuestsData = [];
+    let currentGuestPage = 1;
+    const guestRowsPerPage = 5;
+
+    async function loadAdminGuests() {
+      const { data, error } = await db.from('buku_tamu').select('*').order('id', { ascending: false });
+      const tbody = document.getElementById('adminGuestTableBody');
+      if (!tbody) return;
+
+      if (error) {
+        showToast('Gagal memuat data tamu: ' + error.message);
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-xs text-stone-500 py-6">Gagal memuat data dari database.</td></tr>`;
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-xs text-stone-500 py-6">Belum ada data kunjungan tamu.</td></tr>`;
+        document.getElementById('guestPaginationInfo').innerText = 'Menampilkan 0 dari 0 data';
+        document.getElementById('guestPaginationControls').innerHTML = '';
+        return;
+      }
+
+      allGuestsData = data;
+      filteredGuestsData = data;
+      renderAdminGuests(data);
+    }
+
+    function renderAdminGuests(data) {
+      const tbody = document.getElementById('adminGuestTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      if (data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-xs text-stone-500 py-6">Data tidak ditemukan.</td></tr>`;
+        document.getElementById('guestPaginationInfo').innerText = 'Menampilkan 0 dari 0 data';
+        document.getElementById('guestPaginationControls').innerHTML = '';
+        return;
+      }
+
+      const totalPages = Math.ceil(data.length / guestRowsPerPage);
+      if (currentGuestPage > totalPages) currentGuestPage = totalPages;
+      if (currentGuestPage < 1) currentGuestPage = 1;
+
+      const start = (currentGuestPage - 1) * guestRowsPerPage;
+      const end = start + guestRowsPerPage;
+      const paginatedData = data.slice(start, end);
+
+      paginatedData.forEach(item => {
+        tbody.innerHTML += `
+          <tr class="hover:bg-emerald-50/35 transition-colors">
+            <td class="p-3 font-semibold text-stone-800">${item.hari_tanggal}<br><span class="text-[10px] text-stone-500 font-normal"><i class="fa-regular fa-clock"></i> ${item.waktu_kunjungan}</span></td>
+            <td class="p-3">
+              <div class="font-bold text-stone-900">${item.nama_lengkap}</div>
+              <div class="text-[10px] text-stone-500">${item.pekerjaan}</div>
+            </td>
+            <td class="p-3 text-stone-700">${item.asal_lembaga}</td>
+            <td class="p-3 text-stone-700">${item.nomor_telepon}</td>
+            <td class="p-3 text-stone-600 max-w-xs truncate">${item.maksud_tujuan}</td>
+            <td class="p-3 text-right space-x-2">
+              <button onclick="viewGuestDetail(${item.id})" class="text-kemenkes-600 font-bold hover:underline">Detail</button>
+              <button onclick="deleteGuest(${item.id})" class="text-rose-600 font-bold hover:underline">Hapus</button>
+            </td>
+          </tr>
+        `;
+      });
+
+      document.getElementById('guestPaginationInfo').innerText = `Menampilkan ${start + 1}-${Math.min(end, data.length)} dari ${data.length} data`;
+
+      let controlsHtml = '';
+      controlsHtml += `<button onclick="changeGuestPage(${currentGuestPage - 1})" ${currentGuestPage === 1 ? 'disabled class="px-3 py-1.5 bg-stone-100 text-stone-400 rounded-lg cursor-not-allowed text-xs"' : 'class="px-3 py-1.5 bg-stone-200 hover:bg-stone-300 text-stone-700 rounded-lg text-xs font-semibold"'}>Sebelumnya</button>`;
+      controlsHtml += `<span class="text-xs font-bold text-stone-700 px-2">Hal ${currentGuestPage} / ${totalPages || 1}</span>`;
+      controlsHtml += `<button onclick="changeGuestPage(${currentGuestPage + 1})" ${currentGuestPage >= totalPages ? 'disabled class="px-3 py-1.5 bg-stone-100 text-stone-400 rounded-lg cursor-not-allowed text-xs"' : 'class="px-3 py-1.5 bg-kemenkes-500 hover:bg-kemenkes-600 text-white rounded-lg text-xs font-semibold"'}>Selanjutnya</button>`;
+      
+      document.getElementById('guestPaginationControls').innerHTML = controlsHtml;
+    }
+
+    function changeGuestPage(page) {
+      const totalPages = Math.ceil(filteredGuestsData.length / guestRowsPerPage);
+      if (page < 1 || page > totalPages) return;
+      currentGuestPage = page;
+      renderAdminGuests(filteredGuestsData);
+    }
+
+    function filterAdminGuests() {
+      const query = document.getElementById('adminGuestSearch').value.toLowerCase();
+      filteredGuestsData = allGuestsData.filter(item => 
+        item.nama_lengkap.toLowerCase().includes(query) || 
+        item.asal_lembaga.toLowerCase().includes(query) ||
+        item.pekerjaan.toLowerCase().includes(query)
+      );
+      currentGuestPage = 1;
+      renderAdminGuests(filteredGuestsData);
+    }
+
+    function viewGuestDetail(id) {
+      const guest = allGuestsData.find(item => item.id === id);
+      if (!guest) return;
+      const content = document.getElementById('guestDetailContent');
+      content.innerHTML = `
+        <div class="bg-emerald-50/40 p-4 rounded-2xl space-y-2 border border-emerald-100">
+          <div class="grid grid-cols-2 gap-2">
+            <div><strong>Hari & Tanggal:</strong><br>${guest.hari_tanggal}</div>
+            <div><strong>Waktu Datang:</strong><br>${guest.waktu_kunjungan}</div>
+          </div>
+          <div><strong>Nama Lengkap:</strong><br><span class="text-sm font-bold text-stone-900">${guest.nama_lengkap}</span></div>
+          <div class="grid grid-cols-2 gap-2">
+            <div><strong>Pekerjaan:</strong><br>${guest.pekerjaan}</div>
+            <div><strong>Kontak / Telp:</strong><br>${guest.nomor_telepon}</div>
+          </div>
+          <div><strong>Asal Lembaga / Instansi:</strong><br>${guest.asal_lembaga}</div>
+          <div><strong>Maksud & Tujuan:</strong><br><p class="bg-white p-2.5 rounded-xl border border-emerald-100 text-stone-800 mt-1">${guest.maksud_tujuan}</p></div>
+          <div><strong>Pesan & Kesan / Saran:</strong><br><p class="bg-white p-2.5 rounded-xl border border-emerald-100 text-stone-800 mt-1 italic">${guest.pesan_kesan || '-'}</p></div>
+          <div class="text-[10px] text-stone-400 pt-1">ID Data: ${guest.id}</div>
+        </div>
+      `;
+      openModal('guestDetailModal');
+    }
+
+    async function deleteGuest(id) {
+      if (confirm('Yakin ingin menghapus data buku tamu ini?')) {
+        const { error } = await db.from('buku_tamu').delete().eq('id', id);
+        if (error) {
+          showToast('Gagal menghapus data: ' + error.message);
+          return;
+        }
+        showToast('Data buku tamu berhasil dihapus!');
+        loadAdminGuests();
+      }
+    }
+
+    // ==========================================
+    // 2. FUNGSI STRUKTUR ORGANISASI
+    // ==========================================
+    async function loadPublicStructure() {
+      const { data, error } = await db.from('organisasi').select('*').order('id', { ascending: true });
+      const container = document.getElementById('publicStructureContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      if (error || !data || data.length === 0) {
+        container.innerHTML = `<div class="text-center text-xs text-stone-500 py-6">Belum ada data struktur organisasi.</div>`;
+        return;
+      }
+
+      const leader = data.find(item => item.category === 'leader');
+      let html = '';
+
+      if (leader) {
+        html += `
+          <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 text-center max-w-md mx-auto w-full shadow-sm">
+            <div class="w-14 h-14 bg-kemenkes-500 text-white rounded-2xl flex items-center justify-center text-2xl mx-auto mb-3 shadow-md">
+              <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <span class="text-[10px] font-extrabold text-kemenkes-700 uppercase tracking-widest bg-emerald-100 px-3 py-1 rounded-full border border-emerald-200">Pimpinan Tertinggi</span>
+            <h4 class="font-display font-bold text-stone-900 text-base mt-2">${leader.position_title}</h4>
+            <p class="text-xs font-semibold text-kemenkes-900 mt-1">${leader.person_name}</p>
+          </div>
+        `;
+      }
+
+      const clusters = ['Klaster 1', 'Klaster 2', 'Klaster 3', 'Klaster 4', 'Lintas Klaster'];
+      html += `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">`;
+
+      clusters.forEach(clusterName => {
+        const clusterItems = data.filter(item => item.cluster_group === clusterName);
+        if (clusterItems.length === 0) return;
+
+        const coordinator = clusterItems.find(item => item.category === 'coordinator');
+        const subUnits = clusterItems.filter(item => item.category === 'sub_unit');
+
+        html += `
+          <div class="bg-white rounded-2xl p-5 border border-emerald-100 shadow-sm flex flex-col justify-between hover:border-kemenkes-300 transition-all">
+            <div>
+              <div class="w-10 h-10 bg-emerald-50 text-kemenkes-600 rounded-xl flex items-center justify-center text-base mb-3 font-bold border border-emerald-100">
+                <i class="fa-solid fa-sitemap"></i>
+              </div>
+              <span class="text-[10px] font-bold text-kemenkes-600 uppercase bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-100">${clusterName}</span>
+              <h5 class="font-display font-bold text-stone-900 text-sm mt-2">${coordinator ? coordinator.position_title : clusterName}</h5>
+              ${coordinator ? `<p class="text-[11px] font-semibold text-kemenkes-700 mt-1"><i class="fa-regular fa-user-circle mr-1"></i> ${coordinator.person_name}</p>` : ''}
+              
+              <div class="mt-4 space-y-2 border-t border-emerald-50 pt-3">
+                ${subUnits.map(sub => `
+                  <div class="bg-emerald-50/40 p-2.5 rounded-xl border border-emerald-100/80">
+                    <div class="text-[11px] font-bold text-stone-800">${sub.position_title}</div>
+                    <div class="text-[10px] text-stone-600">${sub.person_name}</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+      container.innerHTML = html;
+      loadAdminStructureTable(data);
+    }
+
+    function loadAdminStructureTable(data) {
+      const tbody = document.getElementById('adminStructureTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      data.forEach(item => {
+        tbody.innerHTML += `
+          <tr class="hover:bg-emerald-50/35 transition-colors">
+            <td class="p-3 font-bold text-kemenkes-600">${item.cluster_group}</td>
+            <td class="p-3 font-medium text-stone-900">${item.position_title}</td>
+            <td class="p-3 text-stone-700">${item.person_name}</td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] bg-emerald-100 text-emerald-800 font-semibold">${item.category}</span></td>
+            <td class="p-3 text-right space-x-2">
+              <button onclick="editStructure(${item.id}, '${item.cluster_group}', '${item.position_title.replace(/'/g, "\\'")}', '${item.person_name.replace(/'/g, "\\'")}', '${item.category}')" class="text-kemenkes-600 font-bold hover:underline">Edit</button>
+              <button onclick="deleteStructure(${item.id})" class="text-rose-600 font-bold hover:underline">Hapus</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function openStructureModal() {
+      document.getElementById('structId').value = '';
+      document.getElementById('structureForm').reset();
+      document.getElementById('structureModalTitle').innerText = 'Tambah Posisi Struktur';
+      openModal('structureModal');
+    }
+
+    function editStructure(id, cluster_group, position_title, person_name, category) {
+      document.getElementById('structId').value = id;
+      document.getElementById('structGroup').value = cluster_group;
+      document.getElementById('structTitle').value = position_title;
+      document.getElementById('structName').value = person_name;
+      document.getElementById('structCategory').value = category;
+      document.getElementById('structureModalTitle').innerText = 'Edit Posisi Struktur';
+      openModal('structureModal');
+    }
+
+    async function saveStructure(e) {
+      e.preventDefault();
+      const id = document.getElementById('structId').value;
+      const cluster_group = document.getElementById('structGroup').value;
+      const position_title = document.getElementById('structTitle').value;
+      const person_name = document.getElementById('structName').value;
+      const category = document.getElementById('structCategory').value;
+
+      if (id) {
+        await db.from('organisasi').update({ cluster_group, position_title, person_name, category }).eq('id', id);
+        showToast('Struktur organisasi berhasil diperbarui!');
+      } else {
+        await db.from('organisasi').insert([{ cluster_group, position_title, person_name, category }]);
+        showToast('Struktur organisasi baru berhasil ditambahkan!');
+      }
+      closeModal('structureModal');
+      loadPublicStructure();
+    }
+
+    async function deleteStructure(id) {
+      if (confirm('Yakin ingin menghapus data struktur ini?')) {
+        await db.from('organisasi').delete().eq('id', id);
+        showToast('Data struktur berhasil dihapus!');
+        loadPublicStructure();
+      }
+    }
+
+    // ==========================================
+    // 3. FUNGSI DOKTER & JADWAL
+    // ==========================================
+    async function loadPublicDoctors() {
+      const { data, error } = await db.from('doctors').select('*').order('id', { ascending: true });
+      const grid = document.getElementById('doctorsGrid');
+      const adminTable = document.getElementById('adminDoctorsTableBody');
+      if (grid) grid.innerHTML = '';
+      if (adminTable) adminTable.innerHTML = '';
+
+      if (error || !data || data.length === 0) {
+        if (grid) grid.innerHTML = `<div class="col-span-3 text-center text-xs text-stone-500 py-6">Belum ada data jadwal dokter.</div>`;
+        return;
+      }
+
+      data.forEach(doc => {
+        if (grid) {
+          grid.innerHTML += `
+            <div class="doctor-card bg-white rounded-2xl p-5 border border-emerald-100 shadow-sm hover:border-kemenkes-300 transition-all" data-search="${doc.name.toLowerCase()} ${doc.specialty.toLowerCase()}">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 bg-kemenkes-500 text-white rounded-2xl flex items-center justify-center font-bold shrink-0 shadow-sm"><i class="fa-solid fa-user-doctor"></i></div>
+                <div>
+                  <span class="text-[10px] font-bold text-kemenkes-700 bg-emerald-100 px-2.5 py-0.5 rounded-md border border-emerald-200">${doc.specialty}</span>
+                  <h4 class="font-display font-bold text-stone-900 text-sm mt-2">${doc.name}</h4>
+                  <p class="text-xs text-stone-500">${doc.title}</p>
+                  <div class="mt-3 text-[11px] text-stone-600 space-y-1">
+                    <div><i class="fa-regular fa-calendar text-kemenkes-500 mr-1"></i> ${doc.days}</div>
+                    <div><i class="fa-regular fa-clock text-kemenkes-500 mr-1"></i> ${doc.time}</div>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+        }
+        if (adminTable) {
+          adminTable.innerHTML += `
+            <tr class="hover:bg-emerald-50/35 transition-colors">
+              <td class="p-3 font-bold text-stone-900">${doc.name} <span class="text-stone-500 font-normal">(${doc.specialty})</span></td>
+              <td class="p-3 text-right space-x-2">
+                <button onclick="deleteDoctor(${doc.id})" class="text-rose-600 font-bold hover:underline">Hapus</button>
+              </td>
+            </tr>`;
+        }
+      });
+    }
+
+    function openDoctorModal() {
+      document.getElementById('doctorId').value = '';
+      document.getElementById('doctorForm').reset();
+      document.getElementById('doctorModalTitle').innerText = 'Tambah Dokter';
+      openModal('doctorModal');
+    }
+
+    async function saveDoctor(e) {
+      e.preventDefault();
+      const id = document.getElementById('doctorId').value;
+      const name = document.getElementById('docName').value;
+      const title = document.getElementById('docTitle').value;
+      const specialty = document.getElementById('docSpecialty').value;
+      const days = document.getElementById('docDays').value;
+      const time = document.getElementById('docTime').value;
+
+      if (id) {
+        await db.from('doctors').update({ name, title, specialty, days, time }).eq('id', id);
+        showToast('Jadwal dokter berhasil diperbarui!');
+      } else {
+        await db.from('doctors').insert([{ name, title, specialty, days, time }]);
+        showToast('Dokter baru berhasil ditambahkan!');
+      }
+      closeModal('doctorModal');
+      loadPublicDoctors();
+    }
+
+    async function deleteDoctor(id) {
+      if (confirm('Yakin ingin menghapus data dokter ini?')) {
+        await db.from('doctors').delete().eq('id', id);
+        showToast('Data dokter berhasil dihapus!');
+        loadPublicDoctors();
+      }
+    }
+
+    function filterDoctors() {
+      const query = document.getElementById('doctorSearchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.doctor-card');
+      cards.forEach(card => {
+        const searchData = card.getAttribute('data-search') || '';
+        if (searchData.includes(query)) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // ==========================================
+    // 4. FUNGSI FAQ
+    // ==========================================
+    async function loadPublicFaqs() {
+      const { data, error } = await db.from('faqs').select('*').order('id', { ascending: true });
+      const container = document.querySelector('#faq .space-y-4');
+      const adminTable = document.getElementById('adminFaqTableBody');
+      if (container) container.innerHTML = '';
+      if (adminTable) adminTable.innerHTML = '';
+
+      if (error || !data || data.length === 0) {
+        if (container) container.innerHTML = `<div class="text-center text-xs text-stone-500 py-6">Belum ada pertanyaan FAQ.</div>`;
+        return;
+      }
+
+      data.forEach(faq => {
+        if (container) {
+          container.innerHTML += `
+            <div class="bg-white rounded-2xl border border-emerald-100 overflow-hidden shadow-sm hover:border-kemenkes-300 transition-all">
+              <button onclick="toggleFaq(this)" class="w-full p-5 text-left font-display font-semibold text-stone-800 flex justify-between items-center text-sm">
+                <span>${faq.question}</span><i class="fa-solid fa-chevron-down text-xs text-kemenkes-500"></i>
+              </button>
+              <div class="hidden p-5 pt-0 text-xs text-stone-600 border-t border-emerald-50 bg-emerald-50/20">${faq.answer}</div>
+            </div>`;
+        }
+        if (adminTable) {
+          adminTable.innerHTML += `
+            <tr class="hover:bg-emerald-50/35 transition-colors">
+              <td class="p-3 font-medium text-stone-800">${faq.question}</td>
+              <td class="p-3 text-right"><button onclick="deleteFaq(${faq.id})" class="text-rose-600 font-bold hover:underline">Hapus</button></td>
+            </tr>`;
+        }
+      });
+    }
+
+    function openFaqModal() {
+      document.getElementById('faqId').value = '';
+      document.getElementById('faqForm').reset();
+      document.getElementById('faqModalTitle').innerText = 'Tambah FAQ';
+      openModal('faqModal');
+    }
+
+    async function saveFaq(e) {
+      e.preventDefault();
+      const id = document.getElementById('faqId').value;
+      const question = document.getElementById('faqQuestion').value;
+      const answer = document.getElementById('faqAnswer').value;
+
+      if (id) {
+        await db.from('faqs').update({ question, answer }).eq('id', id);
+        showToast('FAQ berhasil diperbarui!');
+      } else {
+        await db.from('faqs').insert([{ question, answer }]);
+        showToast('FAQ baru berhasil ditambahkan!');
+      }
+      closeModal('faqModal');
+      loadPublicFaqs();
+    }
+
+    async function deleteFaq(id) {
+      if (confirm('Yakin ingin menghapus FAQ ini?')) {
+        await db.from('faqs').delete().eq('id', id);
+        showToast('FAQ berhasil dihapus!');
+        loadPublicFaqs();
+      }
+    }
+
+    // ==========================================
+    // 5. AUTENTIKASI & UTILITAS
+    // ==========================================
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const username = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+
+      const { data, error } = await db
+        .from('petugas')
+        .select('*')
+        .eq('username', username)
+        .eq('password', password);
+
+      if (error) {
+        showToast('Gagal terhubung ke database: ' + error.message);
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        showToast('Username atau password salah!');
+        return;
+      }
+
+      closeModal('loginModal');
+      showToast('Login Berhasil!');
+      
+      document.querySelector('header').classList.add('hidden');
+      document.querySelector('section#beranda').classList.add('hidden');
+      document.querySelector('section#profil').classList.add('hidden');
+      document.querySelector('section#layanan').classList.add('hidden');
+      document.querySelector('section#jadwal').classList.add('hidden');
+      document.querySelector('section#faq').classList.add('hidden');
+      document.querySelector('section#kontak').classList.add('hidden');
+      document.querySelector('footer').classList.add('hidden');
+      document.querySelector('button[onclick*="guestBookModal"]').classList.add('hidden');
+      
+      document.getElementById('adminDashboard').classList.remove('hidden');
+      loadAdminGuests();
+    }
+
+    function handleLogout() { location.reload(); }
+    function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
+    
+    function openModal(id) { 
+      document.getElementById(id).classList.remove('hidden'); 
+      if (id === 'guestBookModal') {
+        const today = new Date().toISOString().split('T')[0];
+        const nowTime = new Date().toTimeString().slice(0, 5);
+        const dateInput = document.getElementById('gbHariTanggal');
+        const timeInput = document.getElementById('gbWaktu');
+        if (dateInput && !dateInput.value) dateInput.value = today;
+        if (timeInput && !timeInput.value) timeInput.value = nowTime;
+      }
+    }
+    
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+    function toggleFaq(btn) { btn.nextElementSibling.classList.toggle('hidden'); }
 
     function showToast(message) {
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
-      toast.className = 'bg-stone-900 text-white text-xs px-4 py-3 rounded-xl shadow-lg pointer-events-auto transform translate-y-2 opacity-0 transition-all duration-300 flex items-center gap-2 border border-stone-800';
-      toast.innerHTML = `<i class="fa-solid fa-circle-info text-kemenkes-400"></i> <span>${message}</span>`;
+      toast.className = `bg-stone-900 text-white px-4 py-3 rounded-xl shadow-md text-xs font-semibold flex items-center gap-3 border-l-4 border-kemenkes-400`;
+      toast.innerHTML = `<i class="fa-solid fa-circle-check text-kemenkes-300"></i><span>${message}</span>`;
       container.appendChild(toast);
-      
-      setTimeout(() => {
-        toast.classList.remove('translate-y-2', 'opacity-0');
-      }, 10);
-
-      setTimeout(() => {
-        toast.classList.add('translate-y-2', 'opacity-0');
-        setTimeout(() => toast.remove(), 300);
-      }, 3500);
+      setTimeout(() => toast.remove(), 3500);
     }
   </script>
 </body>
