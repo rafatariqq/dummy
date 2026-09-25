@@ -135,17 +135,11 @@
         
         <!-- Branding Logo & Titles -->
         <a href="#" class="flex items-center gap-3 group">
-          <!-- Municipal & Kemenkes Badges Container -->
-          <div class="flex items-center gap-2">
-            <!-- Kota Bandung Badge SVG Placeholder -->
-            <div class="w-10 h-10 bg-emerald-700 text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-105 transition-transform">
-              <i class="fa-solid fa-shield-halved text-yellow-400"></i>
-            </div>
-            <!-- Kemenkes Official Badge Graphic -->
-            <div class="w-10 h-10 bg-teal-600 text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-105 transition-transform">
-              <i class="fa-solid fa-heart-pulse text-white"></i>
-            </div>
-          </div>
+          
+          <!-- ================= TEMPAT MELETAKKAN GAMBAR ================= -->
+          <!-- Ganti "logo.png" dengan nama file gambar Anda -->
+          <img src="logo.png" alt="Logo Puskesmas Garuda" class="h-10 sm:h-12 w-auto object-contain group-hover:scale-105 transition-transform">
+          <!-- ============================================================ -->
 
           <div class="flex flex-col">
             <span class="font-display font-extrabold text-lg sm:text-xl text-slate-800 tracking-tight leading-none group-hover:text-kemenkes-700 transition-colors">
@@ -427,7 +421,7 @@
   <section id="layanan" class="py-16 sm:py-24 bg-slate-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <!-- Section Header with Infographic Pill Pill Style -->
+      <!-- Section Header -->
       <div class="text-center max-w-3xl mx-auto space-y-3">
         <span class="inline-block bg-emerald-100 text-emerald-800 font-semibold text-xs px-4 py-1.5 rounded-full uppercase tracking-wider">
           Pelayanan Medis Terpadu
@@ -487,7 +481,7 @@
               Pelayanan kesehatan gigi lengkap mulai dari penambalan, pencabutan, pembersihan karang gigi (scaling), hingga edukasi kesehatan mulut anak.
             </p>
             <ul class="mt-4 space-y-1.5 text-xs text-slate-600">
-              <li class="flex items-center gap-2"><li class="fa-solid fa-circle-check text-teal-600"></i> Penambalan & Pencabutan Gigi</li>
+              <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-teal-600"></i> Penambalan & Pencabutan Gigi</li>
               <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-teal-600"></i> Pembersihan Karang Gigi (Scaling)</li>
               <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-teal-600"></i> Pengobatan Infeksi Gusi</li>
             </ul>
@@ -798,7 +792,7 @@
           </div>
         </div>
 
-        <!-- Infographic Card Box Matching image theme -->
+        <!-- Infographic Card Box -->
         <div class="lg:col-span-6 bg-white rounded-3xl p-6 sm:p-8 border border-emerald-200 shadow-lg relative overflow-hidden">
           <div class="absolute top-0 right-0 bg-kemenkes-700 text-white text-[10px] font-extrabold px-4 py-1.5 rounded-bl-2xl uppercase">
             Capaian Kinerja 2026
@@ -1075,7 +1069,7 @@
     </div>
   </footer>
 
-  <!-- MODAL 1: Pendaftaran Online Pasien (Online Registration Modal) -->
+  <!-- MODAL 1: Pendaftaran Online Pasien -->
   <div id="registerModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-emerald-100 my-8 relative">
       <button onclick="closeModal('registerModal')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 text-lg">
@@ -1314,8 +1308,10 @@
         tab.classList.add('bg-white', 'text-slate-700', 'border-slate-200');
       });
 
-      event.target.classList.remove('bg-white', 'text-slate-700', 'border-slate-200');
-      event.target.classList.add('bg-kemenkes-600', 'text-white', 'border-kemenkes-600');
+      if (event && event.target) {
+        event.target.classList.remove('bg-white', 'text-slate-700', 'border-slate-200');
+        event.target.classList.add('bg-kemenkes-600', 'text-white', 'border-kemenkes-600');
+      }
 
       cards.forEach(card => {
         if (category === 'all' || card.dataset.category === category) {
@@ -1334,13 +1330,15 @@
         btn.classList.add('bg-slate-100', 'text-slate-700');
       });
 
-      event.target.classList.remove('bg-slate-100', 'text-slate-700');
-      event.target.classList.add('bg-kemenkes-700', 'text-white');
+      if (event && event.target) {
+        event.target.classList.remove('bg-slate-100', 'text-slate-700');
+        event.target.classList.add('bg-kemenkes-700', 'text-white');
+      }
 
       const cards = document.querySelectorAll('.doctor-card');
       cards.forEach(card => {
-        const cardDays = card.dataset.days.split(',');
-        if (day === 'all' || cardDays.includes(day)) {
+        const days = card.dataset.days ? card.dataset.days.split(',') : [];
+        if (day === 'all' || days.includes(day)) {
           card.classList.remove('hidden');
         } else {
           card.classList.add('hidden');
@@ -1348,14 +1346,14 @@
       });
     }
 
-    // Doctor Schedule Text Search
+    // Doctor Search Filter
     function filterDoctors() {
       const query = document.getElementById('doctorSearchInput').value.toLowerCase();
       const cards = document.querySelectorAll('.doctor-card');
 
       cards.forEach(card => {
-        const searchData = card.dataset.search.toLowerCase();
-        if (searchData.includes(query)) {
+        const searchText = card.dataset.search ? card.dataset.search.toLowerCase() : '';
+        if (searchText.includes(query)) {
           card.classList.remove('hidden');
         } else {
           card.classList.add('hidden');
@@ -1363,72 +1361,52 @@
       });
     }
 
-    // FAQ Accordion Toggle
+    // FAQ Toggle
     function toggleFaq(button) {
       const content = button.nextElementSibling;
       const icon = button.querySelector('i');
-
-      const allContents = document.querySelectorAll('#faq .hidden');
-      
-      if (content.classList.contains('hidden')) {
-        content.classList.remove('hidden');
-        icon.classList.add('rotate-180');
-      } else {
-        content.classList.add('hidden');
-        icon.classList.remove('rotate-180');
+      content.classList.toggle('hidden');
+      if (icon) {
+        icon.classList.toggle('rotate-180');
       }
     }
 
-    // Online Registration Form Handler
-    function handleRegistrationSubmit(event) {
-      event.preventDefault();
-      
-      const form = event.target;
-      const patientName = form.querySelectorAll('input')[1].value;
-      const dateVal = form.querySelector('#visitDateInput').value;
-      const poliVal = form.querySelector('#modalPoliSelect').value;
-
-      // Prefix Generator per Poli
-      let prefix = 'A';
-      if (poliVal.includes('Gigi')) prefix = 'B';
-      if (poliVal.includes('KIA')) prefix = 'C';
-      if (poliVal.includes('Laboratorium')) prefix = 'D';
-
-      const randomNum = Math.floor(Math.random() * 15) + 20; // Simulated ticket no
-      const generatedTicket = `${prefix}-0${randomNum}`;
-
-      document.getElementById('ticketNumber').innerText = generatedTicket;
-      document.getElementById('ticketPoli').innerText = poliVal.toUpperCase();
-      document.getElementById('ticketPatientName').innerText = patientName;
-      document.getElementById('ticketDate').innerText = dateVal;
-
-      closeModal('registerModal');
-      openModal('ticketModal');
-
-      showToast(`Pendaftaran Berhasil! Nomor Antrean Anda: ${generatedTicket}`);
-      form.reset();
-    }
-
-    // Contact Form Handler
+    // Contact Form Submission Handler
     function handleContactSubmit(event) {
       event.preventDefault();
-      showToast('Terima kasih! Pesan dan saran Anda telah terkirim.');
+      showToast('Pesan Anda berhasil dikirim! Terima kasih atas masukan Anda.');
       event.target.reset();
     }
 
-    // Check Queue Status Action
+    // Registration Form Submission Handler
+    function handleRegistrationSubmit(event) {
+      event.preventDefault();
+      const nameInput = event.target.querySelector('input[placeholder="Sesuai KTP / BPJS"]');
+      const name = nameInput ? nameInput.value : '-';
+      const date = document.getElementById('visitDateInput').value;
+      const poli = document.getElementById('modalPoliSelect').value;
+
+      document.getElementById('ticketPatientName').innerText = name;
+      document.getElementById('ticketDate').innerText = date;
+      document.getElementById('ticketPoli').innerText = poli.toUpperCase();
+      
+      closeModal('registerModal');
+      openModal('ticketModal');
+      showToast('Pendaftaran berhasil! Nomor antrean Anda telah dibuat.');
+      event.target.reset();
+    }
+
+    // Check Queue Status Handler
     function checkQueueStatus() {
-      const ticketVal = document.getElementById('checkTicketInput').value.trim();
-      const resultBox = document.getElementById('queueResultBox');
-
-      if (!ticketVal) {
-        showToast('Mohon masukkan nomor tiket antrean!', 'warning');
-        return;
+      const input = document.getElementById('checkTicketInput').value.trim();
+      const box = document.getElementById('queueResultBox');
+      if (input) {
+        document.getElementById('resQueueNo').innerText = `Nomor Tiket: ${input.toUpperCase()}`;
+        document.getElementById('resQueueMsg').innerText = 'Status: Menunggu (Sisa 2 Pasien lagi)';
+        box.classList.remove('hidden');
+      } else {
+        showToast('Masukkan nomor tiket terlebih dahulu!', 'warning');
       }
-
-      resultBox.classList.remove('hidden');
-      document.getElementById('resQueueNo').innerText = `Nomor Tiket: ${ticketVal.toUpperCase()}`;
-      document.getElementById('resQueueMsg').innerText = `Status: Dalam Antrean (Perkiraan dilayani dalam 10-15 menit)`;
     }
   </script>
 </body>
