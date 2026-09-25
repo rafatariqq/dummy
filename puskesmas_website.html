@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puskesmas Sehat Bersama - Pelayanan Kesehatan Terpadu & Digital</title>
+    
+    <!-- Google Fonts: Poppins & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        medical: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                        },
+                        tealmed: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                        },
+                        skyblue: {
+                            50: '#f0f9ff',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #0d9488 0%, #0284c7 100%);
+        }
+        .hero-pattern {
+            background-color: #f0fdfa;
+            background-image: radial-gradient(#0d9488 0.5px, transparent 0.5px), radial-gradient(#0d9488 0.5px, #f0fdfa 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            background-opacity: 0.1;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0d9488;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0f766e;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-slate-50 antialiased selection:bg-tealmed-500 selection:text-white">
+
+    <!-- Top Contact Bar -->
+    <div class="bg-slate-900 text-slate-200 text-xs sm:text-sm py-2 px-4 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <div class="flex items-center space-x-4 flex-wrap gap-y-1">
+                <span class="flex items-center text-emerald-400 font-medium">
+                    <i class="fa-solid fa-phone-volume mr-2 animate-pulse"></i> Call Center UGD 24 Jam: (022) 119-7788
+                </span>
+                <span class="hidden md:inline-block text-slate-500">|</span>
+                <span class="hidden md:flex items-center text-slate-300">
+                    <i class="fa-solid fa-clock mr-2 text-tealmed-500"></i> Jam Kerja Admin: Senin - Sabtu (07:30 - 14:00 WIB)
+                </span>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="#kontak" class="hover:text-tealmed-500 transition-colors"><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i> Jl. Kesehatan No. 45, Bandung</a>
+                <span class="text-slate-600">|</span>
+                <div class="flex space-x-2 text-slate-400">
+                    <a href="#" class="hover:text-tealmed-500 transition"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="hover:text-tealmed-500 transition"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-tealmed-500 transition"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center space-x-3 group">
+                    <div class="w-12 h-12 rounded-xl gradient-bg flex items-center justify-center text-white shadow-md shadow-teal-500/20 group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-hospital-user text-2xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-heading font-extrabold text-xl tracking-tight text-slate-800 block leading-none">
+                            PUSKESMAS <span class="text-tealmed-600">SEHAT BERSAMA</span>
+                        </span>
+                        <span class="text-xs text-slate-500 font-medium tracking-wider">PELAYANAN KESEHATAN TERPADU</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex items-center space-x-1 font-medium text-slate-600 text-sm">
+                    <a href="#beranda" class="px-3 py-2 rounded-lg text-tealmed-600 font-semibold hover:bg-tealmed-50 transition">Beranda</a>
+                    <a href="#profil" class="px-3 py-2 rounded-lg hover:text-tealmed-600 hover:bg-slate-50 transition">Profil</a>
+                    <a href="#layanan" class="px-3 py-2 rounded-lg hover:text-tealmed-600 hover:bg-slate-50 transition">Layanan</a>
+                    <a href="#jadwal" class="px-3 py-2 rounded-lg hover:text-tealmed-600 hover:bg-slate-50 transition">Jadwal Dokter</a>
+                    <a href="#informasi" class="px-3 py-2 rounded-lg hover:text-tealmed-600 hover:bg-slate-50 transition">Informasi</a>
+                    <a href="#kontak" class="px-3 py-2 rounded-lg hover:text-tealmed-600 hover:bg-slate-50 transition">Kontak</a>
+                </nav>
+
+                <!-- Action Buttons -->
+                <div class="hidden sm:flex items-center space-x-3">
+                    <a href="tel:0221197788" class="px-4 py-2.5 rounded-xl border-2 border-rose-500 text-rose-600 font-semibold text-xs uppercase tracking-wider hover:bg-rose-500 hover:text-white transition flex items-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-truck-medical animate-bounce"></i> UGD 24h
+                    </a>
+                    <button onclick="openRegistrationModal()" class="px-5 py-2.5 rounded-xl gradient-bg text-white font-semibold text-sm hover:shadow-lg hover:shadow-tealmed-500/30 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                        <i class="fa-solid fa-file-signature"></i> Daftar Online
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg text-slate-600 hover:text-tealmed-600 hover:bg-slate-100 focus:outline-none">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-2">
+            <a href="#beranda" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg font-medium text-slate-700 hover:bg-tealmed-50 hover:text-tealmed-600">Beranda</a>
+            <a href="#profil" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg font-medium text-slate-700 hover:bg-tealmed-50 hover:text-tealmed-600">Profil Puskesmas</a>
+            <a href="#layanan" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg font-medium text-slate-700 hover:bg-tealmed-50 hover:text-tealmed-600">Layanan Poliklinik</a>
+            <a href="#jadwal" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg font-medium text-slate-700 hover:bg-tealmed-50 hover:text-tealmed-600">Jadwal Praktik Dokter</a>
+            <a href="#informasi" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg font-medium text-slate-700 hover:bg-tealmed-50 hover:text-tealmed-600">Informasi & Edukasi</a>
+            <a href="#kontak" onclick="toggleMobileMenu()" class="block px-3 py-2.5 rounded-lg font-medium text-slate-700 hover:bg-tealmed-50 hover:text-tealmed-600">Kontak & Lokasi</a>
+            <div class="pt-4 flex flex-col space-y-2">
+                <button onclick="openRegistrationModal(); toggleMobileMenu();" class="w-full py-3 rounded-xl gradient-bg text-white font-semibold text-center">
+                    <i class="fa-solid fa-file-signature mr-2"></i> Pendaftaran Pasien Online
+                </button>
+                <a href="tel:0221197788" class="w-full py-3 rounded-xl bg-rose-50 text-rose-600 border border-rose-200 font-semibold text-center">
+                    <i class="fa-solid fa-phone-volume mr-2"></i> UGD & Ambulans (022) 119-7788
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION: HERO BERANDA -->
+    <section id="beranda" class="relative hero-pattern pt-8 pb-16 lg:pt-16 lg:pb-24 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Text -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-tealmed-100 text-tealmed-800 font-semibold text-xs sm:text-sm shadow-sm">
+                        <span class="w-2.5 h-2.5 rounded-full bg-tealmed-500 animate-ping"></span>
+                        Pelayanan Kesehatan Berstandar Kemenkes RI
+                    </div>
+                    
+                    <h1 class="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-slate-900 leading-tight">
+                        Layanan Kesehatan <span class="text-transparent bg-clip-text gradient-bg">Cepat, Ramah & Modern</span> Untuk Keluarga Anda
+                    </h1>
+                    
+                    <p class="text-slate-600 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        Puskesmas Sehat Bersama siap melayani Anda dengan tenaga medis profesional, fasilitas lengkap, serta sistem antrean digital terintegrasi BPJS Kesehatan.
+                    </p>
+
+                    <!-- Hero Action Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <button onclick="openRegistrationModal()" class="w-full sm:w-auto px-7 py-4 rounded-xl gradient-bg text-white font-bold text-base shadow-lg shadow-tealmed-500/25 hover:shadow-xl hover:shadow-tealmed-500/40 transition transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                            <i class="fa-solid fa-calendar-check text-lg"></i>
+                            Daftar Antrean Online
+                        </button>
+                        <a href="#layanan" class="w-full sm:w-auto px-7 py-4 rounded-xl bg-white text-slate-700 font-bold text-base border border-slate-200 hover:border-tealmed-500 hover:text-tealmed-600 shadow-sm transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-briefcase-medical text-tealmed-500"></i>
+                            Lihat Poliklinik
+                        </a>
+                    </div>
+
+                    <!-- Trust Badges -->
+                    <div class="pt-6 border-t border-slate-200/80 flex flex-wrap justify-center lg:justify-start items-center gap-6 text-slate-500 text-xs font-medium">
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-shield-halved text-emerald-500 text-base"></i> Terakreditasi Paripurna</span>
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-credit-card text-sky-500 text-base"></i> Melayani Pasien BPJS & Umum</span>
+                        <span class="flex items-center gap-2"><i class="fa-solid fa-clock text-amber-500 text-base"></i> UGD & Kebidanan 24 Jam</span>
+                    </div>
+                </div>
+
+                <!-- Hero Illustration Card -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        <div class="absolute -top-4 -left-4 w-72 h-72 bg-tealmed-300 rounded-full mix-blend-multiply filter blur-2xl opacity-30 animate-blob"></div>
+                        <div class="absolute -bottom-4 -right-4 w-72 h-72 bg-sky-300 rounded-full mix-blend-multiply filter blur-2xl opacity-30 animate-blob animation-delay-2000"></div>
+                        
+                        <div class="relative bg-white p-6 sm:p-8 rounded-3xl shadow-xl border border-slate-100">
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
+                                        <i class="fa-solid fa-hospital-user"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-800 text-sm">Status Antrean Hari Ini</h4>
+                                        <p class="text-xs text-slate-500">Update Real-time</p>
+                                    </div>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold">Aktif</span>
+                            </div>
+
+                            <!-- Live Queue Tracker Mockup -->
+                            <div class="space-y-4">
+                                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex items-center justify-between">
+                                    <div>
+                                        <p class="text-xs text-slate-500 uppercase tracking-wide font-semibold">Poli Umum</p>
+                                        <p class="text-xl font-bold text-tealmed-700">Nomor: A-024</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-xs bg-tealmed-100 text-tealmed-800 px-2 py-1 rounded font-medium">Sedang Dilayani</span>
+                                    </div>
+                                </div>
+
+                                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex items-center justify-between">
+                                    <div>
+                                        <p class="text-xs text-slate-500 uppercase tracking-wide font-semibold">Poli Gigi & Mulut</p>
+                                        <p class="text-xl font-bold text-sky-700">Nomor: B-011</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="text-xs bg-sky-100 text-sky-800 px-2 py-1 rounded font-medium">Sedang Dilayani</span>
+                                    </div>
+                                </div>
+
+                                <div class="bg-amber-50 p-4 rounded-2xl border border-amber-100 flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fa-solid fa-users text-amber-600 text-xl"></i>
+                                        <div>
+                                            <p class="text-xs text-amber-800 font-semibold">Sisa Kuota Antrean Online</p>
+                                            <p class="text-sm font-bold text-amber-900">38 Kuota Tersedia Hari Ini</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button onclick="openRegistrationModal()" class="w-full mt-6 py-3 rounded-xl bg-slate-900 text-white font-medium text-xs hover:bg-slate-800 transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-qrcode"></i> Ambil Nomor Antrean Sekarang
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Marquee Running Text Announcement -->
+        <div class="mt-12 bg-tealmed-700 text-white py-3 overflow-hidden shadow-inner">
+            <div class="max-w-7xl mx-auto flex items-center px-4">
+                <span class="bg-amber-400 text-slate-900 font-bold text-xs uppercase px-3 py-1 rounded-md shrink-0 mr-4 flex items-center gap-1">
+                    <i class="fa-solid fa-bullhorn"></i> Pengumuman
+                </span>
+                <div class="whitespace-nowrap animate-marquee flex space-x-12 text-sm font-medium">
+                    <span>📢 Pelaksanaan Vaksinasi Booster & Imunisasi Anak Setiap Hari Selasa & Kamis Pukul 08.00 - 11.00 WIB.</span>
+                    <span>🌿 Program Bebas Stunting: Konsultasi Gizi Gratis di Poli KIA setiap hari Jumat.</span>
+                    <span>💳 Mohon Membawa Kartu BPJS / KTP Asli Saat Melakukan Verifikasi Pendaftaran Online.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: QUICK ACCESS & STATS -->
+    <section class="py-12 bg-white border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Quick Feature Cards Grid -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 -mt-16 relative z-20 mb-16">
+                
+                <div onclick="openRegistrationModal()" class="cursor-pointer bg-white p-6 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition duration-300 border border-slate-100 group">
+                    <div class="w-14 h-14 rounded-2xl bg-tealmed-50 text-tealmed-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-laptop-medical"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-slate-800 text-lg mb-1">Pendaftaran Online</h3>
+                    <p class="text-slate-500 text-sm mb-3">Daftar berobat tanpa antre panjang di lokasi Puskesmas.</p>
+                    <span class="text-tealmed-600 font-semibold text-xs flex items-center gap-1 group-hover:translate-x-1 transition">
+                        Daftar Sekarang <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                </div>
+
+                <div onclick="scrollToSection('jadwal')" class="cursor-pointer bg-white p-6 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition duration-300 border border-slate-100 group">
+                    <div class="w-14 h-14 rounded-2xl bg-skyblue-50 text-skyblue-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-user-doctor"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-slate-800 text-lg mb-1">Cek Jadwal Dokter</h3>
+                    <p class="text-slate-500 text-sm mb-3">Cek jadwal jam praktik dokter umum dan dokter spesialis.</p>
+                    <span class="text-skyblue-600 font-semibold text-xs flex items-center gap-1 group-hover:translate-x-1 transition">
+                        Lihat Jadwal <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                </div>
+
+                <div onclick="scrollToSection('layanan')" class="cursor-pointer bg-white p-6 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition duration-300 border border-slate-100 group">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-vials"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-slate-800 text-lg mb-1">Layanan Lab & BPJS</h3>
+                    <p class="text-slate-500 text-sm mb-3">Informasi alur BPJS Kesehatan & cek laboratorium darah lengkap.</p>
+                    <span class="text-amber-600 font-semibold text-xs flex items-center gap-1 group-hover:translate-x-1 transition">
+                        Informasi Syarat <i class="fa-solid fa-arrow-right"></i>
+                    </span>
+                </div>
+
+                <a href="tel:0221197788" class="bg-rose-500 text-white p-6 rounded-2xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition duration-300 group">
+                    <div class="w-14 h-14 rounded-2xl bg-white/20 text-white flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-truck-medical"></i>
+                    </div>
+                    <h3 class="font-heading font-bold text-lg mb-1">UGD & Ambulans</h3>
+                    <p class="text-rose-100 text-sm mb-3">Layanan gawat darurat dan pengawalan ambulans 24 Jam.</p>
+                    <span class="font-bold text-xs flex items-center gap-1">
+                        Hubungi Emergency <i class="fa-solid fa-phone"></i>
+                    </span>
+                </a>
+
+            </div>
+
+            <!-- Stat Counters -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center pt-6">
+                <div class="p-4">
+                    <p class="font-heading font-extrabold text-3xl sm:text-4xl text-tealmed-600 mb-1">25.000+</p>
+                    <p class="text-slate-600 text-sm font-medium">Pasien Terlayani / Tahun</p>
+                </div>
+                <div class="p-4">
+                    <p class="font-heading font-extrabold text-3xl sm:text-4xl text-skyblue-600 mb-1">12+</p>
+                    <p class="text-slate-600 text-sm font-medium">Poliklinik & Layanan Spesialis</p>
+                </div>
+                <div class="p-4">
+                    <p class="font-heading font-extrabold text-3xl sm:text-4xl text-tealmed-600 mb-1">35+</p>
+                    <p class="text-slate-600 text-sm font-medium">Dokter & Tenaga Medis</p>
+                </div>
+                <div class="p-4">
+                    <p class="font-heading font-extrabold text-3xl sm:text-4xl text-amber-500 mb-1">98.5%</p>
+                    <p class="text-slate-600 text-sm font-medium">Tingkat Kepuasan Masyarakat</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION: PROFIL PUSKESMAS -->
+    <section id="profil" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-tealmed-600 font-bold text-xs uppercase tracking-widest bg-tealmed-100 px-3 py-1 rounded-full">Tentang Kami</span>
+                <h2 class="font-heading font-bold text-3xl sm:text-4xl text-slate-800 mt-3">Profil Puskesmas Sehat Bersama</h2>
+                <div class="w-16 h-1 gradient-bg mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Sambutan Kepala Puskesmas & Visi Misi -->
+            <div class="grid lg:grid-cols-12 gap-12 items-center mb-16">
+                
+                <!-- Card Sambutan -->
+                <div class="lg:col-span-5 bg-white p-8 rounded-3xl shadow-md border border-slate-100 text-center relative">
+                    <div class="w-28 h-28 rounded-full overflow-hidden mx-auto mb-4 border-4 border-tealmed-500 shadow-md">
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=300" alt="Foto Kepala Puskesmas" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-heading font-bold text-xl text-slate-800">dr. Hj. Ratna Sari, M.Kes</h3>
+                    <p class="text-tealmed-600 font-semibold text-xs mb-4">Kepala Puskesmas Sehat Bersama</p>
+                    <div class="text-slate-600 text-sm italic leading-relaxed bg-slate-50 p-4 rounded-2xl relative">
+                        <i class="fa-solid fa-quote-left text-2xl text-tealmed-200 absolute -top-3 left-3"></i>
+                        "Kami berkomitmen untuk selalu memberikan pelayanan kesehatan yang berkualitas, terjangkau, humanis, serta berorientasi pada keselamatan dan kenyamanan masyarakat."
+                    </div>
+                </div>
+
+                <!-- Visi & Misi Cards -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-xl bg-tealmed-100 text-tealmed-700 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-eye"></i>
+                            </div>
+                            <h4 class="font-heading font-bold text-xl text-slate-800">Visi Puskesmas</h4>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            "Menjadi Puskesmas Unggulan yang Mandiri, Penggerak Pembangunan Kesehatan Masyarakat Terdepan, dan Terpercaya Menuju Masyarakat Healthy 2030."
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-10 h-10 rounded-xl bg-skyblue-100 text-skyblue-700 flex items-center justify-center font-bold">
+                                <i class="fa-solid fa-bullseye"></i>
+                            </div>
+                            <h4 class="font-heading font-bold text-xl text-slate-800">Misi Puskesmas</h4>
+                        </div>
+                        <ul class="space-y-2 text-slate-600 text-sm">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-tealmed-500 mt-1"></i>
+                                <span>Menyelenggarakan pelayanan kesehatan promotif, preventif, kuratif, dan rehabilitatif secara bermutu.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-tealmed-500 mt-1"></i>
+                                <span>Meningkatkan profesionalisme dan kompetensi sumber daya manusia kesehatan secara berkelanjutan.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-tealmed-500 mt-1"></i>
+                                <span>Mengembangkan tata kelola Puskesmas berbasis teknologi informasi modern (Digital Health).</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Motto & Maklumat Banner -->
+                    <div class="gradient-bg text-white p-6 rounded-2xl shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div>
+                            <p class="text-xs font-semibold text-tealmed-100 uppercase tracking-wider">Motto Pelayanan Kami</p>
+                            <p class="font-heading font-extrabold text-lg sm:text-xl mt-1">"SENYUM - CEPAT - EMPATI - TUNTAS"</p>
+                        </div>
+                        <span class="px-4 py-2 bg-white/20 rounded-xl text-xs font-medium whitespace-nowrap backdrop-blur-sm">
+                            Maklumat Standar ISO 9001:2015
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Fasilitas Grid -->
+            <div class="mt-16">
+                <h3 class="font-heading font-bold text-2xl text-slate-800 text-center mb-8">Fasilitas & Sarana Penunjang</h3>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm text-center hover:border-tealmed-500 transition">
+                        <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-500 flex items-center justify-center text-xl mx-auto mb-3">
+                            <i class="fa-solid fa-truck-medical"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-sm">UGD 24 Jam</h4>
+                        <p class="text-xs text-slate-500 mt-1">Penanganan Darurat</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm text-center hover:border-tealmed-500 transition">
+                        <div class="w-12 h-12 rounded-xl bg-tealmed-50 text-tealmed-600 flex items-center justify-center text-xl mx-auto mb-3">
+                            <i class="fa-solid fa-pills"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-sm">Apotek & Farmasi</h4>
+                        <p class="text-xs text-slate-500 mt-1">Obat Lengkap & Gratis BPJS</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm text-center hover:border-tealmed-500 transition">
+                        <div class="w-12 h-12 rounded-xl bg-skyblue-50 text-skyblue-600 flex items-center justify-center text-xl mx-auto mb-3">
+                            <i class="fa-solid fa-vial"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-sm">Laboratorium Modern</h4>
+                        <p class="text-xs text-slate-500 mt-1">Uji Darah, Urine & Dahak</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm text-center hover:border-tealmed-500 transition">
+                        <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl mx-auto mb-3">
+                            <i class="fa-solid fa-baby"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-sm">Ruang Laktasi & Anak</h4>
+                        <p class="text-xs text-slate-500 mt-1">Nursery & Area Bermain</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm text-center hover:border-tealmed-500 transition">
+                        <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl mx-auto mb-3">
+                            <i class="fa-solid fa-wheelchair"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-sm">Akses Disabilitas</h4>
+                        <p class="text-xs text-slate-500 mt-1">Rampa & Toilet Khusus</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm text-center hover:border-tealmed-500 transition">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl mx-auto mb-3">
+                            <i class="fa-solid fa-bed"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-sm">Rawat Inap Bersalin</h4>
+                        <p class="text-xs text-slate-500 mt-1">Kamar Inap Bersih & Nyaman</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm text-center hover:border-tealmed-500 transition">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-xl mx-auto mb-3">
+                            <i class="fa-solid fa-wifi"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-sm">Free Wi-Fi & Ruang Tunggu</h4>
+                        <p class="text-xs text-slate-500 mt-1">Ber-AC & Kursi Ergonimis</p>
+                    </div>
+
+                    <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm text-center hover:border-tealmed-500 transition">
+                        <div class="w-12 h-12 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center text-xl mx-auto mb-3">
+                            <i class="fa-solid fa-square-parking"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-sm">Parkir Luas & Aman</h4>
+                        <p class="text-xs text-slate-500 mt-1">Pengawasan CCTV 24/7</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION: LAYANAN POLIKLINIK -->
+    <section id="layanan" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-tealmed-600 font-bold text-xs uppercase tracking-widest bg-tealmed-100 px-3 py-1 rounded-full">Poliklinik & Medis</span>
+                <h2 class="font-heading font-bold text-3xl sm:text-4xl text-slate-800 mt-3">Layanan Kesehatan Terpadu</h2>
+                <p class="text-slate-500 text-sm mt-2">Pilih kategori layanan medis sesuai dengan kebutuhan kesehatan Anda dan keluarga.</p>
+                <div class="w-16 h-1 gradient-bg mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="flex flex-wrap justify-center gap-2 mb-10" id="service-tabs">
+                <button onclick="filterServices('all')" class="service-tab-btn active px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-tealmed-600 text-white shadow-md transition">Semua Layanan</button>
+                <button onclick="filterServices('umum')" class="service-tab-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Poli Umum</button>
+                <button onclick="filterServices('gigi')" class="service-tab-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Poli Gigi</button>
+                <button onclick="filterServices('kia')" class="service-tab-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Poli KIA & KB</button>
+                <button onclick="filterServices('lansia')" class="service-tab-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Poli Lansia</button>
+                <button onclick="filterServices('penunjang')" class="service-tab-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">Lab & Farmasi</button>
+            </div>
+
+            <!-- Services Grid Cards -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="services-grid">
+                
+                <!-- Card 1 -->
+                <div class="service-card umum bg-slate-50 rounded-3xl p-6 border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-tealmed-100 text-tealmed-600 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-stethoscope"></i>
+                        </div>
+                        <span class="text-xs font-bold text-tealmed-600 uppercase tracking-wider">Poliklinik Utama</span>
+                        <h3 class="font-heading font-bold text-xl text-slate-800 mt-1 mb-2">Poli Pemeriksaan Umum</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Pemeriksaan kesehatan menyeluruh, diagnosa penyakit umum, konsultasi medis, dan rujukan BPJS Kesehatan.
+                        </p>
+                        <div class="text-xs text-slate-500 space-y-1 mb-6">
+                            <p><i class="fa-solid fa-clock text-slate-400 mr-2"></i> Senin - Sabtu (08.00 - 13.00 WIB)</p>
+                            <p><i class="fa-solid fa-id-card text-slate-400 mr-2"></i> KTP / KK / Kartu BPJS Kesehatan</p>
+                        </div>
+                    </div>
+                    <button onclick="openServiceDetail('Poli Pemeriksaan Umum', 'Pemeriksaan fisik rutin, penanganan flu/batuk/demam, pemeriksaan tekanan darah, gula darah dasar, serta penulisan rujukan BPJS.', 'KTP / KK, Kartu BPJS Kesehatan Aktif, Kartu Berobat Puskesmas')" class="w-full py-2.5 rounded-xl bg-white border border-slate-200 text-tealmed-700 font-semibold text-xs hover:bg-tealmed-600 hover:text-white transition">
+                        Detail Syarat & Alur
+                    </button>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="service-card gigi bg-slate-50 rounded-3xl p-6 border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-skyblue-100 text-skyblue-600 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-tooth"></i>
+                        </div>
+                        <span class="text-xs font-bold text-skyblue-600 uppercase tracking-wider">Poliklinik Spesialis Gigi</span>
+                        <h3 class="font-heading font-bold text-xl text-slate-800 mt-1 mb-2">Poli Kesehatan Gigi & Mulut</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Pembersihan karang gigi (Scaling), penambalan gigi berlubang, pencabutan gigi, dan konseling kesehatan mulut.
+                        </p>
+                        <div class="text-xs text-slate-500 space-y-1 mb-6">
+                            <p><i class="fa-solid fa-clock text-slate-400 mr-2"></i> Senin - Jumat (08.00 - 12.00 WIB)</p>
+                            <p><i class="fa-solid fa-id-card text-slate-400 mr-2"></i> KTP & BPJS (Kuota 20 Pasien/Hari)</p>
+                        </div>
+                    </div>
+                    <button onclick="openServiceDetail('Poli Kesehatan Gigi & Mulut', 'Penanganan sakit gigi, penambalan komposit/amalgam, pencabutan gigi anak & dewasa, serta pembersihan karang gigi scaling berkala.', 'KTP, BPJS Kesehatan, Mengambil Kuota Antrean Pagi')" class="w-full py-2.5 rounded-xl bg-white border border-slate-200 text-skyblue-700 font-semibold text-xs hover:bg-skyblue-600 hover:text-white transition">
+                        Detail Syarat & Alur
+                    </button>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="service-card kia bg-slate-50 rounded-3xl p-6 border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-person-breastfeeding"></i>
+                        </div>
+                        <span class="text-xs font-bold text-rose-600 uppercase tracking-wider">Ibu & Anak</span>
+                        <h3 class="font-heading font-bold text-xl text-slate-800 mt-1 mb-2">Poli KIA, KB & Imunisasi</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Pemeriksaan kehamilan (ANC), USG dasar, pelayanan KB (Suntik, IUD, Implan), imunisasi bayi & balita.
+                        </p>
+                        <div class="text-xs text-slate-500 space-y-1 mb-6">
+                            <p><i class="fa-solid fa-clock text-slate-400 mr-2"></i> Senin - Sabtu (08.00 - 13.00 WIB)</p>
+                            <p><i class="fa-solid fa-id-card text-slate-400 mr-2"></i> Buku KIA / Pink, KTP, BPJS</p>
+                        </div>
+                    </div>
+                    <button onclick="openServiceDetail('Poli KIA, KB & Imunisasi', 'Pemeriksaan rutin ibu hamil, imunisasi dasar lengkap balita, pelayanan KB suntik/spiral/pil, dan pemeriksaan pasca melahirkan.', 'Buku KIA (Buku Pink), KTP Ibu, BPJS Kesehatan')" class="w-full py-2.5 rounded-xl bg-white border border-slate-200 text-rose-700 font-semibold text-xs hover:bg-rose-600 hover:text-white transition">
+                        Detail Syarat & Alur
+                    </button>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="service-card lansia bg-slate-50 rounded-3xl p-6 border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-person-cane"></i>
+                        </div>
+                        <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Lansia & PTM</span>
+                        <h3 class="font-heading font-bold text-xl text-slate-800 mt-1 mb-2">Poli Lansia & Santun</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Layanan khusus lansia (usia >60 thn) tanpa antre lama, pemantauan Hipertensi, Diabetes, & Penyakit Tidak Menular.
+                        </p>
+                        <div class="text-xs text-slate-500 space-y-1 mb-6">
+                            <p><i class="fa-solid fa-clock text-slate-400 mr-2"></i> Senin - Sabtu (07.30 - 12.00 WIB)</p>
+                            <p><i class="fa-solid fa-heart text-slate-400 mr-2"></i> Jalur Prioritas Khusus Lansia</p>
+                        </div>
+                    </div>
+                    <button onclick="openServiceDetail('Poli Lansia & Santun', 'Pemeriksaan rutin hipertensi, diabetes, penyakit kronis lansia, serta skrining kesehatan berkala dengan fasilitas ramah lansia.', 'KTP Asli (Usia 60+), Kartu BPJS Kesehatan')" class="w-full py-2.5 rounded-xl bg-white border border-slate-200 text-amber-700 font-semibold text-xs hover:bg-amber-600 hover:text-white transition">
+                        Detail Syarat & Alur
+                    </button>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="service-card penunjang bg-slate-50 rounded-3xl p-6 border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-microscope"></i>
+                        </div>
+                        <span class="text-xs font-bold text-purple-600 uppercase tracking-wider">Penunjang Medis</span>
+                        <h3 class="font-heading font-bold text-xl text-slate-800 mt-1 mb-2">Laboratorium Klinik</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Pemeriksaan Hemoglobin, Kolesterol, Asam Urat, Gula Darah, Tes HIV, Tes DBD, dan pemeriksaan Dahak/TBC.
+                        </p>
+                        <div class="text-xs text-slate-500 space-y-1 mb-6">
+                            <p><i class="fa-solid fa-clock text-slate-400 mr-2"></i> Senin - Sabtu (08.00 - 12.00 WIB)</p>
+                            <p><i class="fa-solid fa-file-medical text-slate-400 mr-2"></i> Rujukan Internal Dokter Puskesmas</p>
+                        </div>
+                    </div>
+                    <button onclick="openServiceDetail('Laboratorium Klinik', 'Layanan sampel darah, urin, dan dahak cepat dengan hasil dapat ditunggu pada hari yang sama.', 'Surat Pengantar / Rujukan Dokter Puskesmas')" class="w-full py-2.5 rounded-xl bg-white border border-slate-200 text-purple-700 font-semibold text-xs hover:bg-purple-600 hover:text-white transition">
+                        Detail Syarat & Alur
+                    </button>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="service-card penunjang bg-slate-50 rounded-3xl p-6 border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition duration-300 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-capsules"></i>
+                        </div>
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Farmasi & Apotek</span>
+                        <h3 class="font-heading font-bold text-xl text-slate-800 mt-1 mb-2">Instalasi Farmasi</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Penyediaan resep obat lengkap gratis untuk pasien BPJS serta konseling penggunaan obat yang aman.
+                        </p>
+                        <div class="text-xs text-slate-500 space-y-1 mb-6">
+                            <p><i class="fa-solid fa-clock text-slate-400 mr-2"></i> Senin - Sabtu (08.00 - 14.00 WIB)</p>
+                            <p><i class="fa-solid fa-receipt text-slate-400 mr-2"></i> Resep Dokter Puskesmas</p>
+                        </div>
+                    </div>
+                    <button onclick="openServiceDetail('Instalasi Farmasi', 'Pengambilan resep racikan & obat paten, informasi dosis obat, serta konsultasi apoteker.', 'Resep Resmi Dokter Puskesmas Sehat Bersama')" class="w-full py-2.5 rounded-xl bg-white border border-slate-200 text-emerald-700 font-semibold text-xs hover:bg-emerald-600 hover:text-white transition">
+                        Detail Syarat & Alur
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION: JADWAL DOKTER -->
+    <section id="jadwal" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-tealmed-600 font-bold text-xs uppercase tracking-widest bg-tealmed-100 px-3 py-1 rounded-full">Jadwal Praktik</span>
+                <h2 class="font-heading font-bold text-3xl sm:text-4xl text-slate-800 mt-3">Jadwal Dokter & Tenaga Medis</h2>
+                <p class="text-slate-500 text-sm mt-2">Cari dokter favorit Anda berdasarkan hari atau nama poliklinik.</p>
+                <div class="w-16 h-1 gradient-bg mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Search & Day Filters -->
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 mb-10 space-y-6">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    
+                    <!-- Search Input -->
+                    <div class="relative w-full md:w-80">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" id="doctor-search" oninput="filterDoctorSchedule()" placeholder="Cari nama dokter / poli..." class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-tealmed-500 focus:ring-2 focus:ring-tealmed-100">
+                    </div>
+
+                    <!-- Day Buttons -->
+                    <div class="flex flex-wrap gap-2 w-full md:w-auto justify-center" id="day-tabs">
+                        <button onclick="filterDoctorDay('semua')" class="day-btn active px-4 py-2 rounded-xl text-xs font-semibold bg-tealmed-600 text-white">Semua</button>
+                        <button onclick="filterDoctorDay('Senin')" class="day-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">Senin</button>
+                        <button onclick="filterDoctorDay('Selasa')" class="day-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">Selasa</button>
+                        <button onclick="filterDoctorDay('Rabu')" class="day-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">Rabu</button>
+                        <button onclick="filterDoctorDay('Kamis')" class="day-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">Kamis</button>
+                        <button onclick="filterDoctorDay('Jumat')" class="day-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">Jumat</button>
+                        <button onclick="filterDoctorDay('Sabtu')" class="day-btn px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">Sabtu</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Doctor Schedule Cards Container -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="doctors-container">
+                <!-- Javascript will inject doctors dynamic content here -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION: INFORMASI & EDUKASI KESEHATAN -->
+    <section id="informasi" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-tealmed-600 font-bold text-xs uppercase tracking-widest bg-tealmed-100 px-3 py-1 rounded-full">Edukasi & Berita</span>
+                <h2 class="font-heading font-bold text-3xl sm:text-4xl text-slate-800 mt-3">Informasi Kesehatan Masyarakat</h2>
+                <p class="text-slate-500 text-sm mt-2">Artikel gaya hidup sehat, info vaksinasi, dan berita kegiatan Puskesmas.</p>
+                <div class="w-16 h-1 gradient-bg mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Articles Grid -->
+            <div class="grid md:grid-cols-3 gap-8">
+                
+                <!-- Article 1 -->
+                <article class="bg-slate-50 rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-md transition group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=600" alt="Pencegahan Stunting" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-4 left-4 bg-tealmed-600 text-white text-xs font-semibold px-3 py-1 rounded-full">Kesehatan Anak</span>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-xs text-slate-400 mb-2"><i class="fa-regular fa-calendar mr-1"></i> 18 September 2026</p>
+                        <h3 class="font-heading font-bold text-lg text-slate-800 mb-3 group-hover:text-tealmed-600 transition">Pentingnya Pemenuhan Gizi 1000 HPK untuk Cegah Stunting</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4 line-clamp-2">
+                            1000 Hari Pertama Kehidupan (HPK) adalah masa emas dalam menentukan tumbuh kembang fisik dan kecerdasan otak anak secara optimal.
+                        </p>
+                        <button onclick="openArticleModal('Pentingnya Pemenuhan Gizi 1000 HPK untuk Cegah Stunting', '18 September 2026', 'Kesehatan Anak', '1000 Hari Pertama Kehidupan (HPK) dimulai sejak konsepsi dalam kandungan hingga anak berusia 2 tahun. Pada periode ini, pemenuhan asupan protein hewani, ASI eksklusif 6 bulan, dan imunisasi rutin berperan hingga 80% dalam mencegah stunting. Puskesmas Sehat Bersama menyediakan layanan konseling gizi gratis bagi ibu hamil dan balita di Poliklinik KIA setiap hari Jumat.')" class="text-tealmed-600 font-bold text-xs flex items-center gap-1 hover:gap-2 transition">
+                            Baca Selengkapnya <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="bg-slate-50 rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-md transition group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=600" alt="Pencegahan DBD" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-4 left-4 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full">Pencegahan Penyakit</span>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-xs text-slate-400 mb-2"><i class="fa-regular fa-calendar mr-1"></i> 12 September 2026</p>
+                        <h3 class="font-heading font-bold text-lg text-slate-800 mb-3 group-hover:text-amber-600 transition">Waspada Demam Berdarah (DBD) Musim Hujan dengan 3M Plus</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4 line-clamp-2">
+                            Memasuki musim penghujan, jentik nyamuk Aedes Aegypti berpotensi berkembang pesat. Lakukan gerakan 3M Plus di rumah.
+                        </p>
+                        <button onclick="openArticleModal('Waspada Demam Berdarah (DBD) Musim Hujan dengan 3M Plus', '12 September 2026', 'Pencegahan Penyakit', 'Langkah 3M Plus meliputi: 1. Menguras tempat penampungan air secara berkala, 2. Menutup rapat tempat penyimpanan air, 3. Mendaur ulang barang bekas. Plus: Menggunakan repellent nyamuk, memelihara ikan pemakan jentik, dan memasang kawat kasa di jendela. Segera periksakan diri ke UGD Puskesmas jika mengalami demam tinggi mendadak disertai bintik merah.')" class="text-amber-600 font-bold text-xs flex items-center gap-1 hover:gap-2 transition">
+                            Baca Selengkapnya <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="bg-slate-50 rounded-3xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-md transition group">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=600" alt="Pemeriksaan Lansia" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <span class="absolute top-4 left-4 bg-skyblue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">Kesehatan Lansia</span>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-xs text-slate-400 mb-2"><i class="fa-regular fa-calendar mr-1"></i> 05 September 2026</p>
+                        <h3 class="font-heading font-bold text-lg text-slate-800 mb-3 group-hover:text-skyblue-600 transition">Tips Menjaga Hipertensi Tetap Stabil bagi Lansia</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4 line-clamp-2">
+                            Tekanan darah tinggi sering tak bergejala. Ketahui pola makan rendah garam dan aktivitas fisik aman untuk lansia.
+                        </p>
+                        <button onclick="openArticleModal('Tips Menjaga Hipertensi Tetap Stabil bagi Lansia', '05 September 2026', 'Kesehatan Lansia', 'Hipertensi dijuluki sebagai Silent Killer. Lansia dianjurkan melakukan kontrol tekanan darah secara teratur minimal 1 bulan sekali, mengonsumsi obat antihipertensi sesuai anjuran dokter tanpa terputus, membatasi asupan garam maksimal 1 sendok teh per hari, dan rutin berolah raga ringan seperti jalan kaki 30 menit sehari.')" class="text-skyblue-600 font-bold text-xs flex items-center gap-1 hover:gap-2 transition">
+                            Baca Selengkapnya <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </article>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION: KONTAK, LOKASI & FAQ -->
+    <section id="kontak" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-tealmed-600 font-bold text-xs uppercase tracking-widest bg-tealmed-100 px-3 py-1 rounded-full">Hubungi Kami</span>
+                <h2 class="font-heading font-bold text-3xl sm:text-4xl text-slate-800 mt-3">Kontak & Pusat Bantuan Pasien</h2>
+                <p class="text-slate-500 text-sm mt-2">Kami siap mendengar saran, pertanyaan, atau keluhan pelayanan Anda.</p>
+                <div class="w-16 h-1 gradient-bg mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-12">
+                
+                <!-- Info & Form Box -->
+                <div class="lg:col-span-7 space-y-8">
+                    
+                    <!-- Contact Cards -->
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-tealmed-100 text-tealmed-600 flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Alamat Puskesmas</h4>
+                                <p class="text-xs text-slate-500 mt-1">Jl. Kesehatan Masyarakat No. 45, Kecamatan Coblong, Kota Bandung</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-phone-volume"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Call Center UGD 24 Jam</h4>
+                                <p class="text-xs text-slate-500 mt-1">(022) 119-7788 / 0812-3456-7890</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Complaint / Feedback Form -->
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                        <h3 class="font-heading font-bold text-xl text-slate-800 mb-2">Formulir Pesan & Pengaduan Pasien</h3>
+                        <p class="text-slate-500 text-xs mb-6">Saran dan tanggapan Anda sangat berarti untuk peningkatkan mutu pelayanan kami.</p>
+
+                        <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-4">
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Lengkap *</label>
+                                    <input type="text" required placeholder="Sesuai KTP" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-tealmed-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">No. WhatsApp / HP *</label>
+                                    <input type="tel" required placeholder="0812xxxx" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-tealmed-500">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Kategori Pesan</label>
+                                <select class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-tealmed-500">
+                                    <option>Pertanyaan Umum / Info BPJS</option>
+                                    <option>Saran & Kritikan Pelayanan</option>
+                                    <option>Pengaduan Fasilitas</option>
+                                    <option>Permohonan Informasi Vaksin</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Pesan / Pengaduan *</label>
+                                <textarea required rows="4" placeholder="Tuliskan keluhan atau saran Anda secara singkat..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-tealmed-500"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-3 rounded-xl gradient-bg text-white font-bold text-sm shadow-md hover:shadow-lg transition">
+                                <i class="fa-solid fa-paper-plane mr-2"></i> Kirim Pesan / Pengaduan
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+
+                <!-- FAQ Accordion & Map -->
+                <div class="lg:col-span-5 space-y-8">
+                    
+                    <!-- FAQ Card -->
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                        <h3 class="font-heading font-bold text-xl text-slate-800 mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-question text-tealmed-600"></i> FAQ / Pertanyaan Sering Diajukan
+                        </h3>
+
+                        <div class="space-y-3" id="faq-accordion">
+                            
+                            <!-- FAQ Item 1 -->
+                            <div class="border border-slate-100 rounded-2xl overflow-hidden">
+                                <button onclick="toggleFaq('faq-1')" class="w-full text-left p-4 bg-slate-50 hover:bg-slate-100 font-semibold text-slate-800 text-xs sm:text-sm flex justify-between items-center transition">
+                                    <span>Apakah berobat di Puskesmas gratis untuk BPJS?</span>
+                                    <i id="faq-1-icon" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                                </button>
+                                <div id="faq-1" class="hidden p-4 text-xs text-slate-600 bg-white border-t border-slate-100 leading-relaxed">
+                                    Ya, seluruh biaya konsultasi dokter dan obat-obatan gratis 100% bagi peserta BPJS Kesehatan aktif yang faskes pertamanya terdaftar di Puskesmas Sehat Bersama.
+                                </div>
+                            </div>
+
+                            <!-- FAQ Item 2 -->
+                            <div class="border border-slate-100 rounded-2xl overflow-hidden">
+                                <button onclick="toggleFaq('faq-2')" class="w-full text-left p-4 bg-slate-50 hover:bg-slate-100 font-semibold text-slate-800 text-xs sm:text-sm flex justify-between items-center transition">
+                                    <span>Bagaimana cara mendaftar secara online?</span>
+                                    <i id="faq-2-icon" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                                </button>
+                                <div id="faq-2" class="hidden p-4 text-xs text-slate-600 bg-white border-t border-slate-100 leading-relaxed">
+                                    Klik tombol 'Daftar Online' pada menu navbar, isi data NIK/BPJS, pilih poliklinik dan tanggal kunjungan. Anda akan mendapatkan tiket antrean digital secara instant.
+                                </div>
+                            </div>
+
+                            <!-- FAQ Item 3 -->
+                            <div class="border border-slate-100 rounded-2xl overflow-hidden">
+                                <button onclick="toggleFaq('faq-3')" class="w-full text-left p-4 bg-slate-50 hover:bg-slate-100 font-semibold text-slate-800 text-xs sm:text-sm flex justify-between items-center transition">
+                                    <span>Dokumen apa saja yang wajib dibawa saat berobat?</span>
+                                    <i id="faq-3-icon" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                                </button>
+                                <div id="faq-3" class="hidden p-4 text-xs text-slate-600 bg-white border-t border-slate-100 leading-relaxed">
+                                    Pasien wajib membawa KTP/KK asli, Kartu BPJS Kesehatan (jika ada), serta Kartu Berobat Puskesmas bagi pasien yang sudah pernah berkunjung.
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Map Location Box -->
+                    <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+                        <h4 class="font-bold text-slate-800 text-sm mb-3 px-2 flex items-center gap-2">
+                            <i class="fa-solid fa-map-location-dot text-rose-500"></i> Peta Peta Lokasi Puskesmas
+                        </h4>
+                        <div class="w-full h-56 rounded-2xl overflow-hidden border border-slate-200">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.000000000000!2d107.610000000000!3d-6.890000000000000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e64c5e800000%3A0x1000000000000000!2sBandung!5e0!3m2!1sid!2sid!4v1600000000000!5m2!1sid!2sid" class="w-full h-full border-0" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION: FOOTER -->
+    <footer class="bg-slate-900 text-slate-300 pt-16 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-slate-800">
+                
+                <!-- Brand Info -->
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl gradient-bg flex items-center justify-center text-white font-bold">
+                            <i class="fa-solid fa-hospital-user text-xl"></i>
+                        </div>
+                        <span class="font-heading font-extrabold text-lg text-white">PUSKESMAS SEHAT</span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Pusat Pelayanan Kesehatan Masyarakat Terpadu terakreditasi Paripurna. Mengedepankan mutu, keselamatan, dan kepuasan pasien.
+                    </p>
+                    <div class="flex space-x-3 text-slate-400 pt-2">
+                        <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-tealmed-600 hover:text-white transition flex items-center justify-center text-sm"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-tealmed-600 hover:text-white transition flex items-center justify-center text-sm"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-tealmed-600 hover:text-white transition flex items-center justify-center text-sm"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <!-- Nav Links -->
+                <div>
+                    <h4 class="font-heading font-bold text-white text-sm mb-4 border-b border-slate-800 pb-2">Navigasi Cepat</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#beranda" class="hover:text-tealmed-400 transition">Beranda Utama</a></li>
+                        <li><a href="#profil" class="hover:text-tealmed-400 transition">Visi & Misi Puskesmas</a></li>
+                        <li><a href="#layanan" class="hover:text-tealmed-400 transition">Poliklinik & Layanan Medis</a></li>
+                        <li><a href="#jadwal" class="hover:text-tealmed-400 transition">Jadwal Praktik Dokter</a></li>
+                        <li><a href="#informasi" class="hover:text-tealmed-400 transition">Berita & Edukasi Kesehatan</a></li>
+                    </ul>
+                </div>
+
+                <!-- Hak & Kewajiban Pasien -->
+                <div>
+                    <h4 class="font-heading font-bold text-white text-sm mb-4 border-b border-slate-800 pb-2">Hak & Kewajiban Pasien</h4>
+                    <ul class="space-y-2 text-xs text-slate-400">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-angle-right text-tealmed-500 mt-0.5"></i> Memperoleh informasi mengenai tata tertib dan peraturan.</li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-angle-right text-tealmed-500 mt-0.5"></i> Memperoleh pelayanan medis yang bermutu dan adil.</li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-angle-right text-tealmed-500 mt-0.5"></i> Menjaga privasi dan kerahasiaan penyakit yang diderita.</li>
+                    </ul>
+                </div>
+
+                <!-- Jam Operasional -->
+                <div>
+                    <h4 class="font-heading font-bold text-white text-sm mb-4 border-b border-slate-800 pb-2">Jam Operasional</h4>
+                    <div class="space-y-2 text-xs text-slate-400">
+                        <div class="flex justify-between">
+                            <span>Senin - Kamis:</span>
+                            <span class="text-white font-medium">07.30 - 14.00 WIB</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Jumat:</span>
+                            <span class="text-white font-medium">07.30 - 11.30 WIB</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Sabtu:</span>
+                            <span class="text-white font-medium">07.30 - 13.00 WIB</span>
+                        </div>
+                        <div class="mt-4 p-3 bg-rose-950/50 border border-rose-800/50 rounded-xl text-rose-300">
+                            <p class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-circle-exclamation"></i> UGD & Kebidanan 24 JAM</p>
+                            <p class="text-[10px] mt-0.5 text-rose-200">Melayani gawat darurat tanpa libur.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Copyright -->
+            <div class="pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+                <p>&copy; 2026 Puskesmas Sehat Bersama. Hak Cipta Dilindungi Undang-Undang.</p>
+                <p>Terhubung Resmi dengan <span class="text-tealmed-400 font-semibold">Kementerian Kesehatan Republik Indonesia</span></p>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- MODAL 1: ONLINE REGISTRATION FORM -->
+    <div id="modal-registration" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative my-8">
+            <button onclick="closeRegistrationModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 text-xl w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-2xl bg-tealmed-100 text-tealmed-600 flex items-center justify-center text-2xl mx-auto mb-2">
+                    <i class="fa-solid fa-hospital-user"></i>
+                </div>
+                <h3 class="font-heading font-bold text-2xl text-slate-800">Form Pendaftaran Antrean Online</h3>
+                <p class="text-slate-500 text-xs mt-1">Silakan isi formulir dengan data yang valid sesuai KTP / BPJS.</p>
+            </div>
+
+            <form id="queue-form" onsubmit="generateQueueTicket(event)" class="space-y-4">
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">NIK / No. BPJS *</label>
+                        <input type="number" required placeholder="16 digit NIK" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-tealmed-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Nama Lengkap Pasien *</label>
+                        <input type="text" id="patient-name" required placeholder="Nama Sesuai KTP" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-tealmed-500">
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">No. WhatsApp Active *</label>
+                        <input type="tel" required placeholder="0812xxxx" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-tealmed-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Jenis Pasien *</label>
+                        <select required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-tealmed-500">
+                            <option value="BPJS">Pasien BPJS Kesehatan</option>
+                            <option value="Umum">Pasien Umum / Non-BPJS</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Pilih Poliklinik *</label>
+                        <select id="select-poli" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-tealmed-500">
+                            <option value="Poli Umum">Poli Pemeriksaan Umum</option>
+                            <option value="Poli Gigi">Poli Kesehatan Gigi & Mulut</option>
+                            <option value="Poli KIA">Poli KIA & Imunisasi</option>
+                            <option value="Poli Lansia">Poli Lansia (Usia 60+)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Tanggal Kunjungan *</label>
+                        <input type="date" required id="visit-date" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-tealmed-500">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Keluhan Singkat / Alasan Kunjungan</label>
+                    <textarea rows="2" placeholder="Contoh: Demam 2 hari, mau kontrol kehamilan..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-tealmed-500"></textarea>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-3.5 rounded-xl gradient-bg text-white font-bold text-sm shadow-lg shadow-tealmed-500/25 hover:shadow-xl transition">
+                        Dapatkan Tiket Antrean Digital
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: TICKET OUTPUT DISPLAY -->
+    <div id="modal-ticket" class="fixed inset-0 z-50 hidden bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative text-center">
+            <button onclick="closeTicketModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 text-xl w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mx-auto mb-3">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            
+            <h3 class="font-heading font-bold text-xl text-slate-800">Pendaftaran Berhasil!</h3>
+            <p class="text-xs text-slate-500 mb-6">Simpan atau screenshot nomor antrean di bawah ini.</p>
+
+            <!-- Printable Ticket Card -->
+            <div class="bg-tealmed-50 border-2 border-dashed border-tealmed-300 rounded-3xl p-6 mb-6 text-left relative overflow-hidden">
+                <div class="border-b border-tealmed-200 pb-3 mb-4 flex justify-between items-center">
+                    <div>
+                        <p class="font-bold text-slate-800 text-sm">PUSKESMAS SEHAT BERSAMA</p>
+                        <p class="text-[10px] text-slate-500">Bukti Antrean Resmi Digital</p>
+                    </div>
+                    <i class="fa-solid fa-qrcode text-3xl text-tealmed-700"></i>
+                </div>
+
+                <div class="text-center py-2">
+                    <p class="text-xs uppercase font-semibold text-slate-500" id="ticket-poli-name">POLI UMUM</p>
+                    <p class="font-heading font-extrabold text-5xl text-tealmed-700 tracking-wider my-2" id="ticket-number">A-015</p>
+                    <span class="inline-block bg-tealmed-200 text-tealmed-900 font-bold text-xs px-3 py-1 rounded-full" id="ticket-date">25 Sep 2026</span>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-tealmed-200 text-xs space-y-1 text-slate-700">
+                    <p><strong>Nama Pasien:</strong> <span id="ticket-patient">Ahmad Fauzi</span></p>
+                    <p><strong>Estimasi Dilayani:</strong> <span id="ticket-time">09:15 - 09:30 WIB</span></p>
+                    <p class="text-[10px] text-slate-500 italic mt-2">*Harap datang 15 menit sebelum estimasi waktu pelayanaan.</p>
+                </div>
+            </div>
+
+            <div class="flex gap-3">
+                <button onclick="window.print()" class="w-1/2 py-2.5 rounded-xl border border-slate-300 text-slate-700 font-bold text-xs hover:bg-slate-100 transition flex items-center justify-center gap-1">
+                    <i class="fa-solid fa-print"></i> Cetak Tiket
+                </button>
+                <button onclick="closeTicketModal()" class="w-1/2 py-2.5 rounded-xl gradient-bg text-white font-bold text-xs shadow-md transition">
+                    Selesai
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: GENERIC DETAIL (SERVICES / ARTICLES) -->
+    <div id="modal-detail" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative">
+            <button onclick="closeDetailModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 text-xl w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <span id="detail-tag" class="px-3 py-1 rounded-full bg-tealmed-100 text-tealmed-700 text-xs font-bold inline-block mb-3">Informasi</span>
+            <h3 id="detail-title" class="font-heading font-bold text-2xl text-slate-800 mb-3">Judul Detail</h3>
+            
+            <div id="detail-content" class="text-slate-600 text-sm leading-relaxed space-y-3">
+                <!-- Content injected dynamically -->
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-slate-100 flex justify-end">
+                <button onclick="closeDetailModal()" class="px-6 py-2.5 rounded-xl bg-slate-800 text-white font-bold text-xs hover:bg-slate-700 transition">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 hidden bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-xl border border-slate-700 flex items-center gap-3 text-sm animate-bounce">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="toast-message">Pesan berhasil dikirim!</span>
+    </div>
+
+
+    <script>
+        // Doctors Data Array
+        const doctorsData = [
+            { id: 1, name: 'dr. Andi Wijaya, Sp.PD', poli: 'Poli Umum', day: 'Senin', time: '08.00 - 12.00 WIB', status: 'Tersedia', img: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=200' },
+            { id: 2, name: 'drg. Maya Kurnia', poli: 'Poli Gigi', day: 'Selasa', time: '08.00 - 11.30 WIB', status: 'Tersedia', img: 'https://images.unsplash.com/photo-1594824813566-88a226454063?auto=format&fit=crop&q=80&w=200' },
+            { id: 3, name: 'dr. Budi Santoso', poli: 'Poli Umum', day: 'Rabu', time: '08.00 - 13.00 WIB', status: 'Tersedia', img: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=200' },
+            { id: 4, name: 'dr. Rina Melati, Sp.A', poli: 'Poli KIA', day: 'Kamis', time: '09.00 - 12.00 WIB', status: 'Tersedia', img: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=200' },
+            { id: 5, name: 'dr. Hendra Pratama', poli: 'Poli Lansia', day: 'Jumat', time: '08.00 - 11.00 WIB', status: 'Tersedia', img: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=200' },
+            { id: 6, name: 'dr. Siska Putri', poli: 'Poli Umum', day: 'Sabtu', time: '08.00 - 12.00 WIB', status: 'Tersedia', img: 'https://images.unsplash.com/photo-1527613426441-4da17471b66d?auto=format&fit=crop&q=80&w=200' }
+        ];
+
+        let selectedDayFilter = 'semua';
+
+        // Set default minimum date for registration form to today
+        document.addEventListener('DOMContentLoaded', () => {
+            const dateInput = document.getElementById('visit-date');
+            if(dateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.value = today;
+                dateInput.min = today;
+            }
+            renderDoctors();
+        });
+
+        // Render Doctors Schedule Grid
+        function renderDoctors(searchQuery = '') {
+            const container = document.getElementById('doctors-container');
+            container.innerHTML = '';
+
+            const filtered = doctorsData.filter(doc => {
+                const matchDay = selectedDayFilter === 'semua' || doc.day === selectedDayFilter;
+                const matchSearch = doc.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                                    doc.poli.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchDay && matchSearch;
+            });
+
+            if(filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-slate-400">
+                        <i class="fa-solid fa-user-slash text-4xl mb-3"></i>
+                        <p class="text-sm font-semibold">Tidak ada jadwal dokter yang cocok dengan pencarian.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(doc => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition flex items-center gap-4";
+                card.innerHTML = `
+                    <img src="${doc.img}" alt="${doc.name}" class="w-16 h-16 rounded-2xl object-cover shrink-0 border-2 border-tealmed-500">
+                    <div class="space-y-1">
+                        <span class="text-[10px] uppercase font-bold text-tealmed-600 bg-tealmed-50 px-2.5 py-0.5 rounded-full">${doc.poli}</span>
+                        <h4 class="font-heading font-bold text-slate-800 text-sm">${doc.name}</h4>
+                        <p class="text-xs text-slate-500"><i class="fa-regular fa-calendar text-slate-400 mr-1"></i> Hari ${doc.day}</p>
+                        <p class="text-xs text-slate-500"><i class="fa-regular fa-clock text-slate-400 mr-1"></i> ${doc.time}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterDoctorDay(day) {
+            selectedDayFilter = day;
+            document.querySelectorAll('.day-btn').forEach(btn => {
+                btn.classList.remove('bg-tealmed-600', 'text-white', 'active');
+                btn.classList.add('bg-slate-100', 'text-slate-600');
+            });
+            event.target.classList.remove('bg-slate-100', 'text-slate-600');
+            event.target.classList.add('bg-tealmed-600', 'text-white', 'active');
+
+            const searchVal = document.getElementById('doctor-search').value;
+            renderDoctors(searchVal);
+        }
+
+        function filterDoctorSchedule() {
+            const searchVal = document.getElementById('doctor-search').value;
+            renderDoctors(searchVal);
+        }
+
+        // Service Category Filtering
+        function filterServices(category) {
+            const cards = document.querySelectorAll('.service-card');
+            cards.forEach(card => {
+                if(category === 'all' || card.classList.contains(category)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            document.querySelectorAll('.service-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-tealmed-600', 'text-white');
+                btn.classList.add('bg-slate-100', 'text-slate-600');
+            });
+            event.target.classList.remove('bg-slate-100', 'text-slate-600');
+            event.target.classList.add('bg-tealmed-600', 'text-white');
+        }
+
+        // Modal Controls
+        function openRegistrationModal() {
+            document.getElementById('modal-registration').classList.remove('hidden');
+        }
+
+        function closeRegistrationModal() {
+            document.getElementById('modal-registration').classList.add('hidden');
+        }
+
+        function closeTicketModal() {
+            document.getElementById('modal-ticket').classList.add('hidden');
+        }
+
+        function openServiceDetail(title, desc, reqs) {
+            document.getElementById('detail-tag').innerText = "Detail Poliklinik";
+            document.getElementById('detail-title').innerText = title;
+            document.getElementById('detail-content').innerHTML = `
+                <p><strong>Cakupan Layanan:</strong><br>${desc}</p>
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 mt-2">
+                    <strong>Persyaratan Dokumen:</strong>
+                    <p class="text-xs text-slate-500 mt-1">${reqs}</p>
+                </div>
+            `;
+            document.getElementById('modal-detail').classList.remove('hidden');
+        }
+
+        function openArticleModal(title, date, category, content) {
+            document.getElementById('detail-tag').innerText = category + " • " + date;
+            document.getElementById('detail-title').innerText = title;
+            document.getElementById('detail-content').innerHTML = `<p class="leading-relaxed">${content}</p>`;
+            document.getElementById('modal-detail').classList.remove('hidden');
+        }
+
+        function closeDetailModal() {
+            document.getElementById('modal-detail').classList.add('hidden');
+        }
+
+        // Queue Ticket Generation Logic
+        function generateQueueTicket(e) {
+            e.preventDefault();
+            const name = document.getElementById('patient-name').value;
+            const poli = document.getElementById('select-poli').value;
+            const visitDate = document.getElementById('visit-date').value;
+
+            let prefix = 'A';
+            if(poli.includes('Gigi')) prefix = 'B';
+            if(poli.includes('KIA')) prefix = 'C';
+            if(poli.includes('Lansia')) prefix = 'D';
+
+            const randomNum = Math.floor(Math.random() * 30) + 1;
+            const queueCode = `${prefix}-${randomNum < 10 ? '0' + randomNum : randomNum}`;
+
+            document.getElementById('ticket-patient').innerText = name;
+            document.getElementById('ticket-poli-name').innerText = poli.toUpperCase();
+            document.getElementById('ticket-number').innerText = queueCode;
+            document.getElementById('ticket-date').innerText = visitDate;
+
+            closeRegistrationModal();
+            document.getElementById('modal-ticket').classList.remove('hidden');
+        }
+
+        // Contact Form Submission Toast
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            e.target.reset();
+            
+            const toast = document.getElementById('toast');
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 4000);
+        }
+
+        // FAQ Accordion Toggle
+        function toggleFaq(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById(id + '-icon');
+            
+            if(content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Smooth Scroll Helper
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
