@@ -57,12 +57,6 @@
     .bg-kemenkes-gradient {
       background: linear-gradient(135deg, #009639 0%, #00768a 100%);
     }
-    .bg-mint-tint {
-      background-color: #f0fdf4;
-    }
-    .border-mint-accent {
-      border-color: #d1fae5;
-    }
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
@@ -80,6 +74,12 @@
 
   <!-- Toast Notification Container -->
   <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- FLOATING BUTTON BUKU TAMU -->
+  <button onclick="openModal('guestBookModal')" class="fixed bottom-6 right-6 z-40 bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-3.5 rounded-full shadow-2xl flex items-center gap-3 font-display font-bold text-sm transition-all transform hover:scale-105 border-2 border-white/30 animate-bounce">
+    <i class="fa-solid fa-address-book text-lg"></i>
+    <span>Buku Tamu</span>
+  </button>
 
   <!-- HEADER UTAMA -->
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100">
@@ -110,7 +110,6 @@
           <a href="#profil" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Profil & Visi Misi</a>
           <a href="#layanan" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Klaster Layanan</a>
           <a href="#jadwal" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Jadwal Dokter</a>
-          <a href="#program" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Program ILP</a>
           <a href="#faq" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">FAQ</a>
           <a href="#kontak" class="hover:text-kemenkes-700 transition-colors py-1 border-b-2 border-transparent hover:border-kemenkes-600">Kontak</a>
         </nav>
@@ -168,9 +167,9 @@
           <a href="#jadwal" class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-7 py-3.5 rounded-2xl shadow-xl transition-all flex items-center gap-2 text-sm">
             <i class="fa-regular fa-calendar-alt text-lg"></i> Lihat Jadwal Dokter
           </a>
-          <a href="https://wa.me/6282353685324" target="_blank" class="bg-emerald-500 hover:bg-emerald-400 text-white font-bold px-7 py-3.5 rounded-2xl shadow-xl transition-all flex items-center gap-2 text-sm">
-            <i class="fa-brands fa-whatsapp text-lg"></i> Hubungi WA Kami
-          </a>
+          <button onclick="openModal('guestBookModal')" class="bg-white hover:bg-slate-100 text-emerald-800 font-bold px-7 py-3.5 rounded-2xl shadow-xl transition-all flex items-center gap-2 text-sm">
+            <i class="fa-solid fa-address-book text-lg"></i> Isi Buku Tamu
+          </button>
         </div>
       </div>
     </div>
@@ -185,7 +184,6 @@
         <h2 class="font-display text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">Tentang Puskesmas Satelit Tarailu</h2>
       </div>
 
-      <!-- Visi Misi -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div class="bg-gradient-to-br from-emerald-800 to-emerald-950 text-white rounded-3xl p-8 shadow-xl flex flex-col justify-between">
           <div class="space-y-4">
@@ -206,17 +204,13 @@
         </div>
       </div>
 
-      <!-- STRUKTUR ORGANISASI DINAMIS DARI DATABASE -->
+      <!-- STRUKTUR ORGANISASI -->
       <div class="space-y-8 pt-6">
         <div class="text-center max-w-xl mx-auto space-y-2">
           <h3 class="font-display font-bold text-2xl sm:text-3xl text-slate-900">Struktur Organisasi & Hirarki</h3>
           <p class="text-xs text-slate-500">Bagan tata kelola dan penanggung jawab klaster pelayanan UPTD Puskesmas Tarailu</p>
         </div>
-
-        <!-- Container Struktur Organisasi -->
-        <div id="publicStructureContainer" class="space-y-8">
-          <!-- Data akan dimuat otomatis via Javascript -->
-        </div>
+        <div id="publicStructureContainer" class="space-y-8"></div>
       </div>
 
     </div>
@@ -284,7 +278,6 @@
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- WhatsApp Card -->
         <div class="bg-slate-50/50 rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col items-center text-center space-y-4 hover:shadow-md transition-all">
           <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl shadow-sm">
             <i class="fa-brands fa-whatsapp"></i>
@@ -299,7 +292,6 @@
           </a>
         </div>
 
-        <!-- Email Card -->
         <div class="bg-slate-50/50 rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col items-center text-center space-y-4 hover:shadow-md transition-all">
           <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl shadow-sm">
             <i class="fa-solid fa-envelope"></i>
@@ -314,7 +306,6 @@
           </a>
         </div>
 
-        <!-- Lokasi / Google Maps Card -->
         <div class="bg-slate-50/50 rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col items-center text-center space-y-4 hover:shadow-md transition-all">
           <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl shadow-sm">
             <i class="fa-solid fa-location-dot"></i>
@@ -324,7 +315,7 @@
             <p class="text-xs text-slate-500 mt-1">Tarailu, Kec. Sampaga, Kab. Mamuju, Sulawesi Barat</p>
           </div>
           <p class="text-xs text-slate-600 font-medium">Jl. Poros Mamuju - Topoyo</p>
-          <a href="https://www.google.com/maps/place/Puskesmas+Satelit+Tarailu/@-2.3111475,119.1754624,18z/data=!4m23!1m16!4m15!1m6!1m2!1s0x2d92d833d4d70f27:0xec8b6ecb8c7bb406!2sJl.+Poros+Mamuju+-+Topoyo,+Sulawesi+Barat!2m2!1d119.1621854!2d-2.4195697!1m6!1m2!1s0x2d9290f914f05173:0xb0b84e39a98a507!2sTarailu,+Kec.+Sampaga,+Kabupaten+Mamuju,+Sulawesi+Barat!2m2!1d119.179765!2d-2.3173016!3e0!3m5!1s0x2d9291e7019333a9:0x7ba3c2a8525060fc!8m2!3d-2.3112276!4d119.1766989!16s%2Fg%2F11ghsjk6wk?entry=ttu&g_ep=EgoyMDI2MDkyMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition-all">
+          <a href="https://www.google.com/maps/place/Puskesmas+Satelit+Tarailu/@-2.3111475,119.1754624,18z" target="_blank" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-sm transition-all">
             <i class="fa-solid fa-map-location-dot text-sm"></i> Buka Google Maps
           </a>
         </div>
@@ -345,7 +336,34 @@
         </button>
       </div>
 
-      <!-- KELOLA STRUKTUR ORGANISASI / HIRARKI -->
+      <!-- KELOLA BUKU TAMU -->
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <h3 class="font-display font-bold text-lg text-slate-900 flex items-center gap-2">
+            <i class="fa-solid fa-address-book text-emerald-600"></i> Daftar Tamu Berkunjung (Buku Tamu)
+          </h3>
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            <input type="text" id="adminGuestSearch" oninput="filterAdminGuests()" placeholder="Cari nama / instansi..." class="px-3.5 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl w-full sm:w-64 focus:outline-none">
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-50 text-slate-600 uppercase">
+              <tr>
+                <th class="p-3 rounded-l-xl">Tanggal & Waktu</th>
+                <th class="p-3">Nama & Pekerjaan</th>
+                <th class="p-3">Asal Lembaga</th>
+                <th class="p-3">Kontak</th>
+                <th class="p-3">Maksud & Tujuan</th>
+                <th class="p-3 text-right rounded-r-xl">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="adminGuestTableBody" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- KELOLA STRUKTUR ORGANISASI -->
       <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
         <div class="flex items-center justify-between">
           <h3 class="font-display font-bold text-lg text-slate-900 flex items-center gap-2">
@@ -399,6 +417,78 @@
     </div>
   </footer>
 
+  <!-- MODAL BUKU TAMU -->
+  <div id="guestBookModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative my-8 max-h-[90vh] overflow-y-auto">
+      <button onclick="closeModal('guestBookModal')" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-12 h-12 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center text-xl font-bold shadow-sm">
+          <i class="fa-solid fa-address-book"></i>
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-xl text-slate-900">Buku Tamu Digital</h3>
+          <p class="text-xs text-slate-500">Silakan isi formulir kunjungan Puskesmas Satelit Tarailu</p>
+        </div>
+      </div>
+      <form onsubmit="handleGuestBookSubmit(event)" class="space-y-4 text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Hari dan Tanggal *</label>
+            <input type="date" id="gbHariTanggal" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Waktu Kunjungan *</label>
+            <input type="time" id="gbWaktu" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500">
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Nama Lengkap *</label>
+          <input type="text" id="gbNama" required placeholder="Nama lengkap beserta gelar..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500">
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Pekerjaan *</label>
+            <input type="text" id="gbPekerjaan" required placeholder="Contoh: PNS / Peneliti / Mahasiswa..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">Nomor Telepon / Kontak *</label>
+            <input type="tel" id="gbKontak" required placeholder="Contoh: 081234567890..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500">
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Asal Lembaga / Instansi / Kedinasan *</label>
+          <input type="text" id="gbAsal" required placeholder="Contoh: Dinkes Mamuju / Universitas / Peneliti / Mandiri..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Maksud dan Tujuan / Keperluan *</label>
+          <textarea id="gbTujuan" rows="3" required placeholder="Jelaskan maksud dan tujuan kunjungan..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500"></textarea>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Pesan dan Kesan / Saran</label>
+          <textarea id="gbPesan" rows="2" placeholder="Tuliskan pesan, kesan, atau saran Anda..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-emerald-500"></textarea>
+        </div>
+        <div class="pt-2 flex justify-end gap-3">
+          <button type="button" onclick="closeModal('guestBookModal')" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-semibold transition-all">Batal</button>
+          <button type="submit" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold shadow-md transition-all">Kirim Buku Tamu</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL DETAIL BUKU TAMU (ADMIN) -->
+  <div id="guestDetailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl relative">
+      <button onclick="closeModal('guestDetailModal')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark"></i></button>
+      <h3 class="font-display font-bold text-lg text-slate-900 mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-circle-info text-emerald-600"></i> Detail Kunjungan Tamu
+      </h3>
+      <div id="guestDetailContent" class="space-y-3 text-xs text-slate-700"></div>
+      <div class="mt-6 flex justify-end">
+        <button onclick="closeModal('guestDetailModal')" class="px-5 py-2 bg-slate-800 text-white rounded-xl font-bold">Tutup</button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL LOGIN -->
   <div id="loginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
@@ -412,7 +502,7 @@
     </div>
   </div>
 
-  <!-- MODAL TAMBAH/EDIT STRUKTUR ORGANISASI -->
+  <!-- MODAL STRUKTUR ORGANISASI -->
   <div id="structureModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative">
       <h3 id="structureModalTitle" class="font-display font-bold text-lg text-slate-900 mb-4">Tambah Struktur Organisasi</h3>
@@ -474,7 +564,7 @@
         </div>
         <div>
           <label class="font-semibold text-slate-700">Hari Praktik</label>
-          <input type="text" id="docDays" required placeholder="Hari (Senin, Rabu)..." class="w-full mt-1 px-3 py-2 bg-slate-50 border rounded-xl">
+          <input type="text" id="docDays" required placeholder="Hari..." class="w-full mt-1 px-3 py-2 bg-slate-50 border rounded-xl">
         </div>
         <div>
           <label class="font-semibold text-slate-700">Jam Praktik</label>
@@ -525,7 +615,129 @@
     });
 
     // ==========================================
-    // 1. FUNGSI STRUKTUR ORGANISASI / HIRARKI
+    // 1. FUNGSI BUKU TAMU
+    // ==========================================
+    async function handleGuestBookSubmit(e) {
+      e.preventDefault();
+      const hari_tanggal = document.getElementById('gbHariTanggal').value;
+      const waktu_kunjungan = document.getElementById('gbWaktu').value;
+      const nama_lengkap = document.getElementById('gbNama').value;
+      const pekerjaan = document.getElementById('gbPekerjaan').value;
+      const nomor_telepon = document.getElementById('gbKontak').value;
+      const asal_lembaga = document.getElementById('gbAsal').value;
+      const maksud_tujuan = document.getElementById('gbTujuan').value;
+      const pesan_kesan = document.getElementById('gbPesan').value;
+
+      const { error } = await db.from('buku_tamu').insert([{
+        hari_tanggal,
+        waktu_kunjungan,
+        nama_lengkap,
+        pekerjaan,
+        nomor_telepon,
+        asal_lembaga,
+        maksud_tujuan,
+        pesan_kesan
+      }]);
+
+      if (error) {
+        showToast('Gagal mengirim buku tamu: ' + error.message);
+        return;
+      }
+
+      showToast('Terima kasih! Buku tamu berhasil dikirim.');
+      e.target.reset();
+      closeModal('guestBookModal');
+    }
+
+    let allGuestsData = [];
+    async function loadAdminGuests() {
+      const { data, error } = await db.from('buku_tamu').order('created_at', { ascending: false });
+      const tbody = document.getElementById('adminGuestTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      if (error || !data || data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center text-xs text-slate-500 py-6">Belum ada data kunjungan tamu.</td></tr>`;
+        return;
+      }
+
+      allGuestsData = data;
+      renderAdminGuests(data);
+    }
+
+    function renderAdminGuests(data) {
+      const tbody = document.getElementById('adminGuestTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      data.forEach(item => {
+        tbody.innerHTML += `
+          <tr class="hover:bg-slate-50/80 transition-colors">
+            <td class="p-3 font-semibold text-slate-800">${item.hari_tanggal}<br><span class="text-[10px] text-slate-500 font-normal"><i class="fa-regular fa-clock"></i> ${item.waktu_kunjungan}</span></td>
+            <td class="p-3">
+              <div class="font-bold text-slate-900">${item.nama_lengkap}</div>
+              <div class="text-[10px] text-slate-500">${item.pekerjaan}</div>
+            </td>
+            <td class="p-3 text-slate-700">${item.asal_lembaga}</td>
+            <td class="p-3 text-slate-700">${item.nomor_telepon}</td>
+            <td class="p-3 text-slate-600 max-w-xs truncate">${item.maksud_tujuan}</td>
+            <td class="p-3 text-right space-x-2">
+              <button onclick="viewGuestDetail(${item.id})" class="text-emerald-600 font-bold hover:underline">Detail</button>
+              <button onclick="deleteGuest(${item.id})" class="text-rose-600 font-bold hover:underline">Hapus</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function filterAdminGuests() {
+      const query = document.getElementById('adminGuestSearch').value.toLowerCase();
+      const filtered = allGuestsData.filter(item => 
+        item.nama_lengkap.toLowerCase().includes(query) || 
+        item.asal_lembaga.toLowerCase().includes(query) ||
+        item.pekerjaan.toLowerCase().includes(query)
+      );
+      renderAdminGuests(filtered);
+    }
+
+    function viewGuestDetail(id) {
+      const guest = allGuestsData.find(item => item.id === id);
+      if (!guest) return;
+      const content = document.getElementById('guestDetailContent');
+      content.innerHTML = `
+        <div class="bg-slate-50 p-4 rounded-2xl space-y-2 border border-slate-200">
+          <div class="grid grid-cols-2 gap-2">
+            <div><strong>Hari & Tanggal:</strong><br>${guest.hari_tanggal}</div>
+            <div><strong>Waktu Datang:</strong><br>${guest.waktu_kunjungan}</div>
+          </div>
+          <div><strong>Nama Lengkap:</strong><br><span class="text-sm font-bold text-slate-900">${guest.nama_lengkap}</span></div>
+          <div class="grid grid-cols-2 gap-2">
+            <div><strong>Pekerjaan:</strong><br>${guest.pekerjaan}</div>
+            <div><strong>Kontak / Telp:</strong><br>${guest.nomor_telepon}</div>
+          </div>
+          <div><strong>Asal Lembaga / Instansi:</strong><br>${guest.asal_lembaga}</div>
+          <div><strong>Maksud & Tujuan:</strong><br><p class="bg-white p-2.5 rounded-xl border border-slate-100 text-slate-800 mt-1">${guest.maksud_tujuan}</p></div>
+          <div><strong>Pesan & Kesan / Saran:</strong><br><p class="bg-white p-2.5 rounded-xl border border-slate-100 text-slate-800 mt-1 italic">${guest.pesan_kesan || '-'}</p></div>
+          <div class="text-[10px] text-slate-400 pt-1">Dicatat pada: ${new Date(guest.created_at).toLocaleString('id-ID')}</div>
+        </div>
+      `;
+      openModal('guestDetailModal');
+    }
+
+    async function deleteGuest(id) {
+      if (confirm('Yakin ingin menghapus data buku tamu ini?')) {
+        const { error } = await db.from('buku_tamu').delete().eq('id', id);
+        if (error) {
+          showToast('Gagal menghapus data: ' + error.message);
+          return;
+        }
+        showToast('Data buku tamu berhasil dihapus!');
+        loadAdminGuests();
+      }
+    }
+
+    // ==========================================
+    // 2. FUNGSI STRUKTUR ORGANISASI
     // ==========================================
     async function loadPublicStructure() {
       const { data, error } = await db.from('organisasi').select('*').order('id', { ascending: true });
@@ -538,7 +750,6 @@
         return;
       }
 
-      // Filter Pimpinan Tertinggi
       const leader = data.find(item => item.category === 'leader');
       let html = '';
 
@@ -555,7 +766,6 @@
         `;
       }
 
-      // Kelompokkan klaster
       const clusters = ['Klaster 1', 'Klaster 2', 'Klaster 3', 'Klaster 4', 'Lintas Klaster'];
       html += `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">`;
 
@@ -660,7 +870,7 @@
     }
 
     // ==========================================
-    // 2. FUNGSI DOKTER & JADWAL
+    // 3. FUNGSI DOKTER & JADWAL
     // ==========================================
     async function loadPublicDoctors() {
       const { data, error } = await db.from('doctors').select('*').order('id', { ascending: true });
@@ -753,7 +963,7 @@
     }
 
     // ==========================================
-    // 3. FUNGSI FAQ
+    // 4. FUNGSI FAQ
     // ==========================================
     async function loadPublicFaqs() {
       const { data, error } = await db.from('faqs').select('*').order('id', { ascending: true });
@@ -820,7 +1030,7 @@
     }
 
     // ==========================================
-    // 4. AUTENTIKASI & UTILITAS
+    // 5. AUTENTIKASI & UTILITAS
     // ==========================================
     async function handleLoginSubmit(e) {
       e.preventDefault();
@@ -835,6 +1045,8 @@
 
       closeModal('loginModal');
       showToast('Login Berhasil!');
+      
+      // Sembunyikan halaman publik
       document.querySelector('header').classList.add('hidden');
       document.querySelector('section#beranda').classList.add('hidden');
       document.querySelector('section#profil').classList.add('hidden');
@@ -843,20 +1055,36 @@
       document.querySelector('section#faq').classList.add('hidden');
       document.querySelector('section#kontak').classList.add('hidden');
       document.querySelector('footer').classList.add('hidden');
+      document.querySelector('button[onclick*="guestBookModal"]').classList.add('hidden');
+      
+      // Tampilkan dashboard admin & load data tamu
       document.getElementById('adminDashboard').classList.remove('hidden');
+      loadAdminGuests();
     }
 
     function handleLogout() { location.reload(); }
     function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('hidden'); }
-    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    
+    function openModal(id) { 
+      document.getElementById(id).classList.remove('hidden'); 
+      if (id === 'guestBookModal') {
+        const today = new Date().toISOString().split('T')[0];
+        const nowTime = new Date().toTimeString().slice(0, 5);
+        const dateInput = document.getElementById('gbHariTanggal');
+        const timeInput = document.getElementById('gbWaktu');
+        if (dateInput && !dateInput.value) dateInput.value = today;
+        if (timeInput && !timeInput.value) timeInput.value = nowTime;
+      }
+    }
+    
     function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
     function toggleFaq(btn) { btn.nextElementSibling.classList.toggle('hidden'); }
 
     function showToast(message) {
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
-      toast.className = `bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl text-xs font-semibold flex items-center gap-3 border-l-4 border-amber-500`;
-      toast.innerHTML = `<i class="fa-solid fa-circle-check text-amber-400"></i><span>${message}</span>`;
+      toast.className = `bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl text-xs font-semibold flex items-center gap-3 border-l-4 border-emerald-500`;
+      toast.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i><span>${message}</span>`;
       container.appendChild(toast);
       setTimeout(() => toast.remove(), 3500);
     }
