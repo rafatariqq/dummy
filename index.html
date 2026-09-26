@@ -1360,37 +1360,52 @@
       if (adminTable) adminTable.innerHTML = '';
 
       if (error || !data || data.length === 0) {
-        if (grid) grid.innerHTML = `<div class="col-span-3 text-center text-xs text-stone-500 py-6">Belum ada data jadwal dokter.</div>`;
+        if (grid) grid.innerHTML = `<div class="col-span-full text-center text-xs text-stone-500 py-6">Belum ada data jadwal dokter.</div>`;
+        if (adminTable) adminTable.innerHTML = `<tr><td colspan="2" class="text-center text-xs text-stone-500 py-6">Belum ada data dokter.</td></tr>`;
         return;
       }
 
       data.forEach(doc => {
         if (grid) {
           grid.innerHTML += `
-            <div class="doctor-card bg-white rounded-2xl p-5 border border-emerald-100 shadow-sm hover:border-kemenkes-300 transition-all" data-search="${doc.name.toLowerCase()} ${doc.specialty.toLowerCase()}">
-              <div class="flex items-start gap-4">
-                <div class="w-12 h-12 bg-kemenkes-500 text-white rounded-2xl flex items-center justify-center font-bold shrink-0 shadow-sm"><i class="fa-solid fa-user-doctor"></i></div>
-                <div>
-                  <span class="text-[10px] font-bold text-kemenkes-700 bg-emerald-100 px-2.5 py-0.5 rounded-md border border-emerald-200">${doc.specialty}</span>
-                  <h4 class="font-display font-bold text-stone-900 text-sm mt-2">${doc.name}</h4>
-                  <p class="text-xs text-stone-500">${doc.title}</p>
-                  <div class="mt-3 text-[11px] text-stone-600 space-y-1">
-                    <div><i class="fa-regular fa-calendar text-kemenkes-500 mr-1"></i> ${doc.days}</div>
-                    <div><i class="fa-regular fa-clock text-kemenkes-500 mr-1"></i> ${doc.time}</div>
-                  </div>
+            <div class="bg-emerald-50/40 rounded-2xl p-6 border border-emerald-100 shadow-sm flex flex-col justify-between hover:border-kemenkes-300 transition-all">
+              <div>
+                <div class="w-12 h-12 bg-kemenkes-100 text-kemenkes-600 rounded-2xl flex items-center justify-center text-xl font-bold mb-4 shadow-sm">
+                  <i class="fa-solid fa-user-doctor"></i>
+                </div>
+                <h3 class="font-display font-bold text-lg text-stone-900">${doc.name}</h3>
+                <p class="text-xs font-semibold text-kemenkes-600 mt-0.5">${doc.title}</p>
+                <div class="mt-4 space-y-2 text-xs text-stone-600 border-t border-emerald-100/60 pt-3">
+                  <div class="flex items-center gap-2"><i class="fa-solid fa-stethoscope text-kemenkes-500 w-4"></i><span>Poli: <strong>${doc.specialty}</strong></span></div>
+                  <div class="flex items-center gap-2"><i class="fa-regular fa-calendar text-kemenkes-500 w-4"></i><span>Hari: <strong>${doc.days}</strong></span></div>
+                  <div class="flex items-center gap-2"><i class="fa-regular fa-clock text-kemenkes-500 w-4"></i><span>Jam: <strong>${doc.time}</strong></span></div>
                 </div>
               </div>
-            </div>`;
+            </div>
+          `;
         }
-        if (adminTable) {
-          adminTable.innerHTML += `
-            <tr class="hover:bg-emerald-50/35 transition-colors">
-              <td class="p-3 font-bold text-stone-900">${doc.name} <span class="text-stone-500 font-normal">(${doc.specialty})</span></td>
-              <td class="p-3 text-right space-x-2">
-                <button onclick="deleteDoctor(${doc.id})" class="text-rose-600 font-bold hover:underline">Hapus</button>
-              </td>
-            </tr>`;
-        }
+      });
+
+      loadAdminDoctorsTable(data);
+    }
+
+    function loadAdminDoctorsTable(data) {
+      const tbody = document.getElementById('adminDoctorsTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      data.forEach(doc => {
+        tbody.innerHTML += `
+          <tr class="hover:bg-emerald-50/35 transition-colors">
+            <td class="p-3">
+              <div class="font-bold text-stone-900">${doc.name}</div>
+              <div class="text-[10px] text-stone-500">${doc.specialty}</div>
+            </td>
+            <td class="p-3 text-right space-x-2">
+              <button onclick="editDoctor(${doc.id}, '${doc.name.replace(/'/g, "\\'")}', '${doc.title.replace(/'/g, "\\'")}', '${doc.specialty.replace(/'/g, "\\'")}', '${doc.days.replace(/'/g, "\\'")}', '${doc.time.replace(/'/g, "\\'")}')" class="text-kemenkes-600 font-bold hover:underline">Edit</button>
+              <button onclick="deleteDoctor(${doc.id})" class="text-rose-600 font-bold hover:underline">Hapus</button>
+            </td>
+          </tr>
+        `;
       });
     }
 
@@ -1398,6 +1413,17 @@
       document.getElementById('doctorId').value = '';
       document.getElementById('doctorForm').reset();
       document.getElementById('doctorModalTitle').innerText = 'Tambah Dokter';
+      openModal('doctorModal');
+    }
+
+    function editDoctor(id, name, title, specialty, days, time) {
+      document.getElementById('doctorId').value = id;
+      document.getElementById('docName').value = name;
+      document.getElementById('docTitle').value = title;
+      document.getElementById('docSpecialty').value = specialty;
+      document.getElementById('docDays').value = days;
+      document.getElementById('docTime').value = time;
+      document.getElementById('doctorModalTitle').innerText = 'Edit Dokter';
       openModal('doctorModal');
     }
 
@@ -1422,28 +1448,15 @@
     }
 
     async function deleteDoctor(id) {
-      if (confirm('Yakin ingin menghapus data dokter ini?')) {
+      if (confirm('Yakin ingin menghapus dokter ini?')) {
         await db.from('doctors').delete().eq('id', id);
-        showToast('Data dokter berhasil dihapus!');
+        showToast('Dokter berhasil dihapus!');
         loadPublicDoctors();
       }
     }
 
-    function filterDoctors() {
-      const query = document.getElementById('doctorSearchInput').value.toLowerCase();
-      const cards = document.querySelectorAll('.doctor-card');
-      cards.forEach(card => {
-        const searchData = card.getAttribute('data-search') || '';
-        if (searchData.includes(query)) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
-
     // ==========================================
-    // 4. FUNGSI FAQ & AUTH
+    // 4. FUNGSI FAQ
     // ==========================================
     async function loadPublicFaqs() {
       const { data, error } = await db.from('faqs').select('*').order('id', { ascending: true });
@@ -1453,42 +1466,59 @@
       if (adminTable) adminTable.innerHTML = '';
 
       if (error || !data || data.length === 0) {
-        if (container) container.innerHTML = `<div class="text-center text-xs text-stone-500 py-6">Belum ada pertanyaan FAQ.</div>`;
+        if (container) container.innerHTML = `<div class="text-center text-xs text-stone-500 py-6">Belum ada FAQ.</div>`;
+        if (adminTable) adminTable.innerHTML = `<tr><td colspan="2" class="text-center text-xs text-stone-500 py-6">Belum ada FAQ.</td></tr>`;
         return;
       }
 
       data.forEach(faq => {
         if (container) {
           container.innerHTML += `
-            <div class="bg-white rounded-2xl border border-emerald-100 overflow-hidden shadow-sm hover:border-kemenkes-300 transition-all">
-              <button onclick="toggleFaq(this)" class="w-full p-5 text-left font-display font-semibold text-stone-800 flex justify-between items-center text-sm">
-                <span>${faq.question}</span><i class="fa-solid fa-chevron-down text-xs text-kemenkes-500"></i>
-              </button>
-              <div class="hidden p-5 pt-0 text-xs text-stone-600 border-t border-emerald-50 bg-emerald-50/20">${faq.answer}</div>
-            </div>`;
-        }
-        if (adminTable) {
-          adminTable.innerHTML += `
-            <tr class="hover:bg-emerald-50/35 transition-colors">
-              <td class="p-3 font-medium text-stone-800">${faq.question}</td>
-              <td class="p-3 text-right"><button onclick="deleteFaq(${faq.id})" class="text-rose-600 font-bold hover:underline">Hapus</button></td>
-            </tr>`;
+            <div class="bg-white rounded-2xl p-5 border border-emerald-100 shadow-sm">
+              <h4 class="font-display font-bold text-sm text-stone-900 flex items-center gap-2">
+                <i class="fa-solid fa-circle-question text-kemenkes-500"></i> ${faq.question}
+              </h4>
+              <p class="text-xs text-stone-600 mt-2 pl-6 leading-relaxed">${faq.answer}</p>
+            </div>
+          `;
         }
       });
+
+      loadAdminFaqTable(data);
     }
 
-    function toggleFaq(btn) {
-      const answer = btn.nextElementSibling;
-      answer.classList.toggle('hidden');
-      const icon = btn.querySelector('i');
-      icon.classList.toggle('fa-chevron-down');
-      icon.classList.toggle('fa-chevron-up');
+    function loadAdminFaqTable(data) {
+      const tbody = document.getElementById('adminFaqTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      data.forEach(faq => {
+        tbody.innerHTML += `
+          <tr class="hover:bg-emerald-50/35 transition-colors">
+            <td class="p-3">
+              <div class="font-bold text-stone-900">${faq.question}</div>
+              <div class="text-[10px] text-stone-500 truncate max-w-xs">${faq.answer}</div>
+            </td>
+            <td class="p-3 text-right space-x-2">
+              <button onclick="editFaq(${faq.id}, '${faq.question.replace(/'/g, "\\'")}', '${faq.answer.replace(/'/g, "\\'")}')" class="text-kemenkes-600 font-bold hover:underline">Edit</button>
+              <button onclick="deleteFaq(${faq.id})" class="text-rose-600 font-bold hover:underline">Hapus</button>
+            </td>
+          </tr>
+        `;
+      });
     }
 
     function openFaqModal() {
       document.getElementById('faqId').value = '';
       document.getElementById('faqForm').reset();
       document.getElementById('faqModalTitle').innerText = 'Tambah FAQ';
+      openModal('faqModal');
+    }
+
+    function editFaq(id, question, answer) {
+      document.getElementById('faqId').value = id;
+      document.getElementById('faqQuestion').value = question;
+      document.getElementById('faqAnswer').value = answer;
+      document.getElementById('faqModalTitle').innerText = 'Edit FAQ';
       openModal('faqModal');
     }
 
@@ -1517,25 +1547,35 @@
       }
     }
 
+    // ==========================================
+    // 5. LOGIN & LOGOUT HANDLERS (DITAMBAHKAN)
+    // ==========================================
     function handleLoginSubmit(e) {
       e.preventDefault();
-      const u = document.getElementById('loginUsername').value;
-      const p = document.getElementById('loginPassword').value;
-      if (u === 'admin' && p === 'tarailusehat2026') {
-        showToast('Login berhasil!');
+      const user = document.getElementById('loginUsername').value.trim();
+      const pass = document.getElementById('loginPassword').value.trim();
+
+      // Kredensial login petugas/admin
+      if (user === 'admin' && pass === 'tarailu2026') {
         closeModal('loginModal');
         document.getElementById('adminDashboard').classList.remove('hidden');
+        document.getElementById('adminDashboard').scrollIntoView({ behavior: 'smooth' });
+        showToast('Login berhasil! Selamat datang, Petugas.');
+        
+        // Muat data panel admin
         loadAdminGuests();
-        window.scrollTo({ top: document.getElementById('adminDashboard').offsetTop, behavior: 'smooth' });
+        loadPublicStructure();
+        loadPublicDoctors();
+        loadPublicFaqs();
       } else {
-        showToast('Username atau password salah!');
+        showToast('Username atau Password salah!');
       }
     }
 
     function handleLogout() {
       document.getElementById('adminDashboard').classList.add('hidden');
-      showToast('Berhasil keluar dari panel admin.');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      showToast('Berhasil keluar (logout).');
     }
   </script>
 </body>
