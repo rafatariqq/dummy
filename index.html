@@ -217,7 +217,7 @@
         <div class="text-center max-w-xl mx-auto space-y-2">
           <span class="bg-slate-200 text-slate-800 border border-slate-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Denah Interaktif</span>
           <h3 class="font-display font-bold text-2xl sm:text-3xl text-stone-900">Tata Letak Ruangan Puskesmas Tarailu </h3>
-          <p class="text-xs text-stone-500">Klik salah satu ruangan pada denah atau gunakan fitur pencarian untuk melihat informasi detail.</p>
+          <p class="text-xs text-slate-500">Klik salah satu ruangan pada denah atau gunakan fitur pencarian untuk melihat informasi detail.</p>
         </div>
 
         <!-- Controls & Search Bar -->
@@ -928,7 +928,6 @@
       loadPublicDoctors();
       loadPublicFaqs();
       loadPublicStructure();
-      checkLoginState();
     });
 
     // Modal & Toast Helpers
@@ -1231,7 +1230,6 @@
         return;
       }
 
-      window.allOrgData = data;
       const leader = data.find(item => item.category === 'leader');
       let html = '';
 
@@ -1290,11 +1288,6 @@
       const tbody = document.getElementById('adminStructureTableBody');
       if (!tbody) return;
       tbody.innerHTML = '';
-
-      if (!data || data.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="text-center text-xs text-stone-500 py-4">Belum ada data struktur.</td></tr>`;
-        return;
-      }
 
       data.forEach(item => {
         tbody.innerHTML += `
@@ -1368,7 +1361,6 @@
 
       if (error || !data || data.length === 0) {
         if (grid) grid.innerHTML = `<div class="col-span-3 text-center text-xs text-stone-500 py-6">Belum ada data jadwal dokter.</div>`;
-        if (adminTable) adminTable.innerHTML = `<tr><td colspan="2" class="text-center text-xs text-stone-500 py-4">Belum ada dokter.</td></tr>`;
         return;
       }
 
@@ -1431,7 +1423,11 @@
 
     async function deleteDoctor(id) {
       if (confirm('Yakin ingin menghapus data dokter ini?')) {
-        await db.from('doctors').delete().eq('id', id);
+        const { error } = await db.from('doctors').delete().eq('id', id);
+        if (error) {
+          showToast('Gagal menghapus data dokter: ' + error.message);
+          return;
+        }
         showToast('Data dokter berhasil dihapus!');
         loadPublicDoctors();
       }
@@ -1439,11 +1435,10 @@
 
     function filterDoctors() {
       const query = document.getElementById('doctorSearchInput').value.toLowerCase();
-      const cards = document.querySelectorAll('.doctor-card');
-      cards.forEach(card => {
-        const searchData = card.getAttribute('data-search') || '';
+      document.querySelectorAll('.doctor-card').forEach(card => {
+        const searchData = card.getAttribute('data-search');
         if (searchData.includes(query)) {
-          card.style.display = '';
+          card.style.display = 'block';
         } else {
           card.style.display = 'none';
         }
@@ -1451,40 +1446,42 @@
     }
 
     // ==========================================
-    // 4. FUNGSI FAQ & AUTH (KELENGKAPAN PERBAIKAN)
+    // 4. FUNGSI FAQ & AUTH ADMIN
     // ==========================================
     async function loadPublicFaqs() {
-      const { data, error } = await db.from('faq').select('*').order('id', { ascending: true });
-      const container = document.querySelector('#faq .space-y-4');
+      const { data, error } = await db.from('faqs').select('*').order('id', { ascending: true });
+      const faqContainer = document.querySelector('#faq .max-w-4xl .space-y-4');
       const adminTable = document.getElementById('adminFaqTableBody');
-      if (container) container.innerHTML = '';
+      if (faqContainer) faqContainer.innerHTML = '';
       if (adminTable) adminTable.innerHTML = '';
 
       if (error || !data || data.length === 0) {
-        if (container) container.innerHTML = `<div class="text-center text-xs text-stone-500 py-6">Belum ada data FAQ.</div>`;
-        if (adminTable) adminTable.innerHTML = `<tr><td colspan="2" class="text-center text-xs text-stone-500 py-4">Belum ada FAQ.</td></tr>`;
+        if (faqContainer) faqContainer.innerHTML = `<div class="text-center text-xs text-stone-500 py-6">Belum ada data FAQ.</div>`;
         return;
       }
 
       data.forEach(faq => {
-        if (container) {
-          container.innerHTML += `
+        if (faqContainer) {
+          faqContainer.innerHTML += `
             <div class="bg-white rounded-2xl p-5 border border-emerald-100 shadow-sm">
-              <h4 class="font-display font-bold text-stone-900 text-sm flex items-center gap-2">
-                <i class="fa-solid fa-circle-question text-kemenkes-500"></i> ${faq.question}
-              </h4>
-              <p class="text-xs text-stone-600 mt-2 pl-6 leading-relaxed">${faq.answer}</p>
+              <h4 class="font-display font-bold text-stone-900 text-sm mb-2"><i class="fa-solid fa-circle-question text-kemenkes-500 mr-2"></i>${faq.question}</h4>
+              <p class="text-xs text-stone-600 pl-6 leading-relaxed">${faq.answer}</p>
             </div>
           `;
         }
         if (adminTable) {
           adminTable.innerHTML += `
             <tr class="hover:bg-emerald-50/35 transition-colors">
-              <td class="p-3 font-bold text-stone-900">${faq.question}</td>
+              <td class="p-3">
+                <div class="font-bold text-stone-900">${faq.question}</div>
+                <div class="text-[10px] text-stone-500 truncate max-w-xs">${faq.answer}</div>
+              </td>
               <td class="p-3 text-right space-x-2">
+                <button onclick="editFaq(${faq.id}, '${faq.question.replace(/'/g, "\\'")}', '${faq.answer.replace(/'/g, "\\'")}')" class="text-kemenkes-600 font-bold hover:underline">Edit</button>
                 <button onclick="deleteFaq(${faq.id})" class="text-rose-600 font-bold hover:underline">Hapus</button>
               </td>
-            </tr>`;
+            </tr>
+          `;
         }
       });
     }
@@ -1496,6 +1493,14 @@
       openModal('faqModal');
     }
 
+    function editFaq(id, question, answer) {
+      document.getElementById('faqId').value = id;
+      document.getElementById('faqQuestion').value = question;
+      document.getElementById('faqAnswer').value = answer;
+      document.getElementById('faqModalTitle').innerText = 'Edit FAQ';
+      openModal('faqModal');
+    }
+
     async function saveFaq(e) {
       e.preventDefault();
       const id = document.getElementById('faqId').value;
@@ -1503,10 +1508,10 @@
       const answer = document.getElementById('faqAnswer').value;
 
       if (id) {
-        await db.from('faq').update({ question, answer }).eq('id', id);
+        await db.from('faqs').update({ question, answer }).eq('id', id);
         showToast('FAQ berhasil diperbarui!');
       } else {
-        await db.from('faq').insert([{ question, answer }]);
+        await db.from('faqs').insert([{ question, answer }]);
         showToast('FAQ baru berhasil ditambahkan!');
       }
       closeModal('faqModal');
@@ -1515,56 +1520,33 @@
 
     async function deleteFaq(id) {
       if (confirm('Yakin ingin menghapus FAQ ini?')) {
-        await db.from('faq').delete().eq('id', id);
+        await db.from('faqs').delete().eq('id', id);
         showToast('FAQ berhasil dihapus!');
         loadPublicFaqs();
       }
     }
 
-    // Auth & Login Control
-    async function handleLoginSubmit(e) {
+    function handleLoginSubmit(e) {
       e.preventDefault();
-      const username = document.getElementById('loginUsername').value;
-      const password = document.getElementById('loginPassword').value;
+      const user = document.getElementById('loginUsername').value;
+      const pass = document.getElementById('loginPassword').value;
 
-      // Autentikasi Admin default Puskesmas Satelit Tarailu
-      if (username === 'admin' && password === 'tarailu2026') {
-        localStorage.setItem('pkm_logged', 'true');
+      if (user === 'admin' && pass === 'tarailusehat2026') {
+        showToast('Login berhasil! Selamat datang Petugas.');
         closeModal('loginModal');
-        showToast('Login Petugas Berhasil!');
-        checkLoginState();
+        document.getElementById('adminDashboard').classList.remove('hidden');
+        document.getElementById('loginUsername').value = '';
+        document.getElementById('loginPassword').value = '';
+        loadAdminGuests();
       } else {
         showToast('Username atau Password salah!');
       }
     }
 
     function handleLogout() {
-      localStorage.removeItem('pkm_logged');
-      checkLoginState();
-      showToast('Berhasil keluar dari panel petugas.');
-    }
-
-    function checkLoginState() {
-      const isLogged = localStorage.getItem('pkm_logged');
-      const adminDash = document.getElementById('adminDashboard');
-      const sectionsToToggle = [
-        document.getElementById('beranda'),
-        document.getElementById('profil'),
-        document.getElementById('layanan'),
-        document.getElementById('jadwal'),
-        document.getElementById('faq'),
-        document.getElementById('kontak')
-      ];
-
-      if (isLogged === 'true') {
-        if (adminDash) adminDash.classList.remove('hidden');
-        sectionsToToggle.forEach(sec => { if (sec) sec.classList.add('hidden'); });
-        loadAdminGuests();
-        loadAdminStructureTable(window.allOrgData || []);
-      } else {
-        if (adminDash) adminDash.classList.add('hidden');
-        sectionsToToggle.forEach(sec => { if (sec) sec.classList.remove('hidden'); });
-      }
+      document.getElementById('adminDashboard').classList.add('hidden');
+      showToast('Anda telah keluar dari panel petugas.');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   </script>
 </body>
