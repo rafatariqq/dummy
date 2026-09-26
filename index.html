@@ -928,6 +928,7 @@
       loadPublicDoctors();
       loadPublicFaqs();
       loadPublicStructure();
+      checkLoginState();
     });
 
     // Modal & Toast Helpers
@@ -1230,6 +1231,7 @@
         return;
       }
 
+      window.allOrgData = data;
       const leader = data.find(item => item.category === 'leader');
       let html = '';
 
@@ -1288,6 +1290,11 @@
       const tbody = document.getElementById('adminStructureTableBody');
       if (!tbody) return;
       tbody.innerHTML = '';
+
+      if (!data || data.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center text-xs text-stone-500 py-4">Belum ada data struktur.</td></tr>`;
+        return;
+      }
 
       data.forEach(item => {
         tbody.innerHTML += `
@@ -1361,6 +1368,7 @@
 
       if (error || !data || data.length === 0) {
         if (grid) grid.innerHTML = `<div class="col-span-3 text-center text-xs text-stone-500 py-6">Belum ada data jadwal dokter.</div>`;
+        if (adminTable) adminTable.innerHTML = `<tr><td colspan="2" class="text-center text-xs text-stone-500 py-4">Belum ada dokter.</td></tr>`;
         return;
       }
 
@@ -1443,46 +1451,42 @@
     }
 
     // ==========================================
-    // 4. FUNGSI FAQ & AUTH
+    // 4. FUNGSI FAQ & AUTH (KELENGKAPAN PERBAIKAN)
     // ==========================================
     async function loadPublicFaqs() {
-      const { data, error } = await db.from('faqs').select('*').order('id', { ascending: true });
+      const { data, error } = await db.from('faq').select('*').order('id', { ascending: true });
       const container = document.querySelector('#faq .space-y-4');
       const adminTable = document.getElementById('adminFaqTableBody');
       if (container) container.innerHTML = '';
       if (adminTable) adminTable.innerHTML = '';
 
       if (error || !data || data.length === 0) {
-        if (container) container.innerHTML = `<div class="text-center text-xs text-stone-500 py-6">Belum ada pertanyaan FAQ.</div>`;
+        if (container) container.innerHTML = `<div class="text-center text-xs text-stone-500 py-6">Belum ada data FAQ.</div>`;
+        if (adminTable) adminTable.innerHTML = `<tr><td colspan="2" class="text-center text-xs text-stone-500 py-4">Belum ada FAQ.</td></tr>`;
         return;
       }
 
       data.forEach(faq => {
         if (container) {
           container.innerHTML += `
-            <div class="bg-white rounded-2xl border border-emerald-100 overflow-hidden shadow-sm hover:border-kemenkes-300 transition-all">
-              <button onclick="toggleFaq(this)" class="w-full p-5 text-left font-display font-semibold text-stone-800 flex justify-between items-center text-sm">
-                <span>${faq.question}</span><i class="fa-solid fa-chevron-down text-xs text-kemenkes-500"></i>
-              </button>
-              <div class="hidden p-5 pt-0 text-xs text-stone-600 border-t border-emerald-50 bg-emerald-50/20">${faq.answer}</div>
-            </div>`;
+            <div class="bg-white rounded-2xl p-5 border border-emerald-100 shadow-sm">
+              <h4 class="font-display font-bold text-stone-900 text-sm flex items-center gap-2">
+                <i class="fa-solid fa-circle-question text-kemenkes-500"></i> ${faq.question}
+              </h4>
+              <p class="text-xs text-stone-600 mt-2 pl-6 leading-relaxed">${faq.answer}</p>
+            </div>
+          `;
         }
         if (adminTable) {
           adminTable.innerHTML += `
             <tr class="hover:bg-emerald-50/35 transition-colors">
-              <td class="p-3 font-medium text-stone-800">${faq.question}</td>
-              <td class="p-3 text-right"><button onclick="deleteFaq(${faq.id})" class="text-rose-600 font-bold hover:underline">Hapus</button></td>
+              <td class="p-3 font-bold text-stone-900">${faq.question}</td>
+              <td class="p-3 text-right space-x-2">
+                <button onclick="deleteFaq(${faq.id})" class="text-rose-600 font-bold hover:underline">Hapus</button>
+              </td>
             </tr>`;
         }
       });
-    }
-
-    function toggleFaq(btn) {
-      const answer = btn.nextElementSibling;
-      answer.classList.toggle('hidden');
-      const icon = btn.querySelector('i');
-      icon.classList.toggle('fa-chevron-down');
-      icon.classList.toggle('fa-chevron-up');
     }
 
     function openFaqModal() {
@@ -1499,10 +1503,10 @@
       const answer = document.getElementById('faqAnswer').value;
 
       if (id) {
-        await db.from('faqs').update({ question, answer }).eq('id', id);
+        await db.from('faq').update({ question, answer }).eq('id', id);
         showToast('FAQ berhasil diperbarui!');
       } else {
-        await db.from('faqs').insert([{ question, answer }]);
+        await db.from('faq').insert([{ question, answer }]);
         showToast('FAQ baru berhasil ditambahkan!');
       }
       closeModal('faqModal');
@@ -1511,31 +1515,56 @@
 
     async function deleteFaq(id) {
       if (confirm('Yakin ingin menghapus FAQ ini?')) {
-        await db.from('faqs').delete().eq('id', id);
+        await db.from('faq').delete().eq('id', id);
         showToast('FAQ berhasil dihapus!');
         loadPublicFaqs();
       }
     }
 
-    function handleLoginSubmit(e) {
+    // Auth & Login Control
+    async function handleLoginSubmit(e) {
       e.preventDefault();
-      const u = document.getElementById('loginUsername').value;
-      const p = document.getElementById('loginPassword').value;
-      if (u === 'admin' && p === 'tarailusehat2026') {
-        showToast('Login berhasil!');
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+
+      // Autentikasi Admin default Puskesmas Satelit Tarailu
+      if (username === 'admin' && password === 'tarailu2026') {
+        localStorage.setItem('pkm_logged', 'true');
         closeModal('loginModal');
-        document.getElementById('adminDashboard').classList.remove('hidden');
-        loadAdminGuests();
-        window.scrollTo({ top: document.getElementById('adminDashboard').offsetTop, behavior: 'smooth' });
+        showToast('Login Petugas Berhasil!');
+        checkLoginState();
       } else {
-        showToast('Username atau password salah!');
+        showToast('Username atau Password salah!');
       }
     }
 
     function handleLogout() {
-      document.getElementById('adminDashboard').classList.add('hidden');
-      showToast('Berhasil keluar dari panel admin.');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      localStorage.removeItem('pkm_logged');
+      checkLoginState();
+      showToast('Berhasil keluar dari panel petugas.');
+    }
+
+    function checkLoginState() {
+      const isLogged = localStorage.getItem('pkm_logged');
+      const adminDash = document.getElementById('adminDashboard');
+      const sectionsToToggle = [
+        document.getElementById('beranda'),
+        document.getElementById('profil'),
+        document.getElementById('layanan'),
+        document.getElementById('jadwal'),
+        document.getElementById('faq'),
+        document.getElementById('kontak')
+      ];
+
+      if (isLogged === 'true') {
+        if (adminDash) adminDash.classList.remove('hidden');
+        sectionsToToggle.forEach(sec => { if (sec) sec.classList.add('hidden'); });
+        loadAdminGuests();
+        loadAdminStructureTable(window.allOrgData || []);
+      } else {
+        if (adminDash) adminDash.classList.add('hidden');
+        sectionsToToggle.forEach(sec => { if (sec) sec.classList.remove('hidden'); });
+      }
     }
   </script>
 </body>
