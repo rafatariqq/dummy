@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buku Tamu Digital - Puskesmas Satelit Tarailu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = { theme: { extend: {
+      colors: { kemenkes: { 50:'#f0fdf4',100:'#d1fae5',200:'#a7f3d0',300:'#34d399',400:'#10b981',500:'#059669',600:'#047857',700:'#065f46',800:'#064e3b',900:'#022c22' } },
+      fontFamily: { sans: ['Inter','sans-serif'], display: ['Manrope','sans-serif'] }
+    } } }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #f3faf6; color: #1e293b; }
+    h1, h2, h3, .font-display { font-family: 'Manrope', sans-serif; letter-spacing: -0.01em; }
+    .hero { background: linear-gradient(135deg, #047857 0%, #10b981 55%, #34d399 100%); position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; opacity: .5;
+      background-image: radial-gradient(rgba(255,255,255,.22) 1.2px, transparent 1.2px); background-size: 26px 26px;
+      -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%); mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%); }
+    .blob { position: absolute; border-radius: 9999px; filter: blur(60px); opacity: .4; }
+    .fld { width: 100%; padding: .7rem .9rem .7rem 2.5rem; background: #f6fcf9; border: 1px solid #a7f3d0; border-radius: .85rem; font-size: .85rem; transition: all .2s; }
+    .fld.noicon { padding-left: .9rem; }
+    .fld:focus { outline: none; border-color: #10b981; background: #fff; box-shadow: 0 0 0 4px rgba(16,185,129,.15); }
+    .ic { position: absolute; left: .9rem; top: 50%; transform: translateY(-50%); color: #10b981; font-size: .85rem; pointer-events: none; }
+    .ic.top { top: 1.05rem; transform: none; }
+    .lbl { display: block; font-size: .75rem; font-weight: 600; color: #44403c; margin-bottom: .35rem; }
+    .step { display: flex; align-items: center; gap: .6rem; font-family: 'Manrope', sans-serif; font-weight: 800; font-size: .9rem; color: #064e3b; margin-bottom: 1rem; }
+    .step span { width: 1.7rem; height: 1.7rem; border-radius: 9999px; background: linear-gradient(135deg,#059669,#34d399); color: #fff; font-size: .75rem; display: flex; align-items: center; justify-content: center; }
+    .step::after { content: ''; flex: 1; height: 1px; background: #d1fae5; }
+    @keyframes pop { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+    .pop { animation: pop .5s ease both; }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- Toast -->
+  <div id="toast" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 hidden bg-stone-900 text-white text-xs px-4 py-3 rounded-xl shadow-lg border border-emerald-500/30"></div>
+
+  <!-- Hero -->
+  <header class="hero text-white pb-24 pt-8">
+    <div class="blob" style="width:20rem;height:20rem;background:#a7f3d0;top:-8rem;left:-6rem"></div>
+    <div class="blob" style="width:22rem;height:22rem;background:#065f46;bottom:-10rem;right:-8rem"></div>
+    <div class="relative max-w-3xl mx-auto px-4 sm:px-6">
+      <a href="index.html" class="inline-flex items-center gap-2 text-xs font-semibold bg-white/15 hover:bg-white/25 border border-white/30 px-3.5 py-1.5 rounded-full backdrop-blur-sm transition-colors">
+        <i class="fa-solid fa-arrow-left"></i> Kembali ke Beranda
+      </a>
+      <div class="mt-8 flex items-center gap-4">
+        <img src="logo-puskesmas-tarailu.png" alt="Logo" class="h-14 sm:h-16 w-auto object-contain bg-white rounded-2xl p-2 shadow-lg" onerror="this.style.display='none'">
+        <div>
+          <p class="text-[11px] font-semibold tracking-wider uppercase text-emerald-100">Puskesmas Satelit Tarailu</p>
+          <h1 class="font-display font-extrabold text-2xl sm:text-4xl leading-tight">Buku Tamu Digital</h1>
+        </div>
+      </div>
+      <p class="mt-4 text-sm sm:text-base text-emerald-50 font-light max-w-xl">Silakan isi formulir kunjungan Puskesmas Satelit Tarailu. Terima kasih atas kunjungan Anda.</p>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-4 sm:px-6 -mt-16 pb-12 relative z-10">
+
+    <!-- Formulir -->
+    <div id="formCard" class="bg-white rounded-3xl border border-emerald-100 shadow-xl p-5 sm:p-8 pop">
+      <form onsubmit="handleSubmit(event)" class="space-y-7 text-xs">
+
+        <div>
+          <div class="step"><span>1</span> Waktu Kunjungan</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="lbl" for="gbHariTanggal">Hari dan Tanggal *</label>
+              <div class="relative"><i class="fa-regular fa-calendar ic"></i>
+                <input type="date" id="gbHariTanggal" required class="fld"></div>
+            </div>
+            <div>
+              <label class="lbl" for="gbWaktu">Waktu Kunjungan *</label>
+              <div class="relative"><i class="fa-regular fa-clock ic"></i>
+                <input type="time" id="gbWaktu" required class="fld"></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="step"><span>2</span> Data Diri</div>
+          <div class="space-y-4">
+            <div>
+              <label class="lbl" for="gbNama">Nama Lengkap *</label>
+              <div class="relative"><i class="fa-regular fa-user ic"></i>
+                <input type="text" id="gbNama" required placeholder="Nama lengkap beserta gelar..." class="fld"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="lbl" for="gbPekerjaan">Pekerjaan *</label>
+                <div class="relative"><i class="fa-solid fa-briefcase ic"></i>
+                  <input type="text" id="gbPekerjaan" required placeholder="Contoh: PNS / Peneliti / Mahasiswa..." class="fld"></div>
+              </div>
+              <div>
+                <label class="lbl" for="gbKontak">Nomor Telepon / Kontak *</label>
+                <div class="relative"><i class="fa-solid fa-phone ic"></i>
+                  <input type="tel" id="gbKontak" required placeholder="Contoh: 081234567890..." class="fld"></div>
+              </div>
+            </div>
+            <div>
+              <label class="lbl" for="gbAsal">Asal Lembaga / Instansi / Kedinasan *</label>
+              <div class="relative"><i class="fa-regular fa-building ic"></i>
+                <input type="text" id="gbAsal" required placeholder="Contoh: Dinkes Mamuju / Universitas / Peneliti / Mandiri..." class="fld"></div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="step"><span>3</span> Keperluan</div>
+          <div class="space-y-4">
+            <div>
+              <label class="lbl" for="gbTujuan">Maksud dan Tujuan / Keperluan *</label>
+              <div class="relative"><i class="fa-regular fa-clipboard ic top"></i>
+                <textarea id="gbTujuan" rows="3" required placeholder="Jelaskan maksud dan tujuan kunjungan..." class="fld"></textarea></div>
+            </div>
+            <div>
+              <label class="lbl" for="gbPesan">Pesan dan Kesan / Saran</label>
+              <div class="relative"><i class="fa-regular fa-comment-dots ic top"></i>
+                <textarea id="gbPesan" rows="2" placeholder="Tuliskan pesan, kesan, atau saran Anda..." class="fld"></textarea></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col-reverse sm:flex-row justify-end gap-3 pt-2 border-t border-emerald-50">
+          <a href="index.html" class="text-center px-5 py-3 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl font-semibold transition-all">Batal</a>
+          <button type="submit" id="submitBtn" class="px-7 py-3 bg-gradient-to-r from-kemenkes-500 to-kemenkes-400 hover:from-kemenkes-600 hover:to-kemenkes-500 text-white rounded-xl font-bold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
+            <i class="fa-solid fa-paper-plane"></i> Kirim Buku Tamu
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Terima kasih -->
+    <div id="thanksCard" class="hidden bg-white rounded-3xl border border-emerald-100 shadow-xl p-8 sm:p-12 text-center space-y-4 pop">
+      <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-kemenkes-500 to-kemenkes-300 text-white flex items-center justify-center text-4xl shadow-lg"><i class="fa-solid fa-check"></i></div>
+      <h2 class="font-display font-extrabold text-2xl text-stone-900">Terima Kasih!</h2>
+      <p class="text-sm text-stone-600 max-w-md mx-auto">Data kunjungan Anda telah tersimpan di Buku Tamu Puskesmas Satelit Tarailu. Semoga hari Anda menyenangkan.</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-3 pt-3 text-xs">
+        <button onclick="again()" class="px-5 py-2.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-kemenkes-700 rounded-xl font-bold transition-all"><i class="fa-solid fa-rotate-left mr-1"></i> Isi Lagi</button>
+        <a href="index.html" class="px-5 py-2.5 bg-kemenkes-500 hover:bg-kemenkes-600 text-white rounded-xl font-bold shadow-md transition-all"><i class="fa-solid fa-house mr-1"></i> Kembali ke Beranda</a>
+      </div>
+    </div>
+
+    <!-- Info bawah -->
+    <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-stone-500">
+      <div class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-kemenkes-500"></i> Tarailu, Kec. Sampaga, Kab. Mamuju, Sulawesi Barat</div>
+      <button type="button" onclick="openQr()" class="inline-flex items-center gap-2 font-semibold text-kemenkes-700 hover:text-kemenkes-500"><i class="fa-solid fa-qrcode"></i> QR Code halaman ini</button>
+    </div>
+    <p class="text-center text-[11px] text-stone-400 mt-6">&copy; 2026 Puskesmas Satelit Tarailu - Kabupaten Mamuju</p>
+  </main>
+
+  <!-- Modal QR -->
+  <div id="qrModal" onclick="closeQr()" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div onclick="event.stopPropagation()" class="bg-white rounded-2xl max-w-xs w-full p-6 text-center shadow-lg border border-emerald-100 space-y-3">
+      <h3 class="font-display font-bold text-stone-900">QR Code Buku Tamu</h3>
+      <div class="flex justify-center"><div id="qrBox" class="p-3 bg-white border border-emerald-100 rounded-xl"></div></div>
+      <p id="qrUrl" class="text-[10px] text-stone-500 break-all"></p>
+      <div class="flex gap-2 justify-center text-xs">
+        <button onclick="downloadQr()" class="px-4 py-2 bg-kemenkes-500 hover:bg-kemenkes-600 text-white rounded-xl font-bold"><i class="fa-solid fa-download mr-1"></i> Unduh</button>
+        <button onclick="closeQr()" class="px-4 py-2 bg-stone-100 rounded-xl font-semibold">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://paofqksfdajcylhnzpki.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_6vlkZRBI1AJhT3fbVLex3Q__kDatp1_';
+    const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    function toast(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg; t.classList.remove('hidden');
+      setTimeout(() => t.classList.add('hidden'), 4000);
+    }
+
+    function setNow() {
+      const d = new Date(), p = n => String(n).padStart(2, '0');
+      document.getElementById('gbHariTanggal').value = `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+      document.getElementById('gbWaktu').value = `${p(d.getHours())}:${p(d.getMinutes())}`;
+    }
+    setNow();
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const row = {
+        hari_tanggal: document.getElementById('gbHariTanggal').value,
+        waktu_kunjungan: document.getElementById('gbWaktu').value,
+        nama_lengkap: document.getElementById('gbNama').value,
+        pekerjaan: document.getElementById('gbPekerjaan').value,
+        nomor_telepon: document.getElementById('gbKontak').value,
+        asal_lembaga: document.getElementById('gbAsal').value,
+        maksud_tujuan: document.getElementById('gbTujuan').value,
+        pesan_kesan: document.getElementById('gbPesan').value
+      };
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim...';
+      const { error } = await db.from('buku_tamu').insert([row]);
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Kirim Buku Tamu';
+      if (error) { toast('Gagal mengirim buku tamu: ' + error.message); return; }
+      e.target.reset();
+      document.getElementById('formCard').classList.add('hidden');
+      document.getElementById('thanksCard').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function again() {
+      document.getElementById('thanksCard').classList.add('hidden');
+      document.getElementById('formCard').classList.remove('hidden');
+      setNow();
+    }
+
+    // QR code halaman ini
+    let qrMade = false;
+    function openQr() {
+      const m = document.getElementById('qrModal');
+      m.classList.remove('hidden'); m.classList.add('flex');
+      if (!qrMade) {
+        const url = location.href.split('#')[0].split('?')[0];
+        new QRCode(document.getElementById('qrBox'), { text: url, width: 200, height: 200, correctLevel: QRCode.CorrectLevel.M });
+        document.getElementById('qrUrl').innerText = url;
+        qrMade = true;
+      }
+    }
+    function closeQr() {
+      const m = document.getElementById('qrModal');
+      m.classList.add('hidden'); m.classList.remove('flex');
+    }
+    function downloadQr() {
+      const c = document.querySelector('#qrBox canvas');
+      if (!c) return;
+      const a = document.createElement('a');
+      a.href = c.toDataURL('image/png'); a.download = 'qr-buku-tamu-puskesmas-tarailu.png'; a.click();
+    }
+  </script>
+</body>
+</html>
